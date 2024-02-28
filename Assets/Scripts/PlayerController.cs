@@ -8,13 +8,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float sideSpeed = 10f;
     [SerializeField] float screenBorderLimit = 0f;
 
+    Animator _animator;
+
+    GameObject explosionParticle;
+
     private float horizontalInput;
 
-    Health health;
+    [HideInInspector] public Health health;
+
+    HudManager hudManager;
+
+    [HideInInspector] public bool gameOver = false;
 
     private void Awake()
     {
         health = GetComponent<Health>();
+        _animator = GetComponent<Animator>();
+        explosionParticle = transform.GetChild(3).gameObject;
+    }
+
+    private void Start()
+    {
+        hudManager = FindObjectOfType<HudManager>();
     }
 
     private void Update()
@@ -23,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
         ScreenBorderLimit();
 
-        if (!health.isAlive)
+        if (!health.isAlive && !gameOver)
         {
             GameOver();
         }
@@ -41,8 +56,6 @@ public class PlayerController : MonoBehaviour
 
     void PlayerInput()
     {
-        
-
         if (Input.touchCount > 0)
         {
             foreach(Touch t in Input.touches)
@@ -114,12 +127,18 @@ public class PlayerController : MonoBehaviour
 
     void GameOver()
     {
+        gameOver = true;
+
+        _animator.Play("SpaceCraft_Explosion");
+        explosionParticle.SetActive(true);
+
         StartCoroutine(RestartScene());
     }
 
     IEnumerator RestartScene()
     {
         transform.parent.GetComponent<MoveForward>().forwardSpeed = 0;
+        sideSpeed = 0;
         
         foreach (BulletShooter b in FindObjectsOfType<BulletShooter>())
         {
@@ -131,11 +150,25 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    void TakeHealth()
+    {
+        foreach (Transform t in hudManager.healthBar.transform)
+        {
+            if (t.gameObject.activeInHierarchy)
+            {
+                t.gameObject.SetActive(false);
+                break;
+            }
+        }
+
+        health.currentHealth--;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            health.currentHealth--;
+            TakeHealth();
         }
     }
 }

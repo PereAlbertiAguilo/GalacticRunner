@@ -3,26 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ScoreManager : MonoBehaviour
+public class HudManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI maxScoreText;
+    public Transform healthBar;
+    [SerializeField] GameObject healthPoint;
+
+    PlayerController playerController;
 
     public int score = 0;
     float seconds;
 
     private void Start()
     {
+        playerController = FindObjectOfType<PlayerController>();
+
         maxScoreText.text = "MaxScore: " + PlayerPrefs.GetInt("maxScore");
+
+        FillHealthBar();
     }
 
     private void Update()
     {
+        UpdateScore();
+    }
+
+    void UpdateScore()
+    {
+        if (playerController.gameOver)
+        {
+            return;
+        }
+
         seconds += Time.deltaTime;
 
-        score = Mathf.RoundToInt(seconds % 60);
+        scoreText.text = "Score: " + (score + Mathf.RoundToInt(seconds % 60));
+    }
 
-        scoreText.text = "Score: " + score;
+    void FillHealthBar()
+    {
+        for (int i = 0; i < playerController.health.maxHealth; i++)
+        {
+            Instantiate(healthPoint, healthBar);
+        }
     }
 
     void SaveData()
