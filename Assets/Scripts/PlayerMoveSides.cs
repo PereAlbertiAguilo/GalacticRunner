@@ -24,39 +24,78 @@ public class PlayerMoveSides : MonoBehaviour
         }
     }
 
+    bool right = false;
+
     void PlayerInput()
     {
-        if(Input.touchCount > 0)
+        
+
+        if (Input.touchCount > 0)
         {
             foreach(Touch t in Input.touches)
             {
                 if (t.position.x > Screen.width / 2)
                 {
-                    transform.Translate(Vector2.right * sideSpeed * Time.deltaTime);
+                    MovePlayer(0, 1);
+                    right = true;
                 }
                 else
                 {
-                    transform.Translate(Vector2.left * sideSpeed * Time.deltaTime);
+                    MovePlayer(-1, 0);
+                    right = false;
                 }
             }
         }
         else
         {
             if (Input.GetMouseButton(0)) 
-            { 
+            {
                 if (Input.mousePosition.x > Screen.width / 2)
                 {
-                    transform.Translate(Vector2.right * sideSpeed * Time.deltaTime);
+                    MovePlayer(0, 1);
+                    right = true;
                 }
                 else
                 {
-                    transform.Translate(Vector2.left * sideSpeed * Time.deltaTime);
+                    MovePlayer(-1, 0);
+                    right = false;
+                }
+            }
+            else
+            {
+                if (!right)
+                {
+                    inputValue += 7 * Time.deltaTime;
+                    inputValue = Mathf.Clamp(inputValue, -1, 0);
+                }
+                else
+                {
+                    inputValue -= 7 * Time.deltaTime;
+                    inputValue = Mathf.Clamp(inputValue, 0, 1);
                 }
             }
         }
 
-        horizontalInput = Input.GetAxis("Horizontal");
+        transform.Translate(Vector2.right * inputValue * sideSpeed * Time.deltaTime);
 
-        transform.Translate(Vector2.right * horizontalInput * sideSpeed * Time.deltaTime);
+        //horizontalInput = Input.GetAxis("Horizontal");
+        //transform.Translate(Vector2.right * horizontalInput * sideSpeed * Time.deltaTime);
+    }
+
+    float inputValue = 0;
+
+    void MovePlayer(int min, int max)
+    {
+        if (min >= 0)
+        {
+            inputValue += 4 * Time.deltaTime;
+        }
+        else
+        {
+            inputValue -= 4 * Time.deltaTime;
+        }
+
+        inputValue = Mathf.Clamp(inputValue, min, max);
+
     }
 }
