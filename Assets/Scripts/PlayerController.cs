@@ -1,19 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerMoveSides : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] float sideSpeed = 10f;
     [SerializeField] float screenBorderLimit = 0f;
 
     private float horizontalInput;
 
+    Health health;
+
+    private void Awake()
+    {
+        health = GetComponent<Health>();
+    }
+
     private void Update()
     {
         PlayerInput();
 
         ScreenBorderLimit();
+
+        if (!health.isAlive)
+        {
+            GameOver();
+        }
     }
 
     void ScreenBorderLimit()
@@ -97,5 +110,32 @@ public class PlayerMoveSides : MonoBehaviour
 
         inputValue = Mathf.Clamp(inputValue, min, max);
 
+    }
+
+    void GameOver()
+    {
+        StartCoroutine(RestartScene());
+    }
+
+    IEnumerator RestartScene()
+    {
+        transform.parent.GetComponent<MoveForward>().forwardSpeed = 0;
+        
+        foreach (BulletShooter b in FindObjectsOfType<BulletShooter>())
+        {
+            b.CancelInvoke();
+        }
+
+        yield return new WaitForSeconds(2);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            health.currentHealth--;
+        }
     }
 }

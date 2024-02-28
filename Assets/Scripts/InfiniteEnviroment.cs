@@ -21,8 +21,6 @@ public class InfiniteEnviroment : MonoBehaviour
 
     private void Update()
     {
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-
         NextTile();
     }
 

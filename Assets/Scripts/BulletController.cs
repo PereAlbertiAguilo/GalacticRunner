@@ -8,7 +8,7 @@ public class BulletController : MonoBehaviour
 
     [SerializeField] float bulletLifeTime = 10f;
 
-    [SerializeField] Transform parent;
+    Transform parent;
 
     private void OnEnable()
     {
@@ -30,11 +30,12 @@ public class BulletController : MonoBehaviour
         transform.parent = parent;
         gameObject.SetActive(false);
         transform.localPosition = Vector2.zero;
+
+        CancelInvoke();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         ReturnToStartPos();
-        CancelInvoke();
     }
 }
