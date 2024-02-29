@@ -15,8 +15,6 @@ public class PauseMenu : MonoBehaviour
     bool music = true;
     bool sfx = true;
 
-    bool paused = false;
-
     private void Start()
     {
         if (PlayerPrefs.HasKey("music")) 
@@ -29,25 +27,36 @@ public class PauseMenu : MonoBehaviour
             sfxAudioSource.mute = PlayerPrefs.GetInt("sfx") == 1 ? false : true; 
             sfxToggle.isOn = PlayerPrefs.GetInt("sfx") == 1 ? true : false;
         }
+
+        Time.timeScale = 1;
     }
 
     public void Resume()
     {
-        paused = false;
         Time.timeScale = 1;
     }
     public void Pause()
     {
-        paused = true;
         Time.timeScale = 0;
     }
     public void Restart()
     {
-        Time.timeScale = 1;
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        StartCoroutine(ChangeSceneDelay("Game"));
     }
-    
+    public void Menu()
+    {
+        StartCoroutine(ChangeSceneDelay("MainMenu"));
+    }
+
+    IEnumerator ChangeSceneDelay(string sceneName)
+    {
+        FadeBlack.instance.FadeToBlack();
+
+        yield return new WaitForSeconds(1);
+
+        SceneManager.LoadScene(sceneName);
+    }
+
     public void Music()
     {
         if (!musicAudioSource.mute)

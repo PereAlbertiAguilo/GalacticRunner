@@ -13,8 +13,14 @@ public class ObstacleSpawner : MonoBehaviour
 
     [SerializeField] float spawnRate;
 
+    [SerializeField] int poolSize = 20;
+
+    [SerializeField] List<GameObject> pool = new List<GameObject>();
+
     private void Start()
     {
+        FillPool();
+
         InvokeRepeating("SpawnObstscle", spawnRate, spawnRate);
     }
 
@@ -40,11 +46,37 @@ public class ObstacleSpawner : MonoBehaviour
         return new Vector2(x, y + playerPos.position.y);
     }
 
+    int RandomIndex()
+    {
+        return Random.Range(0, pool.Count);
+    }
+
     void SpawnObstscle()
     {
-        GameObject obstacle = RandomObstacle();
-        Vector2 spawnPos = RandomPosition();
+        GameObject g = pool[RandomIndex()];
 
-        GameObject instance = Instantiate(obstacle, spawnPos, Quaternion.Euler(0, 0, RandomRotation()));
+        if (!g.activeSelf)
+        {
+            GameObject obstacle = RandomObstacle();
+            Vector2 spawnPos = RandomPosition();
+
+            g.transform.position = spawnPos;
+            g.transform.rotation = Quaternion.Euler(0, 0, RandomRotation());
+            g.SetActive(true);
+            g.transform.parent = null;
+        }
+    }
+
+    void FillPool()
+    {
+        foreach (GameObject o in obstacles)
+        {
+            for (int i = 0; i < poolSize; i++)
+            {
+                GameObject g = Instantiate(o);
+                pool.Add(g);
+                g.SetActive(false);
+            }
+        }
     }
 }

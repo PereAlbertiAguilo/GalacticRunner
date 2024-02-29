@@ -6,46 +6,74 @@ public class ObstacleController : MonoBehaviour
 {
     Health health;
     GameObject mask;
-    GameObject explosionParticle;
 
     [SerializeField] float lifeTime = 10f;
+    [SerializeField] float currentLifeTime = 0;
     [SerializeField] int scorePoints = 10;
 
     HudManager hudManager;
+
+    bool awake = false;
+
+    [SerializeField] GameObject explosionParticle;
 
     private void Awake()
     {
         health = GetComponent<Health>();
         mask = transform.GetChild(0).gameObject;
-        explosionParticle = transform.GetChild(1).gameObject;
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        currentLifeTime = lifeTime;
+
         hudManager = FindObjectOfType<HudManager>();
 
-        Destroy(this.gameObject, lifeTime);
+        DeactivateObject(true);
+
+        awake = true;
+    }
+
+    void Timer()
+    {
+        currentLifeTime -= Time.deltaTime;
+
+        if (currentLifeTime <= 0.0f)
+        {
+            DeactivateObject(false);
+        }
     }
 
     private void Update()
     {
         if (!health.isAlive)
         {
-            DestroyObject();
-            hudManager.score += scorePoints;
+            hudManager.obstacleScore += scorePoints;
+            hudManager.scoreText.GetComponent<Animator>().Play("ScorePop");
+
+            DeactivateObject(true);
+
+            if (health.currentHealth <= (health.maxHealth * 20) / 100 && !mask.activeInHierarchy && awake)
+            {
+                mask.SetActive(true);
+            }
         }
 
-        if(health.currentHealth <= (health.maxHealth * 20) / 100 && !mask.activeInHierarchy)
-        {
-            mask.SetActive(true);
-        }
+        Timer();
     }
-    void DestroyObject()
-    {
-        explosionParticle.transform.parent = null;
-        explosionParticle.SetActive(true);
 
-        Destroy(this.gameObject);
+    void DeactivateObject(bool particle)
+    {
+        if (particle)
+        {
+            Instantiate(explosionParticle, transform.position, Quaternion.identity);
+        }
+
+        mask.SetActive(false);
+        gameObject.SetActive(false);
+        awake = false;
+        health.isAlive = true;
+        currentLifeTime = lifeTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -56,9 +84,10 @@ public class ObstacleController : MonoBehaviour
         {
             health.currentHealth -= 2;
         }
-        else if(tag == "Player")
+        else if (tag == "Player")
         {
-            DestroyObject();
+            DeactivateObject(true);
         }
     }
+    
 }

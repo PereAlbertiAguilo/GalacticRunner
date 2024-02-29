@@ -31,11 +31,15 @@ public class BulletController : MonoBehaviour
         gameObject.SetActive(false);
         transform.localPosition = Vector2.zero;
 
-        CancelInvoke();
+        this.CancelInvoke();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if(collision.gameObject.tag == "Obtsacle")
+        {
+        }
+
         ReturnToStartPos();
     }
 }

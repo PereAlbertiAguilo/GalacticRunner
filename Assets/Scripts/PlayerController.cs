@@ -5,20 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float sideSpeed = 10f;
+    public float sideSpeed = 10f;
     [SerializeField] float screenBorderLimit = 0f;
 
-    Animator _animator;
+    [HideInInspector] public Animator _animator;
 
-    GameObject explosionParticle;
+    [HideInInspector] public GameObject explosionParticle;
 
     private float horizontalInput;
 
     [HideInInspector] public Health health;
 
     HudManager hudManager;
-
-    [HideInInspector] public bool gameOver = false;
 
     private void Awake()
     {
@@ -30,6 +28,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         hudManager = FindObjectOfType<HudManager>();
+
+        StartCoroutine(EnterScene());
     }
 
     private void Update()
@@ -38,10 +38,18 @@ public class PlayerController : MonoBehaviour
 
         ScreenBorderLimit();
 
-        if (!health.isAlive && !gameOver)
+        if (!health.isAlive && !GameManager.instance.gameOver)
         {
-            GameOver();
+            GameManager.instance.GameOver();
         }
+    }
+
+    IEnumerator EnterScene()
+    {
+        yield return new WaitForSeconds(1);
+
+        inputValue = 0;
+        _animator.applyRootMotion = true;
     }
 
     void ScreenBorderLimit()
@@ -122,53 +130,41 @@ public class PlayerController : MonoBehaviour
         }
 
         inputValue = Mathf.Clamp(inputValue, min, max);
-
     }
 
-    void GameOver()
+    void TakeHealth(bool take)
     {
-        gameOver = true;
-
-        _animator.Play("SpaceCraft_Explosion");
-        explosionParticle.SetActive(true);
-
-        StartCoroutine(RestartScene());
-    }
-
-    IEnumerator RestartScene()
-    {
-        transform.parent.GetComponent<MoveForward>().forwardSpeed = 0;
-        sideSpeed = 0;
-        
-        foreach (BulletShooter b in FindObjectsOfType<BulletShooter>())
+        if (take)
         {
-            b.CancelInvoke();
-        }
-
-        yield return new WaitForSeconds(2);
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    void TakeHealth()
-    {
-        foreach (Transform t in hudManager.healthBar.transform)
-        {
-            if (t.gameObject.activeInHierarchy)
+            foreach (Transform t in hudManager.healthBar.transform)
             {
-                t.gameObject.SetActive(false);
-                break;
+                if (t.gameObject.activeInHierarchy)
+                {
+                    t.gameObject.SetActive(false);
+                    health.currentHealth--;
+                    break;
+                }
             }
         }
-
-        health.currentHealth--;
+        else
+        {
+            foreach (Transform t in hudManager.healthBar.transform)
+            {
+                if (!t.gameObject.activeInHierarchy)
+                {
+                    t.gameObject.SetActive(true);
+                    health.currentHealth++;
+                    break;
+                }
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            TakeHealth();
+            TakeHealth(true);
         }
     }
 }

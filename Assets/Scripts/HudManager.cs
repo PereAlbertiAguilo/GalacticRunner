@@ -2,24 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SocialPlatforms;
 
 public class HudManager : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI scoreText;
-    [SerializeField] TextMeshProUGUI maxScoreText;
+    public TextMeshProUGUI scoreText;
     public Transform healthBar;
     [SerializeField] GameObject healthPoint;
 
     PlayerController playerController;
 
-    public int score = 0;
+    public int obstacleScore = 0;
+    public int timeScore = 0;
+    public int maxScore = 0;
     float seconds;
 
     private void Start()
     {
         playerController = FindObjectOfType<PlayerController>();
 
-        maxScoreText.text = "MaxScore: " + PlayerPrefs.GetInt("maxScore");
+        if (PlayerPrefs.HasKey("maxScore"))
+        {
+            maxScore = PlayerPrefs.GetInt("maxScore");
+        }
+        else
+        {
+            maxScore = 0;
+        }
 
         FillHealthBar();
     }
@@ -31,14 +40,15 @@ public class HudManager : MonoBehaviour
 
     void UpdateScore()
     {
-        if (playerController.gameOver)
+        if (GameManager.instance.gameOver)
         {
             return;
         }
 
         seconds += Time.deltaTime;
+        timeScore = Mathf.RoundToInt(seconds % 60);
 
-        scoreText.text = "Score: " + (score + Mathf.RoundToInt(seconds % 60));
+        scoreText.text = "Score: " + (obstacleScore + timeScore);
     }
 
     void FillHealthBar()
@@ -49,25 +59,13 @@ public class HudManager : MonoBehaviour
         }
     }
 
-    void SaveData()
+    public void SaveData()
     {
-        PlayerPrefs.SetInt("currentScore", score);
-
-        if (score > PlayerPrefs.GetInt("maxScore"))
+        if (obstacleScore + timeScore > maxScore)
         {
-            PlayerPrefs.SetInt("maxScore", score);
+            maxScore = obstacleScore + timeScore;
+
+            PlayerPrefs.SetInt("maxScore", maxScore);
         }
-
-        print("MaxScore: " + PlayerPrefs.GetInt("maxScore") + ", CurrentScore: " + PlayerPrefs.GetInt("currentScore"));
-    }
-
-    private void OnDisable()
-    {
-        SaveData();
-    }
-
-    private void OnApplicationQuit()
-    {
-        SaveData();
     }
 }
