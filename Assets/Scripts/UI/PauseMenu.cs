@@ -6,57 +6,31 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] AudioSource musicAudioSource;
-    [SerializeField] AudioSource sfxAudioSource;
-
-    [SerializeField] Toggle musicToggle;
-    [SerializeField] Toggle sfxToggle;
-
-    bool music = true;
-    bool sfx = true;
-
-    private void Start()
-    {
-        Time.timeScale = 1;
-
-        if (PlayerPrefs.HasKey("music")) 
-        { 
-            music = PlayerPrefs.GetInt("music") == 1 ? true : false;
-        }
-        else
-        {
-            music = true;
-        }
-        if (PlayerPrefs.HasKey("sfx")) 
-        { 
-            sfx = PlayerPrefs.GetInt("sfx") == 1 ? true : false;
-        }
-        else
-        {
-            sfx = true;
-        }
-
-        musicToggle.isOn = music;
-        sfxToggle.isOn = sfx;
-    }
-
+    // Resumes the game
     public void Resume()
     {
         Time.timeScale = 1;
     }
+
+    // Pauses the game
     public void Pause()
     {
         Time.timeScale = 0;
     }
+
+    // Restarts the game
     public void Restart()
     {
         StartCoroutine(ChangeSceneDelay("Game"));
     }
+
+    // Goes to the main menu
     public void Menu()
     {
         StartCoroutine(ChangeSceneDelay("MainMenu"));
     }
 
+    // Adds a delay before changeing the scene
     IEnumerator ChangeSceneDelay(string sceneName)
     {
         FadeBlack.instance.FadeToBlack();
@@ -64,52 +38,5 @@ public class PauseMenu : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         SceneManager.LoadScene(sceneName);
-    }
-
-    public void Music(bool active)
-    {
-        if (!active)
-        {
-            musicAudioSource.mute = true;
-            music = false;
-        }
-        else
-        {
-            musicAudioSource.mute = false;
-            music = true;
-        }
-
-        PlayerPrefs.SetInt("music", music ? 1 : 0);
-    }
-    public void SFX(bool active)
-    {
-        if (!active)
-        {
-            sfxAudioSource.mute = true;
-            sfx = false;
-        }
-        else
-        {
-            sfxAudioSource.mute = false;
-            sfx = true;
-        }
-
-        PlayerPrefs.SetInt("sfx", sfx ? 1 : 0);
-    }
-
-    void SaveData()
-    {
-        PlayerPrefs.SetInt("music", music ? 1 : 0);
-        PlayerPrefs.SetInt("sfx", sfx ? 1 : 0);
-    }
-
-    private void OnDisable()
-    {
-        SaveData();
-    }
-
-    private void OnApplicationQuit()
-    {
-        SaveData();
     }
 }

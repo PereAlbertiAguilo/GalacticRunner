@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public float maxHealth = 5f;
+    public int maxHealth = 5;
 
     public float currentHealth;
 
     public bool isAlive = true;
 
+    [SerializeField] int deathPoint = 0;
+
+    // When the gameobject sets active resets the current health to its max health
     private void OnEnable()
     {
         currentHealth = maxHealth;
@@ -17,7 +20,8 @@ public class Health : MonoBehaviour
 
     private void Update()
     {
-        if(currentHealth <= 0)
+        // If the current health reaches a death points dies
+        if(currentHealth <= deathPoint)
         {
             isAlive = false;
         }

@@ -43,20 +43,24 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
+        // Gets the selected values from player prefs
         spaceCraftSelected = PlayerPrefs.GetInt("spaceSelect");
         bulletSelected = PlayerPrefs.GetInt("bulletSelect");
         shieldSelected = PlayerPrefs.GetInt("shieldSelect");
 
+        // Updates the selected estate of the buttons
         ButtonSelectedUpdate("spaceBuy", "spaceSelect", spaceCraftSelected, spaceCraftSelects, true);
         ButtonSelectedUpdate("bulletBuy", "bulletSelect", bulletSelected, bulletSelects, true);
         ButtonSelectedUpdate("shieldBuy", "shieldSelect", shieldSelected, shieldSelects, false);
 
+        // Updates the moeny
         money = PlayerPrefs.GetInt("pointsScore");
-
         moneyText.text = "" + money;
 
+        // Updates the prices texts
         PricesUpdate();
 
+        // Updates the active state of the bought and selected buttons
         for (int i = 0; i < spaceCraftBuys.Length; i++)
         {
             ButtonUpdate("spaceBuy" + i, i, spaceCraftBuys, spaceCraftSelects);
@@ -73,12 +77,15 @@ public class ShopManager : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.E))
         {
             PlayerPrefs.DeleteAll();
         }
+#endif
     }
 
+    // Updates the active state of the bought and selected buttons
     void ButtonUpdate(string key, int index, GameObject[] buys, GameObject[] selects)
     {
         if(PlayerPrefs.HasKey(key))
@@ -86,7 +93,7 @@ public class ShopManager : MonoBehaviour
             if(PlayerPrefs.GetInt(key) == 1)
             {
                 buys[index].SetActive(false);
-                spaceCraftSelects[index].SetActive(true);
+                selects[index].SetActive(true);
             }
             else
             {
@@ -96,31 +103,32 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            print("no key");
             buys[index].SetActive(true);
             selects[index].SetActive(false);
         }
     }
 
+    // Updates the prices texts
     void PricesUpdate()
     {
-        for (int i = 0; i < spaceCraftBuys.Length; i++)
+        for (int i = 0; i < spaceCraftPrices.Length; i++)
         {
             spaceCraftBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "" + spaceCraftPrices[i];
         }
-        for (int i = 0; i < spaceCraftBuys.Length; i++)
+        for (int i = 0; i < bulletPrices.Length; i++)
         {
             bulletBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "" + bulletPrices[i];
         }
-        for (int i = 0; i < spaceCraftBuys.Length; i++)
+        for (int i = 0; i < shieldPrices.Length; i++)
         {
             shieldBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "" + shieldPrices[i];
         }
     }
 
+    // Updates the selected estate of the buttons
     void ButtonSelectedUpdate(string keyBuy, string keySelect, int selected, GameObject[] selects, bool firstSelected)
     {
-        if (PlayerPrefs.HasKey(keySelect))
+        if (PlayerPrefs.HasKey(keySelect) && PlayerPrefs.GetInt(keySelect) >= 0)
         {
             for (int i = 0; i < selects.Length; i++)
             {
@@ -142,6 +150,7 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    // Buys and selects a spacecraft
     #region SpaceCraftButton
     void SelectSpaceCraft(int index)
     {
@@ -178,6 +187,7 @@ public class ShopManager : MonoBehaviour
     }
     #endregion
 
+    // Buys and selects a bullet
     #region BulletButton
     void SelectBullet(int index)
     {
@@ -214,23 +224,38 @@ public class ShopManager : MonoBehaviour
     }
     #endregion
 
+    // Buys and selects a health point
     #region ShieldButton
-    void SelectShield(int index)
+    void SelectShield(int index, bool select)
     {
-        shieldSelected = index;
+        if (select)
+        {
+            shieldSelected = index;
+            PlayerPrefs.SetInt("shieldSelect", shieldSelected);
+            shieldSelects[index].GetComponent<Image>().color = selectedColor;
+            ButtonSelectedUpdate("shieldBuy", "shieldSelect", shieldSelected, shieldSelects, true);
+        }
+        else
+        {
+            shieldSelected = -1;
+            ButtonSelectedUpdate("shieldBuy", "shieldSelect", shieldSelected, shieldSelects, true);
+            shieldSelects[index].GetComponent<Image>().color = Color.white;
+        }
 
         PlayerPrefs.SetInt("shieldSelect", shieldSelected);
-
-        shieldSelects[index].GetComponent<Image>().color = selectedColor;
-
-        ButtonSelectedUpdate("shieldBuy", "shieldSelect", shieldSelected, shieldSelects, true);
     }
 
     public void BuyShield(int index)
     {
         if (PlayerPrefs.HasKey("shieldBuy" + index))
         {
-            SelectShield(index);
+            if (shieldSelected >= 0 || shieldSelected == index)
+            {
+                SelectShield(index, false);
+                return;
+            }
+
+            SelectShield(index, true);
         }
         else
         {
@@ -242,7 +267,7 @@ public class ShopManager : MonoBehaviour
                 PlayerPrefs.SetInt("pointsScore", money);
                 PlayerPrefs.SetInt("shieldBuy" + index, 1);
 
-                SelectShield(index);
+                SelectShield(index, true);
 
                 ButtonUpdate("shieldBuy" + index, index, shieldBuys, shieldSelects);
             }

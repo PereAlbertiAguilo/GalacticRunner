@@ -6,12 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    // Starts the game
     public void Run()
     {
         Time.timeScale = 1;
         StartCoroutine(ChangeSceneDelay("Game"));
     }
 
+    // Exits the game
     public void Exit()
     {
         Application.Quit();
@@ -21,6 +23,7 @@ public class MainMenu : MonoBehaviour
 #endif
     }
 
+    // Adds a delay before changeing the scene
     IEnumerator ChangeSceneDelay(string sceneName)
     {
         FadeBlack.instance.FadeToBlack();

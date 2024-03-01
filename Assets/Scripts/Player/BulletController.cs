@@ -28,17 +28,20 @@ public class BulletController : MonoBehaviour
     {
         parent = transform.parent;
 
+        // Invokes a function that will activate within a given time
         Invoke(nameof(ReturnToStartPos), bulletLifeTime);
     }
 
     private void Update()
     {
+        // Moves this gameobject down if its active
         if (gameObject.activeInHierarchy)
         {
             transform.Translate(Vector2.up * bulletSpeed * Time.deltaTime);
         }
     }
 
+    // The sprite of the bullets updates depending on a player pref int
     void SpriteUpdate()
     {
         if (PlayerPrefs.HasKey("bulletSelect"))
@@ -47,6 +50,7 @@ public class BulletController : MonoBehaviour
         }
     }
 
+    // Resets this gameobject position, active state and sets its parent
     void ReturnToStartPos()
     {
         transform.parent = parent;
@@ -58,10 +62,7 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Obtsacle")
-        {
-        }
-
+        // If the gameobject collides with anything this gameobject resets itself
         ReturnToStartPos();
     }
 }

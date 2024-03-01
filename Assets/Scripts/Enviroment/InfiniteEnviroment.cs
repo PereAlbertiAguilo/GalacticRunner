@@ -24,10 +24,12 @@ public class InfiniteEnviroment : MonoBehaviour
         NextTile();
     }
 
+    // Gets a tile from a gameobject pool
     void NextTile()
     {
         int activeTiles = 0;
 
+        // Gets the amount of active tiles in the pool
         foreach (GameObject g in spaceTilePool)
         {
             if (g.activeInHierarchy)
@@ -37,10 +39,12 @@ public class InfiniteEnviroment : MonoBehaviour
         }
         for (int i = 0; i < spaceTilePool.Count; i++)
         {
+            // If the tile is to far from the player it deactivates
             if (spaceTilePool[i].activeInHierarchy && (playerPos.position.y - spaceTilePool[i].transform.position.y) >= maxSpaceGap)
             {
                 spaceTilePool[i].SetActive(false);
             }
+            // If there is 3 or less active tiles spawns a next tile
             if (activeTiles <= 3 && !spaceTilePool[i].activeInHierarchy)
             {
                 SpawnTile(i);
@@ -49,6 +53,7 @@ public class InfiniteEnviroment : MonoBehaviour
         
     }
 
+    // Spawns a new tile with a random sprite
     void SpawnTile(int i)
     {
         int r = Random.Range(0, tileSprites.Length);
@@ -59,7 +64,7 @@ public class InfiniteEnviroment : MonoBehaviour
     }
 
     
-
+    // Fills a gameobject pool
     void FillPool()
     {
         for (int i = 0; i < poolSize; i++)

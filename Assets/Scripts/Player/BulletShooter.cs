@@ -12,19 +12,24 @@ public class BulletShooter : MonoBehaviour
 
     [SerializeField] List<GameObject> bulletPool = new List<GameObject>();
 
+    [SerializeField] AudioClip bulletClip;
+
     private void Start()
     {
         FillPool();
 
+        // Invokes a function every few seconds
         InvokeRepeating("ShootBullet", bulletSpawnRate, bulletSpawnRate);
     }
 
+    // From a gameobejct pool spawns a new bullet if the gameobject isn't active and plays a sound
     void ShootBullet()
     {
         foreach (GameObject g in bulletPool) 
         {
             if (!g.activeSelf)
             {
+                AudioManager.instance.AudioPlayOneShotVolume(bulletClip, .0075f, false);
                 g.SetActive(true);
                 g.transform.parent = null;
                 break;
@@ -32,6 +37,7 @@ public class BulletShooter : MonoBehaviour
         }
     }
 
+    // Fills a gameobject pool
     void FillPool()
     {
         for (int i = 0; i < poolSize; i++)

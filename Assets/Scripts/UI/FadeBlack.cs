@@ -10,6 +10,7 @@ public class FadeBlack : MonoBehaviour
 
     private void Awake()
     {
+        // Makes this script a static variable
         if (instance == null)
         {
             instance = this;
@@ -18,6 +19,7 @@ public class FadeBlack : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
+    // Activates a fede TO black aimation
     public void FadeToBlack()
     {
         Time.timeScale = 1;
@@ -25,6 +27,7 @@ public class FadeBlack : MonoBehaviour
         _animator.Play("FadeToBlack");
     }
 
+    // Activates a fede FROM black aimation
     public void FadeFromBlack()
     {
         Time.timeScale = 1;
