@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
 
     public bool isAlive = true;
 
-    private void Start()
+    private void OnEnable()
     {
         currentHealth = maxHealth;
     }

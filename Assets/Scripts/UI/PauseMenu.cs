@@ -17,18 +17,27 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1;
+
         if (PlayerPrefs.HasKey("music")) 
         { 
-            musicAudioSource.mute = PlayerPrefs.GetInt("music") == 1 ? false : true;
-            musicToggle.isOn = PlayerPrefs.GetInt("music") == 1 ? true : false;
+            music = PlayerPrefs.GetInt("music") == 1 ? true : false;
+        }
+        else
+        {
+            music = true;
         }
         if (PlayerPrefs.HasKey("sfx")) 
         { 
-            sfxAudioSource.mute = PlayerPrefs.GetInt("sfx") == 1 ? false : true; 
-            sfxToggle.isOn = PlayerPrefs.GetInt("sfx") == 1 ? true : false;
+            sfx = PlayerPrefs.GetInt("sfx") == 1 ? true : false;
+        }
+        else
+        {
+            sfx = true;
         }
 
-        Time.timeScale = 1;
+        musicToggle.isOn = music;
+        sfxToggle.isOn = sfx;
     }
 
     public void Resume()
@@ -57,9 +66,9 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    public void Music()
+    public void Music(bool active)
     {
-        if (!musicAudioSource.mute)
+        if (!active)
         {
             musicAudioSource.mute = true;
             music = false;
@@ -69,10 +78,12 @@ public class PauseMenu : MonoBehaviour
             musicAudioSource.mute = false;
             music = true;
         }
+
+        PlayerPrefs.SetInt("music", music ? 1 : 0);
     }
-    public void SFX()
+    public void SFX(bool active)
     {
-        if (!sfxAudioSource.mute)
+        if (!active)
         {
             sfxAudioSource.mute = true;
             sfx = false;
@@ -82,6 +93,8 @@ public class PauseMenu : MonoBehaviour
             sfxAudioSource.mute = false;
             sfx = true;
         }
+
+        PlayerPrefs.SetInt("sfx", sfx ? 1 : 0);
     }
 
     void SaveData()

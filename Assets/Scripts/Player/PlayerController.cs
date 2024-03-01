@@ -8,7 +8,12 @@ public class PlayerController : MonoBehaviour
     public float sideSpeed = 10f;
     [SerializeField] float screenBorderLimit = 0f;
 
+    [SerializeField] Sprite[] playerSprites;
+
+    SpriteRenderer _playerSpriteRenderer;
+
     [HideInInspector] public Animator _animator;
+    public Animator _explosionAnimator;
 
     [HideInInspector] public GameObject explosionParticle;
 
@@ -22,11 +27,14 @@ public class PlayerController : MonoBehaviour
     {
         health = GetComponent<Health>();
         _animator = GetComponent<Animator>();
+        _playerSpriteRenderer = GetComponent<SpriteRenderer>();
         explosionParticle = transform.GetChild(3).gameObject;
     }
 
     private void Start()
     {
+        SpriteUpdate();
+
         hudManager = FindObjectOfType<HudManager>();
 
         StartCoroutine(EnterScene());
@@ -50,6 +58,14 @@ public class PlayerController : MonoBehaviour
 
         inputValue = 0;
         _animator.applyRootMotion = true;
+    }
+
+    void SpriteUpdate()
+    {
+        if (PlayerPrefs.HasKey("spaceSelect"))
+        {
+            _playerSpriteRenderer.sprite = playerSprites[PlayerPrefs.GetInt("spaceSelect")];
+        }
     }
 
     void ScreenBorderLimit()

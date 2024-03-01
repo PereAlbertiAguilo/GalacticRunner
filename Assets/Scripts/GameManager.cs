@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateScore()
     {
-        scoreText.text = "Score: " + (hudManager.obstacleScore + hudManager.timeScore);
+        scoreText.text = "Score: " + hudManager.timeScore;
         maxScoreText.text = "Max Score: " + hudManager.maxScore;
     }
 
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
         UpdateScore();
 
-        playerController._animator.Play("SpaceCraft_Explosion");
+        playerController._explosionAnimator.Play("SpaceCraft_Explosion");
         playerController.transform.parent.GetComponent<MoveForward>().forwardSpeed = 0;
         playerController.sideSpeed = 0;
 

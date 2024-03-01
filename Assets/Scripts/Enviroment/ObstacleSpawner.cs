@@ -24,13 +24,6 @@ public class ObstacleSpawner : MonoBehaviour
         InvokeRepeating("SpawnObstscle", spawnRate, spawnRate);
     }
 
-    GameObject RandomObstacle()
-    {
-        int randomIndex = Random.Range(0, obstacles.Length);
-
-        return obstacles[randomIndex];
-    }
-
     float RandomRotation()
     {
         int randomIndex = Random.Range(1, 4);
@@ -46,18 +39,27 @@ public class ObstacleSpawner : MonoBehaviour
         return new Vector2(x, y + playerPos.position.y);
     }
 
-    int RandomIndex()
+    int RandomIndex(List<GameObject> l)
     {
-        return Random.Range(0, pool.Count);
+        return Random.Range(0, l.Count);
     }
 
     void SpawnObstscle()
     {
-        GameObject g = pool[RandomIndex()];
+        List<GameObject> unactivePool = new List<GameObject>();
 
-        if (!g.activeSelf)
+        foreach (GameObject a in pool)
         {
-            GameObject obstacle = RandomObstacle();
+            if (!a.activeInHierarchy)
+            {
+                unactivePool.Add(a);
+            }
+        }
+
+        GameObject g = unactivePool[RandomIndex(unactivePool)];
+
+        if (!g.activeInHierarchy)
+        {
             Vector2 spawnPos = RandomPosition();
 
             g.transform.position = spawnPos;
@@ -65,6 +67,8 @@ public class ObstacleSpawner : MonoBehaviour
             g.SetActive(true);
             g.transform.parent = null;
         }
+
+        unactivePool.Clear();
     }
 
     void FillPool()

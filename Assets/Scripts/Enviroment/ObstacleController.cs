@@ -19,19 +19,19 @@ public class ObstacleController : MonoBehaviour
 
     private void Awake()
     {
+        currentLifeTime = lifeTime;
+
         health = GetComponent<Health>();
         mask = transform.GetChild(0).gameObject;
     }
 
     private void OnEnable()
     {
-        currentLifeTime = lifeTime;
-
         hudManager = FindObjectOfType<HudManager>();
 
-        DeactivateObject(true);
-
         awake = true;
+        currentLifeTime = lifeTime;
+        health.isAlive = true;
     }
 
     void Timer()
@@ -48,11 +48,13 @@ public class ObstacleController : MonoBehaviour
     {
         if (!health.isAlive)
         {
-            hudManager.obstacleScore += scorePoints;
+            hudManager.pointsScore += scorePoints;
             hudManager.scoreText.GetComponent<Animator>().Play("ScorePop");
 
             DeactivateObject(true);
-
+        }
+        else
+        {
             if (health.currentHealth <= (health.maxHealth * 20) / 100 && !mask.activeInHierarchy && awake)
             {
                 mask.SetActive(true);
@@ -72,8 +74,6 @@ public class ObstacleController : MonoBehaviour
         mask.SetActive(false);
         gameObject.SetActive(false);
         awake = false;
-        health.isAlive = true;
-        currentLifeTime = lifeTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -89,5 +89,4 @@ public class ObstacleController : MonoBehaviour
             DeactivateObject(true);
         }
     }
-    
 }

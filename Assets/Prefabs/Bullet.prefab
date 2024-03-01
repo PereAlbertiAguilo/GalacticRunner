@@ -99,9 +99,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce64f224feeef0e41a96864a3c7a441e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletSprites:
+  - {fileID: 21300000, guid: 2f9e51f4acba6d34c95a5e82a0ef7cbf, type: 3}
+  - {fileID: 21300000, guid: e20149ffb5a509e4ab4bfbe60adfb372, type: 3}
+  - {fileID: 21300000, guid: 53f363a1baa650d4ea5469c527da2000, type: 3}
+  - {fileID: 21300000, guid: fcdf744e7640e2843ab2e753da63430e, type: 3}
   bulletSpeed: 40
   bulletLifeTime: 2
-  explosionParticle: {fileID: 8629288015194619182, guid: 13ec1975691575144bd31eb00dc43776, type: 3}
 --- !u!70 &1147093034456708898
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
