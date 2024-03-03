@@ -14,10 +14,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI maxScoreText;
+    [SerializeField] TextMeshProUGUI scrapsText;
 
     [SerializeField] GameObject gameOverPanel;
 
+    [SerializeField] GameObject finalObstacle;
+
     [HideInInspector] public bool gameOver = false;
+
+    int gamesPlayed = 1;
 
     private void Awake()
     {
@@ -26,6 +31,9 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+
+        gamesPlayed = PlayerPrefs.HasKey("gamesPlayed") ? PlayerPrefs.GetInt("gamesPlayed") : 1;
+        print(gamesPlayed);
     }
 
     private void Start()
@@ -37,11 +45,23 @@ public class GameManager : MonoBehaviour
         UpdateScore();
     }
 
+    private void Update()
+    {
+        // When te game time reaches 900 seconds / 15 minutes the stage ender will bew activated
+        if(hudManager.timeScore >= 900)
+        {
+            finalObstacle.SetActive(true);
+        }
+
+        
+    }
+
     // Updates the gameover score texts
     void UpdateScore()
     {
-        hudManager.DisplayTime(hudManager.timeScore, scoreText);
-        hudManager.DisplayTime(hudManager.maxScore, maxScoreText);
+        hudManager.DisplayTime(hudManager.timeScore, scoreText, "Current time: ");
+        hudManager.DisplayTime(hudManager.maxScore, maxScoreText, "Max time: ");
+        scrapsText.text = "Scraps: " + hudManager.pointsScore;
     }
 
     // Gameover state
@@ -74,6 +94,14 @@ public class GameManager : MonoBehaviour
     IEnumerator GameoverPanel()
     {
         yield return new WaitForSeconds(2);
+
+        AdsManager.instance.bannerAds.ShowBannerAd();
+
+        if (gamesPlayed % 3 == 0 && gameOver)
+        {
+            AdsManager.instance.bannerAds.HideBannerAd();
+            AdsManager.instance.interstitialAds.ShowInterstitialAd();
+        }
 
         gameOverPanel.SetActive(true);
     }

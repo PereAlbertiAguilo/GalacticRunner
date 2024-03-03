@@ -15,11 +15,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Animator _animator;
     public Animator _explosionAnimator;
 
-    [HideInInspector] public GameObject explosionParticle;
-
-    private float horizontalInput;
-
     [HideInInspector] public Health health;
+
+    [SerializeField] GameObject[] bulletShooter;
 
     HudManager hudManager;
 
@@ -28,7 +26,6 @@ public class PlayerController : MonoBehaviour
         health = GetComponent<Health>();
         _animator = GetComponent<Animator>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
-        explosionParticle = transform.GetChild(3).gameObject;
     }
 
     private void Start()
@@ -43,6 +40,9 @@ public class PlayerController : MonoBehaviour
 
         // Adds a delay when enetering the scene
         StartCoroutine(EnterScene());
+
+        // Instantiates a bullet shooter depending on a stored player pref
+        Instantiate(bulletShooter[PlayerPrefs.HasKey("spaceSelect") ? PlayerPrefs.GetInt("spaceSelect") : 0], transform);
     }
 
     private void Update()
@@ -107,7 +107,9 @@ public class PlayerController : MonoBehaviour
         {
             foreach(Touch t in Input.touches)
             {
-                if (t.position.x > Screen.width / 2)
+                Vector2 playerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+
+                if (t.position.x > playerScreenPos.x)
                 {
                     MovePlayer(0, 1);
                     right = true;
@@ -124,7 +126,9 @@ public class PlayerController : MonoBehaviour
             // Moves the player from side to side if the MOUSE touches one side of the screen or the other
             if (Input.GetMouseButton(0)) 
             {
-                if (Input.mousePosition.x > Screen.width / 2)
+                Vector2 playerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+
+                if (Input.mousePosition.x > playerScreenPos.x)
                 {
                     MovePlayer(0, 1);
                     right = true;
@@ -209,6 +213,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             TakeHealth(true);
+        }
+
+        if (collision.gameObject.CompareTag("FinalObstacle"))
+        {
+            AudioManager.instance.AudioPlayOneShotVolume(explosionClip, .5f, false);
+            GameManager.instance.GameOver();
         }
     }
 }

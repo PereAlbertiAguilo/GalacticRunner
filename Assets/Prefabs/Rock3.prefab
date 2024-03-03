@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 1670363442638162545}
   - component: {fileID: -6938086330187355735}
   - component: {fileID: 369753690540032506}
+  - component: {fileID: 2537834696109383548}
   m_Layer: 0
   m_Name: Rock3
   m_TagString: Obstacle
@@ -162,7 +163,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 39f1961380a35b84eb05744fc8473254, type: 3}
-  m_Color: {r: 0.7254902, g: 0.7254902, b: 0.7254902, a: 1}
+  m_Color: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -222,6 +223,7 @@ MonoBehaviour:
   lifeTime: 7
   currentLifeTime: 0
   scorePoints: 2
+  priority: 1
   destroyClip: {fileID: 8300000, guid: 53bb6063c6ef49345b16cadf16f33167, type: 3}
   explosionParticle: {fileID: 8629288015194619182, guid: 13ec1975691575144bd31eb00dc43776, type: 3}
 --- !u!114 &-6938086330187355735
@@ -253,3 +255,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: -1.25
+--- !u!50 &2537834696109383548
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777231239517494822}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7

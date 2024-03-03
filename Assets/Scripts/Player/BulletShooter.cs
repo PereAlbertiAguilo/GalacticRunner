@@ -43,6 +43,7 @@ public class BulletShooter : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             GameObject g = Instantiate(bullet, transform);
+            g.transform.rotation = transform.rotation;
             bulletPool.Add(g);
             g.SetActive(false);
         }

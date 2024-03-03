@@ -6,9 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Awake()
+    {
+        StartCoroutine(DysplayBannerWithDelay());
+    }
+
+    IEnumerator DysplayBannerWithDelay()
+    {
+        yield return new WaitForSeconds(3f);
+
+        AdsManager.instance.bannerAds.ShowBannerAd();
+    }
+
     // Starts the game
     public void Run()
     {
+        AdsManager.instance.bannerAds.HideBannerAd();
         Time.timeScale = 1;
         StartCoroutine(ChangeSceneDelay("Game"));
     }

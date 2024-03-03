@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4863354088226235241}
   - component: {fileID: 1147093034456708898}
   - component: {fileID: 1108369436000920621}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 53f363a1baa650d4ea5469c527da2000, type: 3}
   - {fileID: 21300000, guid: fcdf744e7640e2843ab2e753da63430e, type: 3}
   bulletSpeed: 40
-  bulletLifeTime: 2
+  bulletLifeTime: 1
 --- !u!70 &1147093034456708898
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -163,7 +163,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0

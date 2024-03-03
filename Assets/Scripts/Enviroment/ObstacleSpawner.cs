@@ -5,31 +5,60 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject[] obstacles;
+    [SerializeField] ObstacleScriptableObject[] obstacleScriptableObject;
+
+    //[SerializeField] GameObject[] obstacles;
 
     [SerializeField] Transform playerPos;
 
     [SerializeField] Vector2 spawnLimits;
 
-    [SerializeField] float spawnRate;
+    [SerializeField] float initialSpawnRate;
+    [SerializeField] float maxSpawnRate;
 
-    [SerializeField] int poolSize = 20;
+    //[SerializeField] int poolSize = 20;
 
     [SerializeField] List<GameObject> pool = new List<GameObject>();
+
+    float currentSpawnRate;
 
     private void Start()
     {
         FillPool();
-
-        InvokeRepeating("SpawnObstscle", spawnRate, spawnRate);
     }
 
-    // Returns a random value 90 at a time
+    private void Update()
+    {
+        // Makes a value go down slowly over time 
+        if (initialSpawnRate > maxSpawnRate)
+        {
+            initialSpawnRate -= Time.deltaTime * .005f;
+
+            initialSpawnRate = Mathf.Clamp(initialSpawnRate, maxSpawnRate, initialSpawnRate);
+        }
+
+        SpawnRepeting();
+    }
+
+    // Spawns obstacles depending on a timer that goes down depending on the initial spawn rate
+    void SpawnRepeting()
+    {
+        currentSpawnRate -= Time.deltaTime;
+
+        if (currentSpawnRate <= 0.0f)
+        {
+            SpawnObstscle();
+
+            currentSpawnRate = initialSpawnRate;
+        }
+    }
+
+    // Returns a random value between 0 and 360
     float RandomRotation()
     {
-        int randomIndex = Random.Range(1, 4);
+        int randomIndex = Random.Range(1, 360);
 
-        return 90 * randomIndex;
+        return randomIndex;
     }
 
     // Returns a random vector 2 within some parameters
@@ -47,9 +76,13 @@ public class ObstacleSpawner : MonoBehaviour
         return Random.Range(0, l.Count);
     }
 
+    Vector2 lastPos = Vector2.zero;
+
     // Spawns obstacles from a gameobject pool
     void SpawnObstscle()
     {
+        Vector2 spawnPos = RandomPosition();
+
         List<GameObject> unactivePool = new List<GameObject>();
 
         // Gets all te unactive gamobjects of the pool
@@ -62,17 +95,24 @@ public class ObstacleSpawner : MonoBehaviour
         }
 
         // Spawns a random obstacle if the gameobject isn't active with a random position and rotation
-        GameObject g = unactivePool[RandomIndex(unactivePool)];
-
-        if (!g.activeInHierarchy)
+        if (unactivePool.Count > 0)
         {
-            Vector2 spawnPos = RandomPosition();
+            GameObject g = unactivePool[RandomIndex(unactivePool)];
+
+            // If the last spawned obtsale pos is near within a certain range to the next spawning obtsacle choses a different random position
+            if (Mathf.Abs(spawnPos.x) < Mathf.Abs(lastPos.x) + 1.5f && Mathf.Abs(spawnPos.y) < Mathf.Abs(lastPos.y) + 1.5f)
+            {
+                spawnPos = RandomPosition();
+            }
+
+            lastPos = spawnPos;
 
             g.transform.position = spawnPos;
             g.transform.rotation = Quaternion.Euler(0, 0, RandomRotation());
             g.SetActive(true);
             g.transform.parent = null;
         }
+        
 
         // Clears the unactive pool
         unactivePool.Clear();
@@ -81,11 +121,11 @@ public class ObstacleSpawner : MonoBehaviour
     // Fills a gameobject pool
     void FillPool()
     {
-        foreach (GameObject o in obstacles)
+        foreach (ObstacleScriptableObject o in obstacleScriptableObject)
         {
-            for (int i = 0; i < poolSize; i++)
+            for (int i = 0; i < o.poolSize; i++)
             {
-                GameObject g = Instantiate(o);
+                GameObject g = Instantiate(o.obstacle);
                 pool.Add(g);
                 g.SetActive(false);
             }

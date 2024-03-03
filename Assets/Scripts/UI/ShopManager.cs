@@ -55,7 +55,7 @@ public class ShopManager : MonoBehaviour
 
         // Updates the moeny
         money = PlayerPrefs.GetInt("pointsScore");
-        moneyText.text = "" + money;
+        moneyText.text = "Scraps: " + money;
 
         // Updates the prices texts
         PricesUpdate();
@@ -113,15 +113,15 @@ public class ShopManager : MonoBehaviour
     {
         for (int i = 0; i < spaceCraftPrices.Length; i++)
         {
-            spaceCraftBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "" + spaceCraftPrices[i];
+            spaceCraftBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = spaceCraftPrices[i] + " S";
         }
         for (int i = 0; i < bulletPrices.Length; i++)
         {
-            bulletBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "" + bulletPrices[i];
+            bulletBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = bulletPrices[i] + " S";
         }
         for (int i = 0; i < shieldPrices.Length; i++)
         {
-            shieldBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "" + shieldPrices[i];
+            shieldBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = shieldPrices[i] + " S";
         }
     }
 
@@ -198,6 +198,8 @@ public class ShopManager : MonoBehaviour
         bulletSelects[index].GetComponent<Image>().color = selectedColor;
 
         ButtonSelectedUpdate("bulletBuy", "bulletSelect", bulletSelected, bulletSelects, true);
+
+        PlayerPrefs.SetInt("bulletDamage", index + 1);
     }
 
     public void BuyBullet(int index)

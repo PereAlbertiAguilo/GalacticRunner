@@ -61,18 +61,18 @@ public class HudManager : MonoBehaviour
 
         timeScore += Time.deltaTime;
 
-        DisplayTime(timeScore, scoreText);
+        DisplayTime(timeScore, scoreText, "");
 
         pointsText.text = "Scraps " + pointsScore;
     }
 
     // Displays the time score with minutes and seconds to a UI text
-    public void DisplayTime(float timeToDisplay, TextMeshProUGUI text)
+    public void DisplayTime(float timeToDisplay, TextMeshProUGUI text, string beforeText)
     {
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
-        text.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        text.text = string.Format(beforeText + "{0:00}:{1:00}", minutes, seconds);
     }
 
     // Fills the health bar depending on the player max health
@@ -97,10 +97,21 @@ public class HudManager : MonoBehaviour
         if (Mathf.RoundToInt(timeScore) > maxScore)
         {
             maxScore = Mathf.RoundToInt(timeScore);
+            timeScore = maxScore;
 
             PlayerPrefs.SetInt("maxScore", maxScore);
         }
 
         PlayerPrefs.SetInt("pointsScore", pointsScore);
+    }
+
+    private void OnDisable()
+    {
+        SaveData();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveData();
     }
 }
