@@ -18,12 +18,12 @@ public class MainMenu : MonoBehaviour
         AdsManager.instance.bannerAds.ShowBannerAd();
     }
 
-    // Starts the game
-    public void Run()
+    // Starts the selected game stage
+    public void Run(string stage)
     {
         AdsManager.instance.bannerAds.HideBannerAd();
         Time.timeScale = 1;
-        StartCoroutine(ChangeSceneDelay("Game"));
+        StartCoroutine(ChangeSceneDelay(stage));
     }
 
     // Exits the game

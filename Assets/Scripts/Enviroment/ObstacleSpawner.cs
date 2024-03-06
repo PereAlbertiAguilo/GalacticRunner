@@ -16,6 +16,8 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] float initialSpawnRate;
     [SerializeField] float maxSpawnRate;
 
+    [SerializeField] bool randomRotation = true;
+
     //[SerializeField] int poolSize = 20;
 
     [SerializeField] List<GameObject> pool = new List<GameObject>();
@@ -58,7 +60,7 @@ public class ObstacleSpawner : MonoBehaviour
     {
         int randomIndex = Random.Range(1, 360);
 
-        return randomIndex;
+        return randomRotation ? randomIndex : 0;
     }
 
     // Returns a random vector 2 within some parameters

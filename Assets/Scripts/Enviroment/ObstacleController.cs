@@ -61,7 +61,7 @@ public class ObstacleController : MonoBehaviour
                 mask.SetActive(true);
             }
 
-            if(playerPos.position.y - 13 >= transform.position.y)
+            if(playerPos.position.y - 16 >= transform.position.y)
             {
                 DeactivateObject(false);
             }

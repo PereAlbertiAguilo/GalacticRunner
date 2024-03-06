@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public float sideSpeed = 10f;
-    [SerializeField] float screenBorderLimit = 0f;
+    public float speed = 5f;
+    [SerializeField] Vector2 screenBorderLimit;
 
     [SerializeField] Sprite[] playerSprites;
     [SerializeField] AudioClip explosionClip;
@@ -65,7 +65,6 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        inputValue = 0;
         _animator.applyRootMotion = true;
     }
 
@@ -92,88 +91,35 @@ public class PlayerController : MonoBehaviour
     // Sets the border that the player can move to with a certain limit
     void ScreenBorderLimit()
     {
-        if(Mathf.Abs(transform.position.x) >= screenBorderLimit)
+        if(Mathf.Abs(transform.position.x) >= screenBorderLimit.x)
         {
-            transform.position = new Vector2(transform.position.x > 0 ? screenBorderLimit : -screenBorderLimit, transform.position.y);
+            transform.localPosition = new Vector2(transform.localPosition.x > 0 ? screenBorderLimit.x : -screenBorderLimit.x, transform.localPosition.y);
         }
+        
     }
-
-    bool right = false;
 
     void PlayerInput()
     {
-        // Moves the player from side to side if the FINGER touches one side of the screen or the other
+        // Moves the player if the FINGER touches the screen
         if (Input.touchCount > 0)
         {
             foreach(Touch t in Input.touches)
             {
-                Vector2 playerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+                Vector2 touchPos = Camera.main.ScreenToWorldPoint(t.position);
 
-                if (t.position.x > playerScreenPos.x)
-                {
-                    MovePlayer(0, 1);
-                    right = true;
-                }
-                else
-                {
-                    MovePlayer(-1, 0);
-                    right = false;
-                }
+                transform.position = Vector3.LerpUnclamped(transform.position, touchPos, Time.deltaTime * speed);
             }
         }
         else
         {
-            // Moves the player from side to side if the MOUSE touches one side of the screen or the other
+            // Moves the player if the MOUSE touches the screen
             if (Input.GetMouseButton(0)) 
             {
-                Vector2 playerScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                if (Input.mousePosition.x > playerScreenPos.x)
-                {
-                    MovePlayer(0, 1);
-                    right = true;
-                }
-                else
-                {
-                    MovePlayer(-1, 0);
-                    right = false;
-                }
-            }
-            else
-            {
-                // Adds a smooth amount to the player movement
-                if (!right)
-                {
-                    inputValue += 7 * Time.deltaTime;
-                    inputValue = Mathf.Clamp(inputValue, -1, 0);
-                }
-                else
-                {
-                    inputValue -= 7 * Time.deltaTime;
-                    inputValue = Mathf.Clamp(inputValue, 0, 1);
-                }
+                transform.position = Vector3.LerpUnclamped(transform.position, mousePos, Time.deltaTime * speed);
             }
         }
-
-        // Moves the player given an inpute value
-        transform.Translate(Vector2.right * inputValue * sideSpeed * Time.deltaTime);
-    }
-
-    float inputValue = 0;
-
-    // Updates the input smoothing time within a min and max range
-    void MovePlayer(int min, int max)
-    {
-        if (min >= 0)
-        {
-            inputValue += 4 * Time.deltaTime;
-        }
-        else
-        {
-            inputValue -= 4 * Time.deltaTime;
-        }
-
-        inputValue = Mathf.Clamp(inputValue, min, max);
     }
 
     // Takes and gives a health point to the player

@@ -31,7 +31,7 @@ public class PauseMenu : MonoBehaviour
         PlayerPrefs.SetInt("gamesPlayed", PlayerPrefs.HasKey("gamesPlayed") ? PlayerPrefs.GetInt("gamesPlayed") + 1: 1);
         AdsManager.instance.bannerAds.HideBannerAd();
 
-        StartCoroutine(ChangeSceneDelay("Game"));
+        StartCoroutine(ChangeSceneDelay(SceneManager.GetActiveScene().name));
     }
 
     // Goes to the main menu

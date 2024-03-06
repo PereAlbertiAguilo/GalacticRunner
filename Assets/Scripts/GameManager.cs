@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         playerController._explosionAnimator.Play("SpaceCraft_Explosion");
         playerController._playerSpriteRenderer.enabled = false;
         playerController.transform.parent.GetComponent<MoveForward>().forwardSpeed = 0;
-        playerController.sideSpeed = 0;
+        playerController.speed = 0;
 
         // Stops the shooting behaviour
         foreach (BulletShooter b in FindObjectsOfType<BulletShooter>())
