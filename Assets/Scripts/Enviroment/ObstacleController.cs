@@ -15,11 +15,13 @@ public class ObstacleController : MonoBehaviour
 
     [SerializeField] AudioClip destroyClip;
     [SerializeField] GameObject explosionParticle;
+    [SerializeField] GameObject textPopUp;
 
     HudManager hudManager;
 
     bool awake = false;
 
+    ParticleSystem ps;
 
     Transform playerPos;
 
@@ -51,7 +53,7 @@ public class ObstacleController : MonoBehaviour
             hudManager.pointsScore += scorePoints;
             hudManager.pointsText.GetComponent<Animator>().Play("ScorePop");
 
-            DeactivateObject(true);
+            DeactivateObject(true, true);
         }
         else
         {
@@ -63,7 +65,7 @@ public class ObstacleController : MonoBehaviour
 
             if(playerPos.position.y - 16 >= transform.position.y)
             {
-                DeactivateObject(false);
+                DeactivateObject(false, false);
             }
         }
 
@@ -79,24 +81,39 @@ public class ObstacleController : MonoBehaviour
         // If the countdown timer reaches 0 deactivates this gameobject
         if (currentLifeTime <= 0.0f)
         {
-            DeactivateObject(false);
+            DeactivateObject(false, false);
         }
     }
 
     // Deactivates this gameobject
-    void DeactivateObject(bool playerDestroyed)
+    void DeactivateObject(bool playerDestroyed, bool collided)
     {
         // If this gameobject is destroyed by the player plays a sound and instantiates a particle
         if (playerDestroyed && !GameManager.instance.gameOver)
         {
             AudioManager.instance.AudioPlayOneShotVolume(destroyClip, 1f, true);
 
-            Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            InstantiateObject(explosionParticle);
+
+            if (collided)
+            {
+                TextMeshProUGUI t = InstantiateObject(textPopUp).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+                t.text = "" + scorePoints;
+                t.fontSize = 1;
+            }
         }
 
         mask.SetActive(false);
         gameObject.SetActive(false);
         awake = false;
+    }
+
+    GameObject InstantiateObject(GameObject instance)
+    {
+        GameObject g = Instantiate(instance, transform.position, Quaternion.identity);
+
+        return g;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -108,7 +125,11 @@ public class ObstacleController : MonoBehaviour
         {
             if(health.currentHealth == health.maxHealth)
             {
-                Instantiate(explosionParticle, transform.position, Quaternion.identity);
+                InstantiateObject(explosionParticle);
+                TextMeshProUGUI t = InstantiateObject(textPopUp).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+                t.text = "" + health.currentHealth;
+                t.color = Color.red;
             }
 
             if (PlayerPrefs.HasKey("bulletDamage"))
@@ -122,7 +143,11 @@ public class ObstacleController : MonoBehaviour
 
             if(health.currentHealth % 10 == 0)
             {
-                Instantiate(explosionParticle, transform.position, Quaternion.identity);
+                InstantiateObject(explosionParticle);
+                TextMeshProUGUI t = InstantiateObject(textPopUp).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+                t.text = "" + health.currentHealth;
+                t.color = Color.red;
             }
 
         }
@@ -131,7 +156,7 @@ public class ObstacleController : MonoBehaviour
         {
             hudManager.healthBarText.gameObject.SetActive(hudManager.playerController.health.currentHealth <= 1 ? true : false);
 
-            DeactivateObject(true);
+            DeactivateObject(true, false);
         }
     }
 
@@ -141,7 +166,7 @@ public class ObstacleController : MonoBehaviour
 
         if (tag == "Obstacle" && priority <= collision.gameObject.GetComponent<ObstacleController>().priority)
         {
-            DeactivateObject(transform.position.y > playerPos.position.y + 13? false : true);
+            DeactivateObject(transform.position.y > playerPos.position.y + 13? false : true, false);
         }
     }
 }

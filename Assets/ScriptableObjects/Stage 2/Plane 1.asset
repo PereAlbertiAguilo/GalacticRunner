@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5245aae4cd395df49997d4eb4de3257d, type: 3}
-  m_Name: Zepelin 2
+  m_Name: Plane 1
   m_EditorClassIdentifier: 
-  obstacle: {fileID: 4096152498010675091, guid: fff99a41d6e54184d83e1ba144de3be3, type: 3}
-  poolSize: 5
+  obstacle: {fileID: 4096152498010675091, guid: a4a9af3e58ae7d94eb35d297924b5cf6, type: 3}
+  poolSize: 12

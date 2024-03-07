@@ -174,7 +174,7 @@ public class ShopManager : MonoBehaviour
             if (money >= spaceCraftPrices[index])
             {
                 money -= spaceCraftPrices[index];
-                moneyText.text = "" + money;
+                moneyText.text = "Scraps: " + money;
 
                 PlayerPrefs.SetInt("pointsScore", money);
                 PlayerPrefs.SetInt("spaceBuy" + index, 1);
@@ -213,7 +213,7 @@ public class ShopManager : MonoBehaviour
             if (money >= bulletPrices[index])
             {
                 money -= bulletPrices[index];
-                moneyText.text = "" + money;
+                moneyText.text = "Scraps: " + money;
 
                 PlayerPrefs.SetInt("pointsScore", money);
                 PlayerPrefs.SetInt("bulletBuy" + index, 1);
@@ -264,7 +264,7 @@ public class ShopManager : MonoBehaviour
             if (money >= shieldPrices[index])
             {
                 money -= shieldPrices[index];
-                moneyText.text = "" + money;
+                moneyText.text = "Scraps: " + money;
 
                 PlayerPrefs.SetInt("pointsScore", money);
                 PlayerPrefs.SetInt("shieldBuy" + index, 1);

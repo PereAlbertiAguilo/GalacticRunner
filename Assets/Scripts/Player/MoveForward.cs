@@ -9,6 +9,6 @@ public class MoveForward : MonoBehaviour
     // Moves the holder of this script down with a given speed
     private void Update()
     {
-        transform.Translate(Vector2.up * forwardSpeed * Time.deltaTime, Space.World);
+        transform.Translate(Vector2.down * forwardSpeed * Time.deltaTime, Space.World);
     }
 }

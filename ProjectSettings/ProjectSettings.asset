@@ -8,7 +8,7 @@ PlayerSettings:
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -142,6 +142,8 @@ PlayerSettings:
   bundleVersion: 1.0.2
   preloadedAssets:
   - {fileID: 0}
+  - {fileID: -8478492312577986815, guid: dfe34b9426c533d4c8c36cbed3a1dd4c, type: 2}
+  - {fileID: 11400000, guid: f8ebb7c3a8444a64d9f13d665c46ead3, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -291,7 +293,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: d1118cc22d996d94ba464b33dd188312, type: 3}
+      m_Icon: {fileID: 2800000, guid: 5ac0c2243d6113a43aac5ed5aac6872f, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

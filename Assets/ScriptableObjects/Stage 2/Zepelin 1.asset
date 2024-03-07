@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Zepelin 1
   m_EditorClassIdentifier: 
   obstacle: {fileID: 4096152498010675091, guid: f311492b529927c4db4bc2fac8aa36f7, type: 3}
-  poolSize: 20
+  poolSize: 8

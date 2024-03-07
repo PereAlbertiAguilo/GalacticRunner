@@ -12,14 +12,16 @@ GameObject:
   - component: {fileID: 6975658734079195885}
   - component: {fileID: 458454036937880767}
   - component: {fileID: -5246995021190727279}
-  - component: {fileID: 7662615421721077192}
+  - component: {fileID: 3306037140109969687}
+  - component: {fileID: 2652139694880781080}
+  - component: {fileID: 4853431565147659424}
   m_Layer: 0
-  m_Name: Cloud 3
+  m_Name: Plane 1
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5672047522962107579
 Transform:
   m_ObjectHideFlags: 0
@@ -76,9 +78,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: f4f044fd2afdacc44b1b170ff63cb766, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.3764706}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 14c8e4eadeeed9942b5b0580232feac9, type: 3}
+  m_Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,12 +102,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e99adb86980814ca4e26996db1b175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 20
+  lifeTime: 7
   currentLifeTime: 0
   scorePoints: 8
-  priority: 4
+  priority: 2
   destroyClip: {fileID: 8300000, guid: 53bb6063c6ef49345b16cadf16f33167, type: 3}
-  explosionParticle: {fileID: 8629288015194619182, guid: 13ec1975691575144bd31eb00dc43776, type: 3}
+  explosionParticle: {fileID: 8629288015194619182, guid: 6d48f5682ce381740bcd24fc88ab60c0, type: 3}
+  textPopUp: {fileID: 3791255777051177583, guid: 73730e61024f74c4d9b6dbc371281a5c, type: 3}
 --- !u!114 &-5246995021190727279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,11 +121,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2935c2f6f3a9254081ae60d5b935b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 55
+  maxHealth: 35
   currentHealth: 0
   isAlive: 1
   deathPoint: 0
---- !u!114 &7662615421721077192
+--- !u!114 &3306037140109969687
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,10 +134,72 @@ MonoBehaviour:
   m_GameObject: {fileID: 4096152498010675091}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69c86aafee805184aa71dbc90b3a56e5, type: 3}
+  m_Script: {fileID: 11500000, guid: e572e8921e012ca459a1f4367c5aa913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardSpeed: 1
+  speed: 4
+--- !u!50 &2652139694880781080
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4096152498010675091}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!70 &4853431565147659424
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4096152498010675091}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0000000031080631, y: -0.72}
+  m_Size: {x: 5.167731, y: 1.4654418}
+  m_Direction: 1
 --- !u!1 &6644223611472231445
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +273,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5e94c4df46eedd24fbec533ea8606006, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0a007d3319b81a542a57ad2029549fe4, type: 3}
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 0
   m_BackSortingLayerID: 0
