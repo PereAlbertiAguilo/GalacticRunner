@@ -11,6 +11,7 @@ public class InfiniteEnviroment : MonoBehaviour
 
     [SerializeField] float lastTilePos;
     [SerializeField] float maxSpaceGap;
+    [SerializeField] float tileSize = 16;
 
     [SerializeField] List<GameObject> spaceTilePool = new List<GameObject>();
 
@@ -57,7 +58,7 @@ public class InfiniteEnviroment : MonoBehaviour
     void SpawnTile(int i)
     {
         int r = Random.Range(0, tileSprites.Length);
-        lastTilePos += 16;
+        lastTilePos += tileSize;
         spaceTilePool[i].GetComponent<SpriteRenderer>().sprite = tileSprites[r];
         spaceTilePool[i].SetActive(true);
         spaceTilePool[i].transform.position = new Vector2(0, transform.position.y + lastTilePos);

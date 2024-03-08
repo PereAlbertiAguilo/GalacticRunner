@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
-    [SerializeField] Vector2 screenBorderLimit;
+    //[SerializeField] Vector2 screenBorderLimit;
 
     [SerializeField] Sprite[] playerSprites;
     [SerializeField] AudioClip explosionClip;
@@ -88,37 +88,51 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Sets the border that the player can move to with a certain limit
+    // Sets the border that the player can move to the current screen resolution
     void ScreenBorderLimit()
     {
-        if(Mathf.Abs(transform.position.x) >= screenBorderLimit.x)
+        Vector2 screenTop = Camera.main.ViewportToWorldPoint(new Vector2(0.5f, 1));
+        Vector2 screenRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 0.5f));
+
+        float upLimit = transform.parent.InverseTransformPoint(screenTop).y - .5f;
+        float rightLimit = transform.parent.InverseTransformPoint(screenRight).x - .5f;
+
+        if (Mathf.Abs(transform.localPosition.y) >= upLimit)
         {
-            transform.localPosition = new Vector2(transform.localPosition.x > 0 ? screenBorderLimit.x : -screenBorderLimit.x, transform.localPosition.y);
+            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y > 0 ? upLimit : -upLimit);
         }
-        
+        if (Mathf.Abs(transform.localPosition.x) >= rightLimit)
+        {
+            transform.localPosition = new Vector2(transform.localPosition.x > 0 ? rightLimit : -rightLimit, transform.localPosition.y);
+        }
     }
 
     void PlayerInput()
     {
-        // Moves the player if the FINGER touches the screen
-        if (Input.touchCount > 0)
+        if(EventSystem.current.currentSelectedGameObject == null)
         {
-            foreach(Touch t in Input.touches)
+            // Moves the player if the FINGER touches the screen
+            if (Input.touchCount > 0)
             {
-                Vector2 touchPos = Camera.main.ScreenToWorldPoint(t.position);
+                foreach (Touch t in Input.touches)
+                {
+                    Vector2 touchPos = Camera.main.ScreenToWorldPoint(t.position);
 
-                transform.position = Vector3.LerpUnclamped(transform.position, touchPos, Time.deltaTime * speed);
+                    transform.position = Vector3.LerpUnclamped(transform.position, touchPos, Time.deltaTime * speed);
+                }
             }
-        }
-        else
-        {
-            // Moves the player if the MOUSE touches the screen
-            if (Input.GetMouseButton(0)) 
+            else
             {
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                // Moves the player if the MOUSE touches the screen
+                if (Input.GetMouseButton(0))
+                {
+                    Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                transform.position = Vector3.LerpUnclamped(transform.position, mousePos, Time.deltaTime * speed);
+                    transform.position = Vector3.LerpUnclamped(transform.position, mousePos, Time.deltaTime * speed);
+                }
             }
+
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
 

@@ -16,12 +16,13 @@ public class ObstacleController : MonoBehaviour
     [SerializeField] AudioClip destroyClip;
     [SerializeField] GameObject explosionParticle;
     [SerializeField] GameObject textPopUp;
+    [SerializeField] bool canTakeDamage = true;
 
     HudManager hudManager;
 
-    bool awake = false;
+    int killStreak = 1;
 
-    ParticleSystem ps;
+    bool awake = false;
 
     Transform playerPos;
 
@@ -40,6 +41,8 @@ public class ObstacleController : MonoBehaviour
     {
         hudManager = FindObjectOfType<HudManager>();
 
+        killStreak = PlayerPrefs.GetInt("killStreak");
+
         awake = true;
         currentLifeTime = lifeTime;
         health.isAlive = true;
@@ -50,9 +53,6 @@ public class ObstacleController : MonoBehaviour
         // If this gameobject isn't alive deactivates this gameobject
         if (!health.isAlive)
         {
-            hudManager.pointsScore += scorePoints;
-            hudManager.pointsText.GetComponent<Animator>().Play("ScorePop");
-
             DeactivateObject(true, true);
         }
         else
@@ -88,6 +88,8 @@ public class ObstacleController : MonoBehaviour
     // Deactivates this gameobject
     void DeactivateObject(bool playerDestroyed, bool collided)
     {
+        killStreak = PlayerPrefs.GetInt("killStreak");
+
         // If this gameobject is destroyed by the player plays a sound and instantiates a particle
         if (playerDestroyed && !GameManager.instance.gameOver)
         {
@@ -97,11 +99,26 @@ public class ObstacleController : MonoBehaviour
 
             if (collided)
             {
+                hudManager.pointsScore += scorePoints * killStreak;
+                hudManager.pointsText.GetComponent<Animator>().Play("ScorePop");
+
                 TextMeshProUGUI t = InstantiateObject(textPopUp).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 
-                t.text = "" + scorePoints;
+                t.text = "" + scorePoints * killStreak;
                 t.fontSize = 1;
+
+                killStreak = 2;
+                PlayerPrefs.SetInt("killStreak", killStreak);
+
+                hudManager.pointsText.text = "Scraps " + hudManager.pointsScore + " X " + killStreak;
             }
+        }
+        else if (canTakeDamage)
+        {
+            killStreak = 1;
+            PlayerPrefs.SetInt("killStreak", killStreak);
+
+            hudManager.pointsText.text = "Scraps " + hudManager.pointsScore + " X " + killStreak;
         }
 
         mask.SetActive(false);
@@ -126,10 +143,6 @@ public class ObstacleController : MonoBehaviour
             if(health.currentHealth == health.maxHealth)
             {
                 InstantiateObject(explosionParticle);
-                TextMeshProUGUI t = InstantiateObject(textPopUp).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
-                t.text = "" + health.currentHealth;
-                t.color = Color.red;
             }
 
             if (PlayerPrefs.HasKey("bulletDamage"))
@@ -141,13 +154,12 @@ public class ObstacleController : MonoBehaviour
                 health.currentHealth -= 1;
             }
 
-            if(health.currentHealth % 10 == 0)
+            if(Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 20) / 100) ||
+                Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 40) / 100) ||
+                Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 60) / 100) ||
+                Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 80) / 100))
             {
                 InstantiateObject(explosionParticle);
-                TextMeshProUGUI t = InstantiateObject(textPopUp).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
-                t.text = "" + health.currentHealth;
-                t.color = Color.red;
             }
 
         }
@@ -168,5 +180,11 @@ public class ObstacleController : MonoBehaviour
         {
             DeactivateObject(transform.position.y > playerPos.position.y + 13? false : true, false);
         }
+    }
+
+    private void OnDestroy()
+    {
+        killStreak = 1;
+        PlayerPrefs.SetInt("killStreak", killStreak);
     }
 }

@@ -450,10 +450,11 @@ MonoBehaviour:
   playerPos: {fileID: 7067900}
   spaceTile: {fileID: 912721365728118255, guid: 02f83909e80c5464dad4e468328f9951, type: 3}
   tileSprites:
-  - {fileID: 21300000, guid: a97b39bd1590200488e69fbce07267cb, type: 3}
+  - {fileID: 21300000, guid: d465db2926aaac04ebf370b7eb23447c, type: 3}
   poolSize: 6
-  lastTilePos: -26
-  maxSpaceGap: 34
+  lastTilePos: -22.4
+  maxSpaceGap: 25.2
+  tileSize: 11.2
   spaceTilePool: []
 --- !u!114 &853206362
 MonoBehaviour:
@@ -497,8 +498,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c972b27a610d10b4699ca93e95993c89, type: 2}
   playerPos: {fileID: 7067900}
   spawnLimits: {x: 4.8, y: 20}
-  initialSpawnRate: 3
-  maxSpawnRate: 3
+  initialSpawnRate: 2.5
+  maxSpawnRate: 2.5
   randomRotation: 0
   pool: []
 --- !u!114 &1103868794 stripped
@@ -1069,7 +1070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3533765579977297875, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4278244095
+      value: 4284067037
       objectReference: {fileID: 0}
     - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
       propertyPath: m_AnchorMax.y

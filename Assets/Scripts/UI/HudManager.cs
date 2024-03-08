@@ -41,8 +41,7 @@ public class HudManager : MonoBehaviour
             maxScore = 0;
         }
 
-        scoreText.text = "Time " + timeScore;
-        scoreText.text = "Scraps " + pointsScore;
+        pointsText.text = "Scraps " + pointsScore + " X 1";
     }
 
     private void Update()
@@ -62,8 +61,6 @@ public class HudManager : MonoBehaviour
         timeScore += Time.deltaTime;
 
         DisplayTime(timeScore, scoreText, "");
-
-        pointsText.text = "Scraps " + pointsScore;
     }
 
     // Displays the time score with minutes and seconds to a UI text

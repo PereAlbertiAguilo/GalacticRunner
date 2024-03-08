@@ -630,7 +630,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.75, y: 1.6}
+  m_Size: {x: 1, y: 1.5}
   m_Direction: 0
 --- !u!50 &8329600650638752971
 Rigidbody2D:
@@ -672,7 +672,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  screenBorderLimit: {x: 4.8, y: 11.2}
   playerSprites:
   - {fileID: 21300000, guid: 0364ab32fc19fd34a9b376e9f5f7f1a3, type: 3}
   - {fileID: 21300000, guid: 152a359442b14b644a7f0cdcac7aa0b6, type: 3}
@@ -685,8 +684,8 @@ MonoBehaviour:
   health: {fileID: 0}
   bulletShooter:
   - {fileID: 9007907116298464339, guid: 78d86acb457741f4c8bf7d619bdea4ba, type: 3}
-  - {fileID: 1493869019936821820, guid: 35632aca94cff1b4cbf37202a740e05a, type: 3}
   - {fileID: 6831205701228439739, guid: b2a545f9f16c9cb4ba3553b4bc11849a, type: 3}
+  - {fileID: 1493869019936821820, guid: 35632aca94cff1b4cbf37202a740e05a, type: 3}
   - {fileID: 388014789486856636, guid: 2c0194f3a435c4c49a03aa527313ee8e, type: 3}
 --- !u!114 &3092207805047067183
 MonoBehaviour:
