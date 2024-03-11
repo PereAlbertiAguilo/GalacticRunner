@@ -451,6 +451,8 @@ MonoBehaviour:
   spaceTile: {fileID: 912721365728118255, guid: 02f83909e80c5464dad4e468328f9951, type: 3}
   tileSprites:
   - {fileID: 21300000, guid: d465db2926aaac04ebf370b7eb23447c, type: 3}
+  - {fileID: 21300000, guid: 6d683aec084c10344a93a3cbbe01fce0, type: 3}
+  - {fileID: 21300000, guid: ad773b78961e592488cbd0171fa1f3b8, type: 3}
   poolSize: 6
   lastTilePos: -22.4
   maxSpaceGap: 25.2
