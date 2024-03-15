@@ -6153,7 +6153,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f0ca231d1da817843a3892df6f962637, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ef9c93fb8b40234fb1ac1044bb5435c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6562,7 +6562,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TBD
+  m_text: Ocean
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98d2aff2692dee3449f2cf4fec3da1d5, type: 2}
   m_sharedMaterial: {fileID: -6421793930459490832, guid: 98d2aff2692dee3449f2cf4fec3da1d5, type: 2}
@@ -9510,7 +9510,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1134979827}
   m_OnClick:
     m_PersistentCalls:
