@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Water ship 2
   m_EditorClassIdentifier: 
   obstacle: {fileID: 4096152498010675091, guid: 3ece7110a35cb6e41a9ab39ac26d143b, type: 3}
-  poolSize: 8
+  poolSize: 5

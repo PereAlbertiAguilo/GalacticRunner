@@ -471,6 +471,9 @@ MonoBehaviour:
   obstacleScriptableObject:
   - {fileID: 11400000, guid: 1cb45feb58c4d744091f2424a8ce13ea, type: 2}
   - {fileID: 11400000, guid: a2bfd748171266042acb89ad87486225, type: 2}
+  - {fileID: 11400000, guid: 2034e742e1253c14e849a5d0d808efd5, type: 2}
+  - {fileID: 11400000, guid: 0701c27deb56bfd498a0ae74108ce3f8, type: 2}
+  - {fileID: 11400000, guid: c25321c3698979944be4a7cf9809e16f, type: 2}
   playerPos: {fileID: 7067900}
   spawnLimits: {x: 4.8, y: 20}
   initialSpawnRate: 2.5
@@ -785,10 +788,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1880735549591593505, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
+      propertyPath: m_ForceIntoRT
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880735549591593505, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
+      propertyPath: orthographic size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880735549591593505, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
+      propertyPath: m_NormalizedViewPortRect.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880735549591593505, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880735549591593505, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1880735549591593505, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645962697332026092, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2961005622102981469, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 7067900}
+    - target: {fileID: 4178129265188707119, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4706283257576502151, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
       propertyPath: m_Name
       value: CameraHolder

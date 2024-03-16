@@ -39,10 +39,17 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] Color selectedColor;
 
+    [Space]
+
+    [SerializeField] GameObject warningPanel;
+
     int money;
 
     private void Start()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("pointsScore", 100000);
+
         // Gets the selected values from player prefs
         spaceCraftSelected = PlayerPrefs.GetInt("spaceSelect");
         bulletSelected = PlayerPrefs.GetInt("bulletSelect");
@@ -171,17 +178,26 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            if (money >= spaceCraftPrices[index])
+            if (index <= PlayerPrefs.GetInt("lastSpaceBought") + 1)
             {
-                money -= spaceCraftPrices[index];
-                moneyText.text = "Scraps: " + money;
+                if (money >= spaceCraftPrices[index])
+                {
+                    money -= spaceCraftPrices[index];
+                    moneyText.text = "Scraps: " + money;
 
-                PlayerPrefs.SetInt("pointsScore", money);
-                PlayerPrefs.SetInt("spaceBuy" + index, 1);
+                    PlayerPrefs.SetInt("pointsScore", money);
+                    PlayerPrefs.SetInt("spaceBuy" + index, 1);
+                    PlayerPrefs.SetInt("lastSpaceBought", index);
 
-                SelectSpaceCraft(index);
+                    SelectSpaceCraft(index);
 
-                ButtonUpdate("spaceBuy" + index, index, spaceCraftBuys, spaceCraftSelects);
+                    ButtonUpdate("spaceBuy" + index, index, spaceCraftBuys, spaceCraftSelects);
+                }
+            }
+            else
+            {
+                Debug.Log("You need to buy the previous upgrate before purchasing this");
+                warningPanel.SetActive(true);
             }
         }
     }
@@ -210,17 +226,26 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            if (money >= bulletPrices[index])
+            if (index <= PlayerPrefs.GetInt("lastBulletBought") + 1)
             {
-                money -= bulletPrices[index];
-                moneyText.text = "Scraps: " + money;
+                if (money >= bulletPrices[index])
+                {
+                    money -= bulletPrices[index];
+                    moneyText.text = "Scraps: " + money;
 
-                PlayerPrefs.SetInt("pointsScore", money);
-                PlayerPrefs.SetInt("bulletBuy" + index, 1);
+                    PlayerPrefs.SetInt("pointsScore", money);
+                    PlayerPrefs.SetInt("bulletBuy" + index, 1);
+                    PlayerPrefs.SetInt("lastBulletBought", index);
 
-                SelectBullet(index);
+                    SelectBullet(index);
 
-                ButtonUpdate("bulletBuy" + index, index, bulletBuys, bulletSelects);
+                    ButtonUpdate("bulletBuy" + index, index, bulletBuys, bulletSelects);
+                }
+            }
+            else
+            {
+                Debug.Log("You need to buy the previous upgrate before purchasing this");
+                warningPanel.SetActive(true);
             }
         }
     }
@@ -261,17 +286,30 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            if (money >= shieldPrices[index])
+            if (!PlayerPrefs.HasKey("lastShieldBought"))
             {
-                money -= shieldPrices[index];
-                moneyText.text = "Scraps: " + money;
+                PlayerPrefs.SetInt("lastShieldBought", -1);
+            }
+            if (index <= PlayerPrefs.GetInt("lastShieldBought") + 1)
+            {
+                if (money >= shieldPrices[index])
+                {
+                    money -= shieldPrices[index];
+                    moneyText.text = "Scraps: " + money;
 
-                PlayerPrefs.SetInt("pointsScore", money);
-                PlayerPrefs.SetInt("shieldBuy" + index, 1);
+                    PlayerPrefs.SetInt("pointsScore", money);
+                    PlayerPrefs.SetInt("shieldBuy" + index, 1);
+                    PlayerPrefs.SetInt("lastShieldBought", index);
 
-                SelectShield(index, true);
+                    SelectShield(index, true);
 
-                ButtonUpdate("shieldBuy" + index, index, shieldBuys, shieldSelects);
+                    ButtonUpdate("shieldBuy" + index, index, shieldBuys, shieldSelects);
+                }
+            }
+            else
+            {
+                Debug.Log("You need to buy the previous upgrate before purchasing this");
+                warningPanel.SetActive(true);
             }
         }
     }

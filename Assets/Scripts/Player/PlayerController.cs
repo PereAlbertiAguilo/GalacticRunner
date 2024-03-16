@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
         // Instantiates a bullet shooter depending on a stored player pref
         Instantiate(bulletShooter[PlayerPrefs.HasKey("spaceSelect") ? PlayerPrefs.GetInt("spaceSelect") : 0], transform);
+
     }
 
     private void Update()

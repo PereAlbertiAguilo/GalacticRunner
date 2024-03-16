@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5245aae4cd395df49997d4eb4de3257d, type: 3}
-  m_Name: Water ship 3
+  m_Name: Water ship 5
   m_EditorClassIdentifier: 
-  obstacle: {fileID: 4096152498010675091, guid: ff56c93fb4c2a904e977fd94412ee22f, type: 3}
-  poolSize: 15
+  obstacle: {fileID: 4096152498010675091, guid: 026d23cf188cb1840adeef2f7d019d70, type: 3}
+  poolSize: 35
