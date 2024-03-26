@@ -4,35 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using System.Reflection;
 
 public class ShopManager : MonoBehaviour
 {
-    [SerializeField] GameObject[] spaceCraftBuys;
-    [SerializeField] GameObject[] spaceCraftSelects;
-
-    [SerializeField] int[] spaceCraftPrices;
-
-    [SerializeField] int spaceCraftSelected = 0;
-
-    [Space]
-
-    [SerializeField] GameObject[] bulletBuys;
-    [SerializeField] GameObject[] bulletSelects;
-
-    [SerializeField] int[] bulletPrices;
-
-    [SerializeField] int bulletSelected = 0;
-
-    [Space]
-
-    [SerializeField] GameObject[] shieldBuys;
-    [SerializeField] GameObject[] shieldSelects;
-
-    [SerializeField] int[] shieldPrices;
-
-    [SerializeField] int shieldSelected = 0;
-
+    [SerializeField] ShopItem[] shopItems;
     [Space]
 
     [SerializeField] TextMeshProUGUI moneyText;
@@ -45,41 +20,45 @@ public class ShopManager : MonoBehaviour
 
     int money;
 
+    [Serializable]
+    public class ShopItem
+    {
+        public string itemName;
+
+        public GameObject[] selects;
+        public GameObject[] buys;
+
+        public int[] prices;
+
+        public int selectedIndex = 0;
+    }
+
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt("pointsScore", 100000);
+        PlayerPrefs.SetInt("pointsScore", 1000000);
 
         // Gets the selected values from player prefs
-        spaceCraftSelected = PlayerPrefs.GetInt("spaceSelect");
-        bulletSelected = PlayerPrefs.GetInt("bulletSelect");
-        shieldSelected = PlayerPrefs.GetInt("shieldSelect");
+        shopItems[0].selectedIndex = PlayerPrefs.GetInt("spaceSelect");
+        shopItems[1].selectedIndex = PlayerPrefs.GetInt("bulletSelect");
+        shopItems[2].selectedIndex = PlayerPrefs.GetInt("engineSelect");
+        shopItems[3].selectedIndex = PlayerPrefs.GetInt("shieldSelect");
+        shopItems[4].selectedIndex = PlayerPrefs.GetInt("bulletShotSpeedSelect");
+        shopItems[5].selectedIndex = PlayerPrefs.GetInt("bulletSpeedSelect");
 
         // Updates the selected estate of the buttons
-        ButtonSelectedUpdate("spaceBuy", "spaceSelect", spaceCraftSelected, spaceCraftSelects, true);
-        ButtonSelectedUpdate("bulletBuy", "bulletSelect", bulletSelected, bulletSelects, true);
-        ButtonSelectedUpdate("shieldBuy", "shieldSelect", shieldSelected, shieldSelects, false);
+        ButtonSelectedUpdate("spaceBuy", "spaceSelect", shopItems[0].selectedIndex, shopItems[0].selects, true);
+        ButtonSelectedUpdate("bulletBuy", "bulletSelect", shopItems[1].selectedIndex, shopItems[1].selects, true);
+        ButtonSelectedUpdate("engineBuy", "engineSelect", shopItems[2].selectedIndex, shopItems[2].selects, false);
+        ButtonSelectedUpdate("shieldBuy", "shieldSelect", shopItems[3].selectedIndex, shopItems[3].selects, false);
+        ButtonSelectedUpdate("bulletShotSpeedBuy", "bulletShotSpeedSelect", shopItems[4].selectedIndex, shopItems[4].selects, false);
+        ButtonSelectedUpdate("bulletSpeedBuy", "bulletSpeedSelect", shopItems[5].selectedIndex, shopItems[5].selects, false);
 
         // Updates the moeny
         money = PlayerPrefs.GetInt("pointsScore");
-        moneyText.text = "Scraps: " + money;
+        moneyText.text = "Scraps:\n" + money;
 
         // Updates the prices texts
-        PricesUpdate();
-
-        // Updates the active state of the bought and selected buttons
-        for (int i = 0; i < spaceCraftBuys.Length; i++)
-        {
-            ButtonUpdate("spaceBuy" + i, i, spaceCraftBuys, spaceCraftSelects);
-        }
-        for (int i = 0; i < bulletBuys.Length; i++)
-        {
-            ButtonUpdate("bulletBuy" + i, i, bulletBuys, bulletSelects);
-        }
-        for (int i = 0; i < shieldBuys.Length; i++)
-        {
-            ButtonUpdate("shieldBuy" + i, i, shieldBuys, shieldSelects);
-        }
+        UIUpdate();
     }
 
     private void Update()
@@ -115,20 +94,41 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    // Updates the prices texts
-    void PricesUpdate()
+    // Updates the prices texts and the buttons of the UI for each shop item
+    void UIUpdate()
     {
-        for (int i = 0; i < spaceCraftPrices.Length; i++)
+        foreach (ShopItem item in shopItems)
         {
-            spaceCraftBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = spaceCraftPrices[i] + " S";
+            for (int i = 0; i < item.prices.Length; i++)
+            {
+                item.buys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "<color=" + "#DDAC59" + ">" + item.prices[i] +  " S </color>";
+                item.selects[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "<color=" + "#49A43A" + "> Select </color>";
+            }
         }
-        for (int i = 0; i < bulletPrices.Length; i++)
+
+        for (int i = 0; i < shopItems[0].prices.Length; i++)
         {
-            bulletBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = bulletPrices[i] + " S";
+            ButtonUpdate("spaceBuy" + i, i, shopItems[0].buys, shopItems[0].selects);
         }
-        for (int i = 0; i < shieldPrices.Length; i++)
+        for (int i = 0; i < shopItems[1].prices.Length; i++)
         {
-            shieldBuys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = shieldPrices[i] + " S";
+            ButtonUpdate("bulletBuy" + i, i, shopItems[1].buys, shopItems[1].selects);
+        }
+        for (int i = 0; i < shopItems[2].prices.Length; i++)
+        {
+            ButtonUpdate("engineBuy" + i, i, shopItems[2].buys, shopItems[2].selects);
+        }
+        for (int i = 0; i < shopItems[3].prices.Length; i++)
+        {
+            ButtonUpdate("shieldBuy" + i, i, shopItems[3].buys, shopItems[3].selects);
+        }
+        for (int i = 0; i < shopItems[4].prices.Length; i++)
+        {
+            ButtonUpdate("bulletShotSpeedBuy" + i, i, shopItems[4].buys, shopItems[4].selects);
+        }
+        for (int i = 0; i < shopItems[5].prices.Length; i++)
+        {
+            ButtonUpdate("bulletSpeedBuy" + i, i, shopItems[5].buys, shopItems[5].selects);
         }
     }
 
@@ -157,161 +157,125 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    // Buys and selects a spacecraft
-    #region SpaceCraftButton
-    void SelectSpaceCraft(int index)
+    void SelectItem(int index, string buyKey, string selectKey, ref int selectedIndex, 
+        GameObject[] selects, bool canBeUnselected, bool select)
     {
-        spaceCraftSelected = index;
-
-        PlayerPrefs.SetInt("spaceSelect", spaceCraftSelected);
-
-        spaceCraftSelects[index].GetComponent<Image>().color = selectedColor;
-
-        ButtonSelectedUpdate("spaceBuy", "spaceSelect", spaceCraftSelected, spaceCraftSelects, true);
-    }
-
-    public void BuySpaceCraft(int index)
-    {
-        if (PlayerPrefs.HasKey("spaceBuy" + index))
+        if (canBeUnselected)
         {
-            SelectSpaceCraft(index);
+            if (select)
+            {
+                UpdateSelectedItem(index, buyKey, selectKey, ref selectedIndex, selects);
+            }
+            else
+            {
+                selectedIndex = -1;
+                ButtonSelectedUpdate(buyKey, selectKey, selectedIndex, selects, true);
+                selects[index].GetComponent<Image>().color = Color.white;
+                PlayerPrefs.SetInt(selectKey, selectedIndex);
+            }
         }
         else
         {
-            if (index <= PlayerPrefs.GetInt("lastSpaceBought") + 1)
+            UpdateSelectedItem(index, buyKey, selectKey, ref selectedIndex, selects);
+        }
+    }
+    void UpdateSelectedItem(int index, string buyKey, string selectKey, ref int selectedIndex, GameObject[] selects)
+    {
+        selectedIndex = index;
+        PlayerPrefs.SetInt(selectKey, selectedIndex);
+        selects[index].GetComponent<Image>().color = selectedColor;
+        ButtonSelectedUpdate(buyKey, selectKey, selectedIndex, selects, true);
+    }
+    void BuyItem(int index, string buyKey, string lastBoughtKey, string selectKey, ref int selectedIndex, 
+        GameObject[] buys, GameObject[] selects, int[] prices, bool canBeUnselected, bool isFirstBought)
+    {
+        if (PlayerPrefs.HasKey(buyKey + index))
+        {
+            if (selectedIndex >= 0 || selectedIndex == index && canBeUnselected)
             {
-                if (money >= spaceCraftPrices[index])
+                SelectItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected, false);
+                return;
+            }
+            SelectItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected, true);
+        }
+        else
+        {
+            if (!PlayerPrefs.HasKey(lastBoughtKey) && !isFirstBought)
+            {
+                PlayerPrefs.SetInt(lastBoughtKey, -1);
+            }
+            if (index <= PlayerPrefs.GetInt(lastBoughtKey) + 1)
+            {
+                if (money >= prices[index])
                 {
-                    money -= spaceCraftPrices[index];
-                    moneyText.text = "Scraps: " + money;
-
+                    money -= prices[index];
+                    moneyText.text = "Scraps:\n" + money;
                     PlayerPrefs.SetInt("pointsScore", money);
-                    PlayerPrefs.SetInt("spaceBuy" + index, 1);
-                    PlayerPrefs.SetInt("lastSpaceBought", index);
-
-                    SelectSpaceCraft(index);
-
-                    ButtonUpdate("spaceBuy" + index, index, spaceCraftBuys, spaceCraftSelects);
+                    PlayerPrefs.SetInt(buyKey + index, 1);
+                    PlayerPrefs.SetInt(lastBoughtKey, index);
+                    SelectItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected, true);
+                    ButtonUpdate(buyKey + index, index, buys, selects);
                 }
             }
             else
             {
-                Debug.Log("You need to buy the previous upgrate before purchasing this");
                 warningPanel.SetActive(true);
             }
         }
+    }
+    
+
+    // Buys and selects a spacecraft
+    #region SpaceCraftButton
+    public void BuySpaceCraft(int index)
+    {
+        BuyItem(index, "spaceBuy", "lastSpaceBought", "spaceSelect", ref shopItems[0].selectedIndex, 
+            shopItems[0].buys, shopItems[0].selects, shopItems[0].prices, false, true);
     }
     #endregion
 
     // Buys and selects a bullet
     #region BulletButton
-    void SelectBullet(int index)
-    {
-        bulletSelected = index;
-
-        PlayerPrefs.SetInt("bulletSelect", bulletSelected);
-
-        bulletSelects[index].GetComponent<Image>().color = selectedColor;
-
-        ButtonSelectedUpdate("bulletBuy", "bulletSelect", bulletSelected, bulletSelects, true);
-
-        PlayerPrefs.SetInt("bulletDamage", index + 1);
-    }
-
     public void BuyBullet(int index)
     {
-        if (PlayerPrefs.HasKey("bulletBuy" + index))
-        {
-            SelectBullet(index);
-        }
-        else
-        {
-            if (index <= PlayerPrefs.GetInt("lastBulletBought") + 1)
-            {
-                if (money >= bulletPrices[index])
-                {
-                    money -= bulletPrices[index];
-                    moneyText.text = "Scraps: " + money;
+        BuyItem(index, "bulletBuy", "lastBulletBought", "bulletSelect", ref shopItems[1].selectedIndex, 
+            shopItems[1].buys, shopItems[1].selects, shopItems[1].prices, false, true);
+    }
+    #endregion
 
-                    PlayerPrefs.SetInt("pointsScore", money);
-                    PlayerPrefs.SetInt("bulletBuy" + index, 1);
-                    PlayerPrefs.SetInt("lastBulletBought", index);
-
-                    SelectBullet(index);
-
-                    ButtonUpdate("bulletBuy" + index, index, bulletBuys, bulletSelects);
-                }
-            }
-            else
-            {
-                Debug.Log("You need to buy the previous upgrate before purchasing this");
-                warningPanel.SetActive(true);
-            }
-        }
+    // Buys and selects an engine
+    #region EngineButton
+    public void BuyEngine(int index)
+    {
+        BuyItem(index, "engineBuy", "lastEngineBought", "engineSelect", ref shopItems[2].selectedIndex, 
+            shopItems[2].buys, shopItems[2].selects, shopItems[2].prices, true, false);
     }
     #endregion
 
     // Buys and selects a health point
     #region ShieldButton
-    void SelectShield(int index, bool select)
-    {
-        if (select)
-        {
-            shieldSelected = index;
-            PlayerPrefs.SetInt("shieldSelect", shieldSelected);
-            shieldSelects[index].GetComponent<Image>().color = selectedColor;
-            ButtonSelectedUpdate("shieldBuy", "shieldSelect", shieldSelected, shieldSelects, true);
-        }
-        else
-        {
-            shieldSelected = -1;
-            ButtonSelectedUpdate("shieldBuy", "shieldSelect", shieldSelected, shieldSelects, true);
-            shieldSelects[index].GetComponent<Image>().color = Color.white;
-        }
-
-        PlayerPrefs.SetInt("shieldSelect", shieldSelected);
-    }
-
     public void BuyShield(int index)
     {
-        if (PlayerPrefs.HasKey("shieldBuy" + index))
-        {
-            if (shieldSelected >= 0 || shieldSelected == index)
-            {
-                SelectShield(index, false);
-                return;
-            }
+        BuyItem(index, "shieldBuy", "lastShieldBought", "shieldSelect", ref shopItems[3].selectedIndex, 
+            shopItems[3].buys, shopItems[3].selects, shopItems[3].prices, true, false);
+    }
+    #endregion
 
-            SelectShield(index, true);
-        }
-        else
-        {
-            if (!PlayerPrefs.HasKey("lastShieldBought"))
-            {
-                PlayerPrefs.SetInt("lastShieldBought", -1);
-            }
-            if (index <= PlayerPrefs.GetInt("lastShieldBought") + 1)
-            {
-                if (money >= shieldPrices[index])
-                {
-                    money -= shieldPrices[index];
-                    moneyText.text = "Scraps: " + money;
+    // Buys and selects the bullet shot speed
+    #region ShieldButton
+    public void BuyBulletShotSpeed(int index)
+    {
+        BuyItem(index, "bulletShotSpeedBuy", "lastBulletShotSpeedBought", "bulletShotSpeedSelect", 
+            ref shopItems[4].selectedIndex, shopItems[4].buys, shopItems[4].selects, shopItems[4].prices, true, false);
+    }
+    #endregion
 
-                    PlayerPrefs.SetInt("pointsScore", money);
-                    PlayerPrefs.SetInt("shieldBuy" + index, 1);
-                    PlayerPrefs.SetInt("lastShieldBought", index);
-
-                    SelectShield(index, true);
-
-                    ButtonUpdate("shieldBuy" + index, index, shieldBuys, shieldSelects);
-                }
-            }
-            else
-            {
-                Debug.Log("You need to buy the previous upgrate before purchasing this");
-                warningPanel.SetActive(true);
-            }
-        }
+    // Buys and selects the bullet speed
+    #region ShieldButton
+    public void BuyBulletSpeed(int index)
+    {
+        BuyItem(index, "bulletSpeedBuy", "lastBulletSpeedBought", "bulletSpeedSelect", 
+            ref shopItems[5].selectedIndex, shopItems[5].buys, shopItems[5].selects, shopItems[5].prices, true, false);
     }
     #endregion
 }

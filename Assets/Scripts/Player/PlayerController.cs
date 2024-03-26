@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
         health = GetComponent<Health>();
         _animator = GetComponent<Animator>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Updates the player health
+        ShieldsUpdate();
     }
 
     private void Start()
@@ -35,15 +38,14 @@ public class PlayerController : MonoBehaviour
         // Updates the player sprite
         SpriteUpdate();
 
-        // Updates the player health
-        ShieldsUpdate();
-
         // Adds a delay when enetering the scene
         StartCoroutine(EnterScene());
 
         // Instantiates a bullet shooter depending on a stored player pref
         Instantiate(bulletShooter[PlayerPrefs.HasKey("spaceSelect") ? PlayerPrefs.GetInt("spaceSelect") : 0], transform);
 
+        // Upadtes the player move speed
+        speed += PlayerPrefs.HasKey("engineSelect") ? PlayerPrefs.GetInt("engineSelect") + 1 : 0;
     }
 
     private void Update()
@@ -85,7 +87,6 @@ public class PlayerController : MonoBehaviour
         {
             health.maxHealth = PlayerPrefs.GetInt("shieldSelect") + 1;
             health.currentHealth = health.maxHealth;
-            hudManager.FillHealthBar();
         }
     }
 

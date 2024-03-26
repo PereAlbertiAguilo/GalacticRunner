@@ -7,18 +7,18 @@ public class ObstacleSpawner : MonoBehaviour
 {
     [SerializeField] ObstacleScriptableObject[] obstacleScriptableObject;
 
-    //[SerializeField] GameObject[] obstacles;
+    //[SerializeField] Transform playerPos;
 
-    [SerializeField] Transform playerPos;
-
-    [SerializeField] Vector2 spawnLimits;
+    [Space]
 
     [SerializeField] float initialSpawnRate;
     [SerializeField] float maxSpawnRate;
+    [SerializeField] float spawnRateAugment;
+    [SerializeField] float spawnRateAugmentSpeed = 0.05f;
+
+    [Space]
 
     [SerializeField] bool randomRotation = true;
-
-    //[SerializeField] int poolSize = 20;
 
     [SerializeField] List<GameObject> pool = new List<GameObject>();
 
@@ -26,17 +26,24 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void Start()
     {
+        spawnRateAugment = initialSpawnRate;
+
+
         FillPool();
     }
 
     private void Update()
     {
         // Makes a value go down slowly over time 
-        if (initialSpawnRate > maxSpawnRate)
+        if (spawnRateAugment > maxSpawnRate)
         {
-            initialSpawnRate -= Time.deltaTime * .005f;
+            spawnRateAugment -= Time.deltaTime * spawnRateAugmentSpeed;
 
-            initialSpawnRate = Mathf.Clamp(initialSpawnRate, maxSpawnRate, initialSpawnRate);
+            spawnRateAugment = Mathf.Clamp(spawnRateAugment, maxSpawnRate, spawnRateAugment);
+        }
+        if (spawnRateAugment <= maxSpawnRate)
+        {
+            spawnRateAugment = initialSpawnRate;
         }
 
         SpawnRepeting();
@@ -51,8 +58,19 @@ public class ObstacleSpawner : MonoBehaviour
         {
             SpawnObstscle();
 
-            currentSpawnRate = initialSpawnRate;
+            currentSpawnRate = spawnRateAugment;
         }
+    }
+
+    Vector2 ScreenBorderLimit()
+    {
+        Vector2 screenRight = Camera.main.ViewportToWorldPoint(new Vector2(1, 0.5f));
+        Vector2 screenTop = Camera.main.ViewportToWorldPoint(new Vector2(0.5f, 1));
+
+        float x = screenRight.x;
+        float y = screenTop.y;
+
+        return new Vector2(x, y);
     }
 
     // Returns a random value between 0 and 360
@@ -66,10 +84,10 @@ public class ObstacleSpawner : MonoBehaviour
     // Returns a random vector 2 within some parameters
     Vector2 RandomPosition()
     {
-        float x = Random.Range(-spawnLimits.x, spawnLimits.x);
-        float y = Random.Range(spawnLimits.y, spawnLimits.y * 2);
+        float x = Random.Range(-ScreenBorderLimit().x, ScreenBorderLimit().x);
+        float y = Random.Range(ScreenBorderLimit().y + 25, ScreenBorderLimit().y + 50);
 
-        return new Vector2(x, y + playerPos.position.y);
+        return new Vector2(x, y);
     }
 
     // Returns a random integer bettween 0 and a list lenght
@@ -96,13 +114,16 @@ public class ObstacleSpawner : MonoBehaviour
             }
         }
 
-        // Spawns a random obstacle if the gameobject isn't active with a random position and rotation
+        // Spawns a random obstacle if the gameobject
+        // isn't active with a random position and rotation
         if (unactivePool.Count > 0)
         {
             GameObject g = unactivePool[RandomIndex(unactivePool)];
 
-            // If the last spawned obtsale pos is near within a certain range to the next spawning obtsacle choses a different random position
-            if (Mathf.Abs(spawnPos.x) < Mathf.Abs(lastPos.x) + 1.5f && Mathf.Abs(spawnPos.y) < Mathf.Abs(lastPos.y) + 1.5f)
+            // If the last spawned obtsale pos is near within a certain range
+            // to the next spawning obtsacle choses a different random position
+            if (Mathf.Abs(spawnPos.x) < Mathf.Abs(lastPos.x) + 1.5f && 
+                Mathf.Abs(spawnPos.y) < Mathf.Abs(lastPos.y) + 1.5f)
             {
                 spawnPos = RandomPosition();
             }

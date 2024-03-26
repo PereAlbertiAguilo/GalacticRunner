@@ -6,11 +6,16 @@ public class MoveForward : MonoBehaviour
 {
     public float forwardSpeed = 10f;
 
+    [SerializeField] bool randomSpeedOffset = true;
+
     private void OnEnable()
     {
-        float randomVar = Random.Range(0, .2f);
+        if (randomSpeedOffset)
+        {
+            float randomVar = Random.Range(0, .5f);
 
-        forwardSpeed += randomVar;
+            forwardSpeed += randomVar;
+        }
     }
 
     // Moves the holder of this script down with a given speed

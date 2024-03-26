@@ -63,7 +63,7 @@ public class ObstacleController : MonoBehaviour
                 mask.SetActive(true);
             }
 
-            if(playerPos.position.y - 16 >= transform.position.y)
+            if(playerPos.position.y - 18 >= transform.position.y)
             {
                 DeactivateObject(false, false);
             }
@@ -170,6 +170,11 @@ public class ObstacleController : MonoBehaviour
 
             DeactivateObject(true, false);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position, 2);
     }
 
     private void OnCollisionStay2D(Collision2D collision)

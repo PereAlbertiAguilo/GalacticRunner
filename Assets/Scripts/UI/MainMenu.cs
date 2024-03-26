@@ -8,12 +8,14 @@ public class MainMenu : MonoBehaviour
 {
     private void Awake()
     {
+        AdsManager.instance.bannerAds.ShowBannerAd();
+
         StartCoroutine(DysplayBannerWithDelay());
     }
 
     IEnumerator DysplayBannerWithDelay()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         AdsManager.instance.bannerAds.ShowBannerAd();
     }

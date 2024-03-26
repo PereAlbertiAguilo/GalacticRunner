@@ -42,6 +42,8 @@ public class HudManager : MonoBehaviour
         }
 
         pointsText.text = "Scraps " + pointsScore + " X 1";
+
+        FillHealthBar();
     }
 
     private void Update()

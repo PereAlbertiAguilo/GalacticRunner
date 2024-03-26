@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: -1
+  randomSpeedOffset: 1
 --- !u!50 &3600810825104839179
 Rigidbody2D:
   serializedVersion: 4
@@ -671,7 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10bd124872184147813212f1407d19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 4
   playerSprites:
   - {fileID: 21300000, guid: 0364ab32fc19fd34a9b376e9f5f7f1a3, type: 3}
   - {fileID: 21300000, guid: 152a359442b14b644a7f0cdcac7aa0b6, type: 3}
@@ -773,6 +774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: -2
+  randomSpeedOffset: 0
 --- !u!1 &6053997357998495195
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +885,7 @@ Transform:
   m_GameObject: {fileID: 9025120280335265253}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 12.71, z: 0}
+  m_LocalPosition: {x: 0, y: 16.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -932,5 +934,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12, y: 1}
+  m_Size: {x: 15, y: 1}
   m_EdgeRadius: 0

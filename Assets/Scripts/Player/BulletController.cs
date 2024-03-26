@@ -21,6 +21,8 @@ public class BulletController : MonoBehaviour
 
     private void Start()
     {
+        bulletSpeed += PlayerPrefs.HasKey("bulletSpeedSelect") ? (PlayerPrefs.GetInt("bulletSpeedSelect") + 1) * 10 : 0;
+
         SpriteUpdate();
     }
 

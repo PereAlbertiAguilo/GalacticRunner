@@ -452,9 +452,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0ef9c93fb8b40234fb1ac1044bb5435c, type: 3}
   - {fileID: 21300000, guid: 689a509819014b04696efaa0a1b7d883, type: 3}
   poolSize: 6
-  lastTilePos: -22.4
-  maxSpaceGap: 25.2
-  tileSize: 11.2
+  lastTilePos: -26
+  maxSpaceGap: 34
+  tileSize: 16
   spaceTilePool: []
 --- !u!114 &853206362
 MonoBehaviour:
@@ -474,10 +474,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2034e742e1253c14e849a5d0d808efd5, type: 2}
   - {fileID: 11400000, guid: 0701c27deb56bfd498a0ae74108ce3f8, type: 2}
   - {fileID: 11400000, guid: c25321c3698979944be4a7cf9809e16f, type: 2}
-  playerPos: {fileID: 7067900}
-  spawnLimits: {x: 4.8, y: 20}
-  initialSpawnRate: 2.5
+  initialSpawnRate: 2
   maxSpawnRate: 0.05
+  spawnRateAugment: 0
+  spawnRateAugmentSpeed: 0.025
   randomRotation: 0
   pool: []
 --- !u!114 &1103868794 stripped
@@ -794,7 +794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1880735549591593505, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
       propertyPath: orthographic size
-      value: 12
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1880735549591593505, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
       propertyPath: m_NormalizedViewPortRect.x

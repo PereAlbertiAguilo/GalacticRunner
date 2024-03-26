@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d46831afb072a4e9d895a6e0b86577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnRate: 0.09
+  bulletSpawnRate: 0.15
   bullet: {fileID: 5537667384859716885, guid: d21430c6ae4eb9b42a8745530a22542f, type: 3}
   poolSize: 25
   bulletPool: []

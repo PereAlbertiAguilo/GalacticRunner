@@ -454,9 +454,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6d683aec084c10344a93a3cbbe01fce0, type: 3}
   - {fileID: 21300000, guid: ad773b78961e592488cbd0171fa1f3b8, type: 3}
   poolSize: 6
-  lastTilePos: -22.4
-  maxSpaceGap: 25.2
-  tileSize: 11.2
+  lastTilePos: -26
+  maxSpaceGap: 34
+  tileSize: 16
   spaceTilePool: []
 --- !u!114 &853206362
 MonoBehaviour:
@@ -475,10 +475,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8aa7bc3a9dfcfe649b629700d89372b8, type: 2}
   - {fileID: 11400000, guid: c41403d77221e01468684224497e304f, type: 2}
   - {fileID: 11400000, guid: 39047ae8e6316de488481f1d53650d1a, type: 2}
-  playerPos: {fileID: 7067900}
-  spawnLimits: {x: 4.8, y: 20}
-  initialSpawnRate: 2.5
+  initialSpawnRate: 2
   maxSpawnRate: 0.05
+  spawnRateAugment: 0
+  spawnRateAugmentSpeed: 0.025
   randomRotation: 0
   pool: []
 --- !u!114 &853206363
@@ -498,10 +498,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c20775b0e633f0d4195a9a2465ba625f, type: 2}
   - {fileID: 11400000, guid: 2e39f483235e6244d90dd706436e2ace, type: 2}
   - {fileID: 11400000, guid: c972b27a610d10b4699ca93e95993c89, type: 2}
-  playerPos: {fileID: 7067900}
-  spawnLimits: {x: 4.8, y: 20}
   initialSpawnRate: 2.5
   maxSpawnRate: 2.5
+  spawnRateAugment: 0
+  spawnRateAugmentSpeed: 0.05
   randomRotation: 0
   pool: []
 --- !u!114 &1103868794 stripped
@@ -812,6 +812,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1880735549591593505, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
+      propertyPath: orthographic size
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 2961005622102981469, guid: d5ab4d9b3e5566c458da8ec7602e73c8, type: 3}
       propertyPath: m_Follow
       value: 

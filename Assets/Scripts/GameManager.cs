@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
         }
 
         gamesPlayed = PlayerPrefs.HasKey("gamesPlayed") ? PlayerPrefs.GetInt("gamesPlayed") : 1;
-        print(gamesPlayed);
     }
 
     private void Start()
@@ -83,7 +82,7 @@ public class GameManager : MonoBehaviour
         // Stops the shooting behaviour
         foreach (BulletShooter b in FindObjectsOfType<BulletShooter>())
         {
-            b.CancelInvoke();
+            b.enabled = false;
         }
 
         // Opens the gameover panel with some delay

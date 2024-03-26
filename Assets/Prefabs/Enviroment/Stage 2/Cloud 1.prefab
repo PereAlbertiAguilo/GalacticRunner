@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e99adb86980814ca4e26996db1b175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 20
+  lifeTime: 25
   currentLifeTime: 0
   scorePoints: 8
   priority: 4
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: 2
+  randomSpeedOffset: 1
 --- !u!1 &6644223611472231445
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BulletShooter : MonoBehaviour
 {
-    [SerializeField] float bulletSpawnRate = .5f;
+    [SerializeField] float bulletSpawnRate = .15f;
+    float startRate;
 
     [SerializeField] GameObject bullet;
 
@@ -16,10 +17,28 @@ public class BulletShooter : MonoBehaviour
 
     private void Start()
     {
-        FillPool();
+        bulletSpawnRate -= (PlayerPrefs.HasKey("bulletShotSpeedSelect") ? (float)PlayerPrefs.GetInt("bulletShotSpeedSelect") + 1 : 0) / 100;
 
-        // Invokes a function every few seconds
-        InvokeRepeating("ShootBullet", bulletSpawnRate, bulletSpawnRate);
+        startRate = bulletSpawnRate;
+
+        FillPool();
+    }
+
+    private void Update()
+    {
+        SpawnRepeting();
+    }
+
+    void SpawnRepeting()
+    {
+        bulletSpawnRate -= Time.deltaTime;
+
+        if (bulletSpawnRate <= 0.0f)
+        {
+            ShootBullet();
+
+            bulletSpawnRate = startRate;
+        }
     }
 
     // From a gameobejct pool spawns a new bullet if the gameobject isn't active and plays a sound
@@ -29,7 +48,7 @@ public class BulletShooter : MonoBehaviour
         {
             if (!g.activeSelf)
             {
-                AudioManager.instance.AudioPlayOneShotVolume(bulletClip, .0075f, false);
+                AudioManager.instance.AudioPlayOneShotVolume(bulletClip, .0015f, false);
                 g.SetActive(true);
                 g.transform.parent = null;
                 break;

@@ -25,7 +25,7 @@ public class PauseMenu : MonoBehaviour
     {
         foreach (BulletShooter b in FindObjectsOfType<BulletShooter>())
         {
-            b.CancelInvoke();
+            b.enabled = false;
         }
 
         PlayerPrefs.SetInt("gamesPlayed", PlayerPrefs.HasKey("gamesPlayed") ? PlayerPrefs.GetInt("gamesPlayed") + 1: 1);
