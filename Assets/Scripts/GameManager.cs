@@ -78,11 +78,16 @@ public class GameManager : MonoBehaviour
         playerController._playerSpriteRenderer.enabled = false;
         playerController.transform.parent.GetComponent<MoveForward>().forwardSpeed = 0;
         playerController.speed = 0;
+        playerController.GetComponent<CapsuleCollider2D>().enabled = false;
 
         // Stops the shooting behaviour
         foreach (BulletShooter b in FindObjectsOfType<BulletShooter>())
         {
             b.enabled = false;
+        }
+        foreach (ObstacleSpawner o in FindObjectsOfType<ObstacleSpawner>())
+        {
+            o.enabled = false;
         }
 
         // Opens the gameover panel with some delay

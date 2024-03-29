@@ -33,7 +33,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     #region LoadCallBacks
     public void OnUnityAdsAdLoaded(string placementId)
     {
-        Debug.Log("Rewarded Ad Loaded");
+        //Debug.Log("Rewarded Ad Loaded");
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message) { }
@@ -49,7 +49,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     {
         if(placementId == adUnitId && showCompletionState.Equals(UnityAdsCompletionState.COMPLETED))
         {
-            Debug.Log("Ads Fully Watched...");
+            //Debug.Log("Ads Fully Watched...");
         }
     }
     #endregion

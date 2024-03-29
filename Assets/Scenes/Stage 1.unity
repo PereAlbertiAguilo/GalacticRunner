@@ -473,10 +473,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e6fa2d604e1664d4995a5a211e36bd27, type: 2}
   - {fileID: 11400000, guid: 2234b581bd2ec124e8e2fbadbf8d9259, type: 2}
   - {fileID: 11400000, guid: 6b8c9bee8c4d7c649ac2ec6a59218d4b, type: 2}
+  playerPos: {fileID: 7067900}
+  bosses:
+  - {fileID: 6020750755276850069, guid: 646a759def3e2be469ce49b86d0e25ad, type: 3}
+  - {fileID: 6020750755276850069, guid: 8a7f16b741fc17748ac0d824d52cf509, type: 3}
+  - {fileID: 6020750755276850069, guid: d0d77c01ab2750b4aa05f9235922caf8, type: 3}
+  bossIndex: 0
   initialSpawnRate: 2
   maxSpawnRate: 0.05
   spawnRateAugment: 0
   spawnRateAugmentSpeed: 0.025
+  varieSpawnRateAmount: 1
   randomRotation: 1
   pool: []
 --- !u!114 &1103868794 stripped
@@ -854,7 +861,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 703289077141192025, guid: 9238962e275a24342842332fa832548f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5300751275939486461, guid: 9238962e275a24342842332fa832548f, type: 3}
       propertyPath: m_LocalScale.x

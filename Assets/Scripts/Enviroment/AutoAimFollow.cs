@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletAutoAimFollow : MonoBehaviour
+public class AutoAimFollow : MonoBehaviour
 {
     Transform playerPos;
     [SerializeField] float speed;

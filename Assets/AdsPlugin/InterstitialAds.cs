@@ -33,7 +33,7 @@ public class InterstitialAds : MonoBehaviour , IUnityAdsLoadListener , IUnityAds
     #region LoadCallBacks
     public void OnUnityAdsAdLoaded(string placementId)
     {
-        Debug.Log("Interstitial Ad Loaded");
+        //Debug.Log("Interstitial Ad Loaded");
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message) {    }
@@ -48,7 +48,7 @@ public class InterstitialAds : MonoBehaviour , IUnityAdsLoadListener , IUnityAds
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
         AdsManager.instance.bannerAds.ShowBannerAd();
-        Debug.Log("Interstatial Ad Compleated");
+        //Debug.Log("Interstatial Ad Compleated");
     }
     #endregion
 }

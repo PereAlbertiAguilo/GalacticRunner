@@ -7,6 +7,7 @@ TagManager:
   - Obstacle
   - Bullet
   - FinalObstacle
+  - BossHealthBar
   layers:
   - Default
   - TransparentFX

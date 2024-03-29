@@ -12,13 +12,16 @@ public class ObstacleController : MonoBehaviour
     [SerializeField] float currentLifeTime = 0;
     [SerializeField] int scorePoints = 10;
     [SerializeField] int priority = 0;
+    [SerializeField] bool canTakeDamage = true;
+
+    [Space]
 
     [SerializeField] AudioClip destroyClip;
     [SerializeField] GameObject explosionParticle;
     [SerializeField] GameObject textPopUp;
-    [SerializeField] bool canTakeDamage = true;
 
     HudManager hudManager;
+    PlayerController playerController;
 
     int killStreak = 1;
 
@@ -35,12 +38,12 @@ public class ObstacleController : MonoBehaviour
     private void Start()
     {
         playerPos = FindObjectOfType<PlayerController>(true).transform.parent;
+        hudManager = FindObjectOfType<HudManager>();
+        playerController = FindObjectOfType<PlayerController>();
     }
 
     private void OnEnable()
     {
-        hudManager = FindObjectOfType<HudManager>();
-
         killStreak = PlayerPrefs.GetInt("killStreak");
 
         awake = true;
@@ -86,44 +89,46 @@ public class ObstacleController : MonoBehaviour
     }
 
     // Deactivates this gameobject
-    void DeactivateObject(bool playerDestroyed, bool collided)
+    void DeactivateObject(bool playerDestroyed, bool bulletCollided)
     {
         killStreak = PlayerPrefs.GetInt("killStreak");
 
         // If this gameobject is destroyed by the player plays a sound and instantiates a particle
-        if (playerDestroyed && !GameManager.instance.gameOver)
+        if (playerDestroyed && !GameManager.instance.gameOver && playerController.canTakeDamage)
         {
             AudioManager.instance.AudioPlayOneShotVolume(destroyClip, 1f, true);
-
             InstantiateObject(explosionParticle);
 
-            if (collided)
+            if (bulletCollided)
             {
                 hudManager.pointsScore += scorePoints * killStreak;
                 hudManager.pointsText.GetComponent<Animator>().Play("ScorePop");
 
                 TextMeshProUGUI t = InstantiateObject(textPopUp).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
-                t.text = "" + scorePoints * killStreak;
+                t.text = "" + scorePoints * killStreak + " S";
                 t.fontSize = 1;
 
-                killStreak = 2;
-                PlayerPrefs.SetInt("killStreak", killStreak);
-
-                hudManager.pointsText.text = "Scraps " + hudManager.pointsScore + " X " + killStreak;
+                KillStreak(killStreak + 1);
             }
         }
         else if (canTakeDamage)
         {
-            killStreak = 1;
-            PlayerPrefs.SetInt("killStreak", killStreak);
-
-            hudManager.pointsText.text = "Scraps " + hudManager.pointsScore + " X " + killStreak;
+            KillStreak(1);
         }
 
         mask.SetActive(false);
         gameObject.SetActive(false);
         awake = false;
+    }
+
+    void KillStreak(int streak)
+    {
+        if (streak <= 5)
+        {
+            killStreak = streak;
+        }
+        PlayerPrefs.SetInt("killStreak", killStreak);
+        hudManager.pointsText.text = "Scraps " + hudManager.pointsScore + " X " + killStreak;
     }
 
     GameObject InstantiateObject(GameObject instance)
@@ -145,9 +150,9 @@ public class ObstacleController : MonoBehaviour
                 InstantiateObject(explosionParticle);
             }
 
-            if (PlayerPrefs.HasKey("bulletDamage"))
+            if (PlayerPrefs.HasKey("bulletSelect") && PlayerPrefs.GetInt("bulletSelect") > 0)
             {
-                health.currentHealth -= PlayerPrefs.GetInt("bulletDamage");
+                health.currentHealth -= PlayerPrefs.GetInt("bulletSelect") * 2;
             }
             else
             {
@@ -166,8 +171,6 @@ public class ObstacleController : MonoBehaviour
         // If this gameobject collides with the player it deactivates itself and updates the health bar text
         else if (tag == "Player")
         {
-            hudManager.healthBarText.gameObject.SetActive(hudManager.playerController.health.currentHealth <= 1 ? true : false);
-
             DeactivateObject(true, false);
         }
     }
@@ -181,9 +184,14 @@ public class ObstacleController : MonoBehaviour
     {
         string tag = collision.gameObject.tag;
 
-        if (tag == "Obstacle" && priority <= collision.gameObject.GetComponent<ObstacleController>().priority)
+        if (tag == "Obstacle")
         {
-            DeactivateObject(transform.position.y > playerPos.position.y + 13? false : true, false);
+            ObstacleController oc = collision.gameObject.GetComponent<ObstacleController>();
+
+            if (oc != null && priority <= oc.priority)
+            {
+                DeactivateObject(transform.position.y > playerPos.position.y + 14 ? false : true, false);
+            }
         }
     }
 

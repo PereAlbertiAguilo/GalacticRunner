@@ -15,9 +15,14 @@ public class BulletShooter : MonoBehaviour
 
     [SerializeField] AudioClip bulletClip;
 
+    [SerializeField] bool isPlayerBullet = true;
+
     private void Start()
     {
-        bulletSpawnRate -= (PlayerPrefs.HasKey("bulletShotSpeedSelect") ? (float)PlayerPrefs.GetInt("bulletShotSpeedSelect") + 1 : 0) / 100;
+        if (isPlayerBullet)
+        {
+            bulletSpawnRate -= (PlayerPrefs.HasKey("bulletShotSpeedSelect") ? (float)PlayerPrefs.GetInt("bulletShotSpeedSelect") + 1 : 0) / 100;
+        }
 
         startRate = bulletSpawnRate;
 
@@ -51,6 +56,8 @@ public class BulletShooter : MonoBehaviour
                 AudioManager.instance.AudioPlayOneShotVolume(bulletClip, .0015f, false);
                 g.SetActive(true);
                 g.transform.parent = null;
+                g.transform.rotation = transform.rotation;
+
                 break;
             }
         }
@@ -61,8 +68,8 @@ public class BulletShooter : MonoBehaviour
     {
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject g = Instantiate(bullet, transform);
-            g.transform.rotation = transform.rotation;
+            GameObject g = Instantiate(bullet, transform.position, Quaternion.identity);
+            g.transform.parent = transform;
             bulletPool.Add(g);
             g.SetActive(false);
         }

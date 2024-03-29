@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Reflection;
 
 public class ShopManager : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("pointsScore", 1000000);
 
         // Gets the selected values from player prefs
@@ -46,12 +48,12 @@ public class ShopManager : MonoBehaviour
         shopItems[5].selectedIndex = PlayerPrefs.GetInt("bulletSpeedSelect");
 
         // Updates the selected estate of the buttons
-        ButtonSelectedUpdate("spaceBuy", "spaceSelect", shopItems[0].selectedIndex, shopItems[0].selects, true);
-        ButtonSelectedUpdate("bulletBuy", "bulletSelect", shopItems[1].selectedIndex, shopItems[1].selects, true);
-        ButtonSelectedUpdate("engineBuy", "engineSelect", shopItems[2].selectedIndex, shopItems[2].selects, false);
-        ButtonSelectedUpdate("shieldBuy", "shieldSelect", shopItems[3].selectedIndex, shopItems[3].selects, false);
-        ButtonSelectedUpdate("bulletShotSpeedBuy", "bulletShotSpeedSelect", shopItems[4].selectedIndex, shopItems[4].selects, false);
-        ButtonSelectedUpdate("bulletSpeedBuy", "bulletSpeedSelect", shopItems[5].selectedIndex, shopItems[5].selects, false);
+        ButtonSelectedUpdate("spaceBuy", "spaceSelect", shopItems[0].selectedIndex, shopItems[0].selects, true, false);
+        ButtonSelectedUpdate("bulletBuy", "bulletSelect", shopItems[1].selectedIndex, shopItems[1].selects, true, false);
+        ButtonSelectedUpdate("engineBuy", "engineSelect", shopItems[2].selectedIndex, shopItems[2].selects, false, true);
+        ButtonSelectedUpdate("shieldBuy", "shieldSelect", shopItems[3].selectedIndex, shopItems[3].selects, false, true);
+        ButtonSelectedUpdate("bulletShotSpeedBuy", "bulletShotSpeedSelect", shopItems[4].selectedIndex, shopItems[4].selects, false, true);
+        ButtonSelectedUpdate("bulletSpeedBuy", "bulletSpeedSelect", shopItems[5].selectedIndex, shopItems[5].selects, false, true);
 
         // Updates the moeny
         money = PlayerPrefs.GetInt("pointsScore");
@@ -101,8 +103,7 @@ public class ShopManager : MonoBehaviour
         {
             for (int i = 0; i < item.prices.Length; i++)
             {
-                item.buys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "<color=" + "#DDAC59" + ">" + item.prices[i] +  " S </color>";
-                item.selects[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "<color=" + "#49A43A" + "> Select </color>";
+                item.buys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.prices[i] + " S";
             }
         }
 
@@ -133,27 +134,37 @@ public class ShopManager : MonoBehaviour
     }
 
     // Updates the selected estate of the buttons
-    void ButtonSelectedUpdate(string keyBuy, string keySelect, int selected, GameObject[] selects, bool firstSelected)
+    void ButtonSelectedUpdate(string keyBuy, string keySelect, int selectedIndex, GameObject[] selects, bool firstSelected, bool canBeUnselected)
     {
-        if (PlayerPrefs.HasKey(keySelect) && PlayerPrefs.GetInt(keySelect) >= 0)
-        {
-            for (int i = 0; i < selects.Length; i++)
-            {
-                if (i == selected)
-                {
-                    selects[i].GetComponent<Image>().color = selectedColor;
-                }
-                else
-                {
-                    selects[i].GetComponent<Image>().color = Color.white;
-                }
-            }
-        }
-        else if (firstSelected)
+        if (!PlayerPrefs.HasKey(keySelect) && firstSelected)
         {
             PlayerPrefs.SetInt(keyBuy + 0, 1);
             PlayerPrefs.SetInt(keySelect, 0);
             selects[0].GetComponent<Image>().color = selectedColor;
+            if (canBeUnselected)
+            {
+                selects[0].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Deselect";
+            }
+        }
+        else
+        {
+            for (int i = 0; i < selects.Length; i++)
+            {
+                if (i == selectedIndex)
+                {
+                    selects[i].GetComponent<Image>().color = selectedColor;
+
+                    if (canBeUnselected)
+                    {
+                        selects[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Deselect";
+                    }
+                }
+                else
+                {
+                    selects[i].GetComponent<Image>().color = Color.white;
+                    selects[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Select";
+                }
+            }
         }
     }
 
@@ -164,39 +175,49 @@ public class ShopManager : MonoBehaviour
         {
             if (select)
             {
-                UpdateSelectedItem(index, buyKey, selectKey, ref selectedIndex, selects);
+                UpdateSelectedItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected);
             }
             else
             {
                 selectedIndex = -1;
-                ButtonSelectedUpdate(buyKey, selectKey, selectedIndex, selects, true);
-                selects[index].GetComponent<Image>().color = Color.white;
+                ButtonSelectedUpdate(buyKey, selectKey, selectedIndex, selects, false, canBeUnselected);
                 PlayerPrefs.SetInt(selectKey, selectedIndex);
+                selects[index].GetComponent<Image>().color = Color.white;
             }
         }
         else
         {
-            UpdateSelectedItem(index, buyKey, selectKey, ref selectedIndex, selects);
+            UpdateSelectedItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected);
         }
     }
-    void UpdateSelectedItem(int index, string buyKey, string selectKey, ref int selectedIndex, GameObject[] selects)
+    void UpdateSelectedItem(int index, string buyKey, string selectKey, ref int selectedIndex, GameObject[] selects, bool canBeUnselected)
     {
         selectedIndex = index;
         PlayerPrefs.SetInt(selectKey, selectedIndex);
         selects[index].GetComponent<Image>().color = selectedColor;
-        ButtonSelectedUpdate(buyKey, selectKey, selectedIndex, selects, true);
+        ButtonSelectedUpdate(buyKey, selectKey, selectedIndex, selects, false, canBeUnselected);
     }
     void BuyItem(int index, string buyKey, string lastBoughtKey, string selectKey, ref int selectedIndex, 
         GameObject[] buys, GameObject[] selects, int[] prices, bool canBeUnselected, bool isFirstBought)
     {
         if (PlayerPrefs.HasKey(buyKey + index))
         {
-            if (selectedIndex >= 0 || selectedIndex == index && canBeUnselected)
+            if (canBeUnselected)
             {
-                SelectItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected, false);
-                return;
+                if (index == selectedIndex)
+                {
+                    SelectItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected, false);
+                    return;
+                }
+                else
+                {
+                    SelectItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected, true);
+                }
             }
-            SelectItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected, true);
+            else
+            {
+                SelectItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected, true);
+            }
         }
         else
         {

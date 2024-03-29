@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.SceneManagement;
 
 public class HudManager : MonoBehaviour
 {
@@ -32,9 +33,9 @@ public class HudManager : MonoBehaviour
             pointsScore = 0;
         }
 
-        if (PlayerPrefs.HasKey("maxScore"))
+        if (PlayerPrefs.HasKey("maxScore" + SceneManager.GetActiveScene().buildIndex))
         {
-            maxScore = PlayerPrefs.GetInt("maxScore");
+            maxScore = PlayerPrefs.GetInt("maxScore" + SceneManager.GetActiveScene().buildIndex);
         }
         else
         {
@@ -98,7 +99,7 @@ public class HudManager : MonoBehaviour
             maxScore = Mathf.RoundToInt(timeScore);
             timeScore = maxScore;
 
-            PlayerPrefs.SetInt("maxScore", maxScore);
+            PlayerPrefs.SetInt("maxScore" + SceneManager.GetActiveScene().buildIndex, maxScore);
         }
 
         PlayerPrefs.SetInt("pointsScore", pointsScore);

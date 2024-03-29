@@ -475,10 +475,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8aa7bc3a9dfcfe649b629700d89372b8, type: 2}
   - {fileID: 11400000, guid: c41403d77221e01468684224497e304f, type: 2}
   - {fileID: 11400000, guid: 39047ae8e6316de488481f1d53650d1a, type: 2}
+  playerPos: {fileID: 7067900}
+  bosses:
+  - {fileID: 6020750755276850069, guid: 6513aa0b38e6b684c9fa1080a4c62708, type: 3}
+  - {fileID: 6020750755276850069, guid: 83a8bfb62ea034b4993fced93d0cbd9e, type: 3}
+  - {fileID: 6020750755276850069, guid: 2a02271fabe152e4f89514b65f3589d2, type: 3}
+  bossIndex: 0
   initialSpawnRate: 2
   maxSpawnRate: 0.05
   spawnRateAugment: 0
   spawnRateAugmentSpeed: 0.025
+  varieSpawnRateAmount: 1
   randomRotation: 0
   pool: []
 --- !u!114 &853206363
@@ -498,10 +505,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c20775b0e633f0d4195a9a2465ba625f, type: 2}
   - {fileID: 11400000, guid: 2e39f483235e6244d90dd706436e2ace, type: 2}
   - {fileID: 11400000, guid: c972b27a610d10b4699ca93e95993c89, type: 2}
+  playerPos: {fileID: 0}
+  bosses: []
+  bossIndex: 0
   initialSpawnRate: 2.5
   maxSpawnRate: 2.5
   spawnRateAugment: 0
   spawnRateAugmentSpeed: 0.05
+  varieSpawnRateAmount: 1
   randomRotation: 0
   pool: []
 --- !u!114 &1103868794 stripped

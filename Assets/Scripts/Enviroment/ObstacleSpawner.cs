@@ -7,7 +7,9 @@ public class ObstacleSpawner : MonoBehaviour
 {
     [SerializeField] ObstacleScriptableObject[] obstacleScriptableObject;
 
-    //[SerializeField] Transform playerPos;
+    [SerializeField] Transform playerPos;
+    [SerializeField] List<GameObject> bosses = new List<GameObject>();
+    public int bossIndex = 0;
 
     [Space]
 
@@ -15,6 +17,7 @@ public class ObstacleSpawner : MonoBehaviour
     [SerializeField] float maxSpawnRate;
     [SerializeField] float spawnRateAugment;
     [SerializeField] float spawnRateAugmentSpeed = 0.05f;
+    public bool varieSpawnRateAmount = true;
 
     [Space]
 
@@ -28,21 +31,30 @@ public class ObstacleSpawner : MonoBehaviour
     {
         spawnRateAugment = initialSpawnRate;
 
-
         FillPool();
     }
 
     private void Update()
     {
         // Makes a value go down slowly over time 
-        if (spawnRateAugment > maxSpawnRate)
+        if (spawnRateAugment > maxSpawnRate && varieSpawnRateAmount)
         {
             spawnRateAugment -= Time.deltaTime * spawnRateAugmentSpeed;
-
             spawnRateAugment = Mathf.Clamp(spawnRateAugment, maxSpawnRate, spawnRateAugment);
         }
         if (spawnRateAugment <= maxSpawnRate)
         {
+            if (bosses.Count > 0)
+            {
+                if (bossIndex >= bosses.Count)
+                {
+                    bossIndex = 0;
+                }
+
+                Instantiate(bosses[bossIndex], playerPos.transform);
+                bossIndex++;
+                varieSpawnRateAmount = false;
+            }
             spawnRateAugment = initialSpawnRate;
         }
 
@@ -57,7 +69,6 @@ public class ObstacleSpawner : MonoBehaviour
         if (currentSpawnRate <= 0.0f)
         {
             SpawnObstscle();
-
             currentSpawnRate = spawnRateAugment;
         }
     }
@@ -102,7 +113,6 @@ public class ObstacleSpawner : MonoBehaviour
     void SpawnObstscle()
     {
         Vector2 spawnPos = RandomPosition();
-
         List<GameObject> unactivePool = new List<GameObject>();
 
         // Gets all te unactive gamobjects of the pool
@@ -135,7 +145,6 @@ public class ObstacleSpawner : MonoBehaviour
             g.SetActive(true);
             g.transform.parent = null;
         }
-        
 
         // Clears the unactive pool
         unactivePool.Clear();

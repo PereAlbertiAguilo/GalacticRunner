@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
-    //[SerializeField] Vector2 screenBorderLimit;
 
     [SerializeField] Sprite[] playerSprites;
     [SerializeField] AudioClip explosionClip;
@@ -14,16 +13,20 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public Animator _animator;
     public Animator _explosionAnimator;
+    SpriteRenderer _spriteRenderer;
 
     [HideInInspector] public Health health;
 
     [SerializeField] GameObject[] bulletShooter;
+
+    public bool canTakeDamage = true;
 
     HudManager hudManager;
 
     private void Awake()
     {
         health = GetComponent<Health>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -59,7 +62,6 @@ public class PlayerController : MonoBehaviour
         // Activates the gameover state if the player dies and plays a sound
         if (!health.isAlive && !GameManager.instance.gameOver)
         {
-            AudioManager.instance.AudioPlayOneShotVolume(explosionClip, .5f, false);
             GameManager.instance.GameOver();
         }
     }
@@ -139,7 +141,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Takes and gives a health point to the player
-    void TakeHealth(bool take)
+    void HealthUpdate(bool take)
     {
         if (take)
         {
@@ -169,17 +171,42 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    IEnumerator ImmunityFrames()
+    {
+        canTakeDamage = false;
+        _spriteRenderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(.20f);
+        _spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(.20f);
+        _spriteRenderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(.20f);
+        _spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(.20f);
+        _spriteRenderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(.20f);
+        _spriteRenderer.color = Color.white;
+        canTakeDamage = true;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // If the player collides with an obstacle takes 1 health point
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Obstacle") && canTakeDamage)
         {
-            TakeHealth(true);
+            StartCoroutine(ImmunityFrames());
+            HealthUpdate(true);
+            _explosionAnimator.Play("SpaceCraft_Explosion");
+            AudioManager.instance.AudioPlayOneShotVolume(explosionClip, .2f, false);
+
+            if (health.currentHealth <= health.deathPoint + 1)
+            {
+                hudManager.healthBarText.gameObject.SetActive(true);
+            }
         }
 
         if (collision.gameObject.CompareTag("FinalObstacle"))
         {
-            AudioManager.instance.AudioPlayOneShotVolume(explosionClip, .5f, false);
+            AudioManager.instance.AudioPlayOneShotVolume(explosionClip, .2f, false);
             GameManager.instance.GameOver();
         }
     }
