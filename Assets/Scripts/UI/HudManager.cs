@@ -85,7 +85,7 @@ public class HudManager : MonoBehaviour
             Destroy(t);
         }
 
-        for (int i = 0; i < playerController.health.maxHealth; i++)
+        for (int i = 0; i < playerController.health.maxHealth / 4; i++)
         {
             Instantiate(healthPoint, healthBar);
         }

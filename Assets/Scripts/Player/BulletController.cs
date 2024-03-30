@@ -20,7 +20,7 @@ public class BulletController : MonoBehaviour
     Transform playerPos;
     Transform parent;
     Quaternion startRot;
-    public bool follow = true;
+    bool follow = true;
 
     private void Awake()
     {

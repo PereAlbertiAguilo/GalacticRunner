@@ -103,6 +103,8 @@ MonoBehaviour:
   bulletSpeed: 20
   bulletLifeTime: 3
   isPlayerBullet: 0
+  bulletFollow: 0
+  follow: 1
 --- !u!70 &1147093034456708898
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

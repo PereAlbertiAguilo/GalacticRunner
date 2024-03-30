@@ -2,16 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BossController : MonoBehaviour
 {
     [SerializeField] float speed;
+
+    [Space]
+
+    [SerializeField] int scorePoints = 100;
+    [SerializeField] GameObject textPopUp;
+
+    bool canTakeDamage = false;
 
     Transform playerPos;
     Image healthBar;
     Animator _animator;
     Health health;
     ObstacleSpawner obstacleSpawner;
+    HudManager hudManager;
 
     private void Awake()
     {
@@ -23,6 +32,7 @@ public class BossController : MonoBehaviour
     {
         playerPos = FindObjectOfType<PlayerController>(true).transform;
         obstacleSpawner = FindObjectOfType<ObstacleSpawner>();
+        hudManager = FindObjectOfType<HudManager>();
 
         healthBar = GameObject.FindGameObjectWithTag("BossHealthBar").GetComponent<Image>();
         healthBar.enabled = true;
@@ -40,10 +50,12 @@ public class BossController : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         _animator.applyRootMotion = true;
+        canTakeDamage = true;
     }
     IEnumerator ExitScene()
     {
         _animator.Play("ExitScene");
+        canTakeDamage = false;
 
         yield return new WaitForSeconds(1);
 
@@ -52,12 +64,19 @@ public class BossController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    GameObject InstantiateObject(GameObject instance)
+    {
+        GameObject g = Instantiate(instance, transform.parent.position, Quaternion.identity);
+
+        return g;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         string tag = collision.gameObject.tag;
 
         // If this gameobject collides with a bullet takes away 2 points of its life
-        if (tag == "Bullet" || tag == "Player")
+        if ((tag == "Bullet" || tag == "Player") && canTakeDamage)
         {
             if (health.currentHealth == health.maxHealth)
             {
@@ -75,6 +94,13 @@ public class BossController : MonoBehaviour
 
             if (!health.isAlive)
             {
+                hudManager.pointsScore += scorePoints;
+                hudManager.pointsText.GetComponent<Animator>().Play("ScorePop");
+
+                TextMeshProUGUI t = InstantiateObject(textPopUp).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                t.text = "" + scorePoints + " S";
+                t.fontSize = 2;
+
                 StartCoroutine(ExitScene());
             }
 

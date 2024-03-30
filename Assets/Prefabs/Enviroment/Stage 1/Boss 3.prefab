@@ -394,6 +394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
+  scorePoints: 250
+  textPopUp: {fileID: 3791255777051177583, guid: 73730e61024f74c4d9b6dbc371281a5c, type: 3}
 --- !u!114 &924073769881715148
 MonoBehaviour:
   m_ObjectHideFlags: 0

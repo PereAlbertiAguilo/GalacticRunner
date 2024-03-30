@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("shieldSelect") && PlayerPrefs.GetInt("shieldSelect") >= 0)
         {
-            health.maxHealth = PlayerPrefs.GetInt("shieldSelect") + 1;
+            health.maxHealth = (PlayerPrefs.GetInt("shieldSelect") + 1) * 4;
             health.currentHealth = health.maxHealth;
         }
     }
@@ -149,9 +150,18 @@ public class PlayerController : MonoBehaviour
 
             foreach (Transform t in hudManager.healthBar)
             {
+                Image i = t.GetComponent<Image>();
+
                 if (t.gameObject.activeInHierarchy)
                 {
-                    t.gameObject.SetActive(false);
+                    if(i.fillAmount > .25f)
+                    {
+                        i.fillAmount -= .25f;
+                    }
+                    else
+                    {
+                        t.gameObject.SetActive(false);
+                    }
                     break;
                 }
             }
@@ -162,9 +172,19 @@ public class PlayerController : MonoBehaviour
 
             foreach (Transform t in hudManager.healthBar)
             {
+                Image i = t.GetComponent<Image>();
+
                 if (!t.gameObject.activeInHierarchy)
                 {
-                    t.gameObject.SetActive(true);
+                    if (i.fillAmount < 1)
+                    {
+                        i.fillAmount += .25f;
+                    }
+                    else
+                    {
+                        t.gameObject.SetActive(true);
+                        i.fillAmount = .25f;
+                    }
                     break;
                 }
             }

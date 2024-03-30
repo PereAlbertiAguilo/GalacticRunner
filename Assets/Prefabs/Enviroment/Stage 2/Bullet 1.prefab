@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSprites: []
-  bulletSpeed: 15
+  bulletSpeed: 10
   bulletLifeTime: 3
   isPlayerBullet: 0
   bulletFollow: 1
