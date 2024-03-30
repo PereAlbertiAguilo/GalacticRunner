@@ -21,7 +21,7 @@ public class BulletShooter : MonoBehaviour
     {
         if (isPlayerBullet)
         {
-            bulletSpawnRate -= (PlayerPrefs.HasKey("bulletShotSpeedSelect") ? (float)PlayerPrefs.GetInt("bulletShotSpeedSelect") + 1 : 0) / 100;
+            bulletSpawnRate -= (PlayerPrefs.HasKey("BulletShotSpeedSelect") ? (float)PlayerPrefs.GetInt("BulletShotSpeedSelect") + 1 : 0) / 100;
         }
 
         startRate = bulletSpawnRate;
@@ -56,7 +56,7 @@ public class BulletShooter : MonoBehaviour
                 AudioManager.instance.AudioPlayOneShotVolume(bulletClip, .0015f, false);
                 g.SetActive(true);
                 g.transform.parent = null;
-                g.transform.rotation = transform.rotation;
+                //g.transform.rotation = transform.rotation;
 
                 break;
             }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Ship 4
   m_EditorClassIdentifier: 
   obstacle: {fileID: 4096152498010675091, guid: 63ba6df9c3dbb0849b04a3f83f8f7973, type: 3}
-  poolSize: 20
+  poolSize: 10

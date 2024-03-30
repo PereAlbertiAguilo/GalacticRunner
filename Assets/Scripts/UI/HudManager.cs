@@ -42,7 +42,7 @@ public class HudManager : MonoBehaviour
             maxScore = 0;
         }
 
-        pointsText.text = "Scraps " + pointsScore + " X 1";
+        pointsText.text = "Scraps " + pointsScore;
 
         FillHealthBar();
     }

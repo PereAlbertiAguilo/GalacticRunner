@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Plane 1
   m_EditorClassIdentifier: 
   obstacle: {fileID: 4096152498010675091, guid: a4a9af3e58ae7d94eb35d297924b5cf6, type: 3}
-  poolSize: 12
+  poolSize: 8

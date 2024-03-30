@@ -23,7 +23,6 @@ public class ObstacleController : MonoBehaviour
     HudManager hudManager;
     PlayerController playerController;
 
-    int killStreak = 1;
 
     bool awake = false;
 
@@ -40,12 +39,12 @@ public class ObstacleController : MonoBehaviour
         playerPos = FindObjectOfType<PlayerController>(true).transform.parent;
         hudManager = FindObjectOfType<HudManager>();
         playerController = FindObjectOfType<PlayerController>();
+
+        scorePoints *= PlayerPrefs.HasKey("ScrapsAmountSelect") ? (PlayerPrefs.GetInt("ScrapsAmountSelect") + 2) : 1;
     }
 
     private void OnEnable()
     {
-        killStreak = PlayerPrefs.GetInt("killStreak");
-
         awake = true;
         currentLifeTime = lifeTime;
         health.isAlive = true;
@@ -91,44 +90,28 @@ public class ObstacleController : MonoBehaviour
     // Deactivates this gameobject
     void DeactivateObject(bool playerDestroyed, bool bulletCollided)
     {
-        killStreak = PlayerPrefs.GetInt("killStreak");
-
         // If this gameobject is destroyed by the player plays a sound and instantiates a particle
-        if (playerDestroyed && !GameManager.instance.gameOver && playerController.canTakeDamage)
+        if (playerDestroyed && !GameManager.instance.gameOver)
         {
             AudioManager.instance.AudioPlayOneShotVolume(destroyClip, 1f, true);
             InstantiateObject(explosionParticle);
 
             if (bulletCollided)
             {
-                hudManager.pointsScore += scorePoints * killStreak;
+                hudManager.pointsScore += scorePoints;
                 hudManager.pointsText.GetComponent<Animator>().Play("ScorePop");
 
                 TextMeshProUGUI t = InstantiateObject(textPopUp).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                t.text = "" + scorePoints * killStreak + " S";
+                t.text = "" + scorePoints + " S";
                 t.fontSize = 1;
 
-                KillStreak(killStreak + 1);
+                hudManager.pointsText.text = "Scraps " + hudManager.pointsScore;
             }
-        }
-        else if (canTakeDamage)
-        {
-            KillStreak(1);
         }
 
         mask.SetActive(false);
         gameObject.SetActive(false);
         awake = false;
-    }
-
-    void KillStreak(int streak)
-    {
-        if (streak <= 5)
-        {
-            killStreak = streak;
-        }
-        PlayerPrefs.SetInt("killStreak", killStreak);
-        hudManager.pointsText.text = "Scraps " + hudManager.pointsScore + " X " + killStreak;
     }
 
     GameObject InstantiateObject(GameObject instance)
@@ -150,9 +133,9 @@ public class ObstacleController : MonoBehaviour
                 InstantiateObject(explosionParticle);
             }
 
-            if (PlayerPrefs.HasKey("bulletSelect") && PlayerPrefs.GetInt("bulletSelect") > 0)
+            if (PlayerPrefs.HasKey("BulletsSelect") && PlayerPrefs.GetInt("BulletsSelect") > 0)
             {
-                health.currentHealth -= PlayerPrefs.GetInt("bulletSelect") * 2;
+                health.currentHealth -= PlayerPrefs.GetInt("BulletsSelect") * 2;
             }
             else
             {
@@ -169,7 +152,7 @@ public class ObstacleController : MonoBehaviour
 
         }
         // If this gameobject collides with the player it deactivates itself and updates the health bar text
-        else if (tag == "Player")
+        else if (tag == "Player" && playerController.canTakeDamage)
         {
             DeactivateObject(true, false);
         }
@@ -188,16 +171,20 @@ public class ObstacleController : MonoBehaviour
         {
             ObstacleController oc = collision.gameObject.GetComponent<ObstacleController>();
 
-            if (oc != null && priority <= oc.priority)
+            if (oc != null)
             {
-                DeactivateObject(transform.position.y > playerPos.position.y + 14 ? false : true, false);
+                if (priority < oc.priority)
+                {
+                    DeactivateObject(transform.position.y > playerPos.position.y + 14 ? false : true, false);
+                }
+                if (priority == oc.priority)
+                {
+                    if (transform.position.y > oc.transform.position.y)
+                    {
+                        DeactivateObject(transform.position.y > playerPos.position.y + 14 ? false : true, false);
+                    }
+                }
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        killStreak = 1;
-        PlayerPrefs.SetInt("killStreak", killStreak);
     }
 }

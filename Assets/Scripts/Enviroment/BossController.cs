@@ -6,21 +6,22 @@ using TMPro;
 
 public class BossController : MonoBehaviour
 {
+    [SerializeField] bool followPlayer = true;
     [SerializeField] float speed;
 
     [Space]
 
-    [SerializeField] int scorePoints = 100;
-    [SerializeField] GameObject textPopUp;
+    public int scorePoints = 100;
+    public GameObject textPopUp;
 
-    bool canTakeDamage = false;
+    [HideInInspector] public bool canTakeDamage = false;
 
     Transform playerPos;
-    Image healthBar;
+    [HideInInspector] public Image healthBar;
     Animator _animator;
-    Health health;
+    [HideInInspector] public Health health;
     ObstacleSpawner obstacleSpawner;
-    HudManager hudManager;
+    [HideInInspector] public HudManager hudManager;
 
     private void Awake()
     {
@@ -42,19 +43,32 @@ public class BossController : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.LerpUnclamped(transform.position, new Vector2(playerPos.position.x, transform.position.y), Time.deltaTime * speed);
+        if (followPlayer)
+        {
+            transform.position = Vector3.LerpUnclamped(transform.position, new Vector2(playerPos.position.x, transform.position.y), Time.deltaTime * speed);
+        }
     }
 
-    IEnumerator EnterScene()
+    public IEnumerator EnterScene()
     {
         yield return new WaitForSeconds(1);
 
-        _animator.applyRootMotion = true;
+        if (followPlayer) 
+        { 
+            _animator.applyRootMotion = true; 
+        }
         canTakeDamage = true;
     }
-    IEnumerator ExitScene()
+    public IEnumerator ExitScene(bool hasIdleAnim)
     {
-        _animator.Play("ExitScene");
+        if (hasIdleAnim)
+        {
+            _animator.SetBool("ExitScene", true);
+        }
+        else
+        {
+            _animator.Play("ExitScene");
+        }
         canTakeDamage = false;
 
         yield return new WaitForSeconds(1);
@@ -64,7 +78,7 @@ public class BossController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    GameObject InstantiateObject(GameObject instance)
+    public GameObject InstantiateObject(GameObject instance)
     {
         GameObject g = Instantiate(instance, transform.parent.position, Quaternion.identity);
 
@@ -83,9 +97,9 @@ public class BossController : MonoBehaviour
                //InstantiateObject(explosionParticle);
             }
 
-            if (PlayerPrefs.HasKey("bulletSelect") && PlayerPrefs.GetInt("bulletSelect") > 0)
+            if (PlayerPrefs.HasKey("BulletsSelect") && PlayerPrefs.GetInt("BulletsSelect") > 0)
             {
-                health.currentHealth -= PlayerPrefs.GetInt("bulletSelect") * 2;
+                health.currentHealth -= PlayerPrefs.GetInt("BulletsSelect") * 2;
             }
             else
             {
@@ -101,7 +115,7 @@ public class BossController : MonoBehaviour
                 t.text = "" + scorePoints + " S";
                 t.fontSize = 2;
 
-                StartCoroutine(ExitScene());
+                StartCoroutine(ExitScene(false));
             }
 
             healthBar.fillAmount = (float)health.currentHealth / health.maxHealth;

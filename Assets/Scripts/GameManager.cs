@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool gameOver = false;
 
     int gamesPlayed = 1;
+
+    bool stageEnded = false;
 
     private void Awake()
     {
@@ -47,12 +50,19 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // When te game time reaches 900 seconds / 15 minutes the stage ender will bew activated
-        if(hudManager.timeScore >= 900)
+        if(hudManager.timeScore >= 900 && !stageEnded)
         {
-            finalObstacle.SetActive(true);
-        }
+            stageEnded = true;
 
-        
+            finalObstacle.SetActive(true);
+
+            foreach (ObstacleSpawner o in FindObjectsOfType<ObstacleSpawner>())
+            {
+                o.enabled = false;
+            }
+
+            PlayerPrefs.SetInt("stagesEnded", SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     // Updates the gameover score texts

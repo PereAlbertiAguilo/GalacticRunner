@@ -104,12 +104,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 25
   currentLifeTime: 0
-  scorePoints: 25
+  scorePoints: 45
   priority: 4
+  canTakeDamage: 1
   destroyClip: {fileID: 8300000, guid: 53bb6063c6ef49345b16cadf16f33167, type: 3}
   explosionParticle: {fileID: 8629288015194619182, guid: 6d48f5682ce381740bcd24fc88ab60c0, type: 3}
   textPopUp: {fileID: 3791255777051177583, guid: 73730e61024f74c4d9b6dbc371281a5c, type: 3}
-  canTakeDamage: 1
 --- !u!114 &-5246995021190727279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2935c2f6f3a9254081ae60d5b935b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 75
+  maxHealth: 100
   currentHealth: 0
   isAlive: 1
   deathPoint: 0

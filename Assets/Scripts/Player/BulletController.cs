@@ -16,9 +16,11 @@ public class BulletController : MonoBehaviour
     [SerializeField] bool isPlayerBullet = true;
 
     [SerializeField] bool bulletFollow = false;
+    [SerializeField] bool useParentRotation = false;
 
     Transform playerPos;
     Transform parent;
+    Vector3 parentDir;
     Quaternion startRot;
     bool follow = true;
 
@@ -31,12 +33,12 @@ public class BulletController : MonoBehaviour
     {
         playerPos = FindAnyObjectByType<PlayerController>().transform;
 
-        transform.rotation = parent.rotation;
+        //transform.rotation = parent.rotation;
         startRot = transform.rotation;
 
         if (isPlayerBullet)
         {
-            bulletSpeed += PlayerPrefs.HasKey("bulletSpeedSelect") ? (PlayerPrefs.GetInt("bulletSpeedSelect") + 1) * 10 : 0;
+            bulletSpeed += PlayerPrefs.HasKey("BulletSpeedSelect") ? (PlayerPrefs.GetInt("BulletSpeedSelect") + 1) * 10 : 0;
             SpriteUpdate();
         }
     }
@@ -44,6 +46,11 @@ public class BulletController : MonoBehaviour
     private void OnEnable()
     {
         parent = transform.parent;
+
+        if (parent != null)
+        {
+            parentDir = parent.up;
+        }
 
         // Invokes a function that will activate within a given time
         Invoke(nameof(ReturnToStartPos), bulletLifeTime);
@@ -76,7 +83,7 @@ public class BulletController : MonoBehaviour
             }
             else
             {
-                transform.Translate(Vector2.up * bulletSpeed * Time.deltaTime);
+                transform.Translate((useParentRotation ? parentDir : (isPlayerBullet ? Vector3.up : Vector3.down)) * bulletSpeed * Time.deltaTime);
             }
         }
     }
@@ -84,9 +91,9 @@ public class BulletController : MonoBehaviour
     // The sprite of the bullets updates depending on a player pref int
     void SpriteUpdate()
     {
-        if (PlayerPrefs.HasKey("bulletSelect"))
+        if (PlayerPrefs.HasKey("BulletsSelect"))
         {
-            _bulletSpriteRenderer.sprite = bulletSprites[PlayerPrefs.GetInt("bulletSelect")];
+            _bulletSpriteRenderer.sprite = bulletSprites[PlayerPrefs.GetInt("BulletsSelect")];
         }
     }
 

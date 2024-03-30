@@ -14,11 +14,16 @@ public class AutoAimFollow : MonoBehaviour
         playerPos = FindAnyObjectByType<PlayerController>().transform;
     }
 
+    private void OnEnable()
+    {
+        follow = true;
+    }
+
     private void Update()
     {
         Vector3 direction = playerPos.position - transform.position;
 
-        if (transform.position.y > playerPos.position.y + 3)
+        if (transform.position.y > playerPos.position.y + 2.5f)
         {
             if (follow)
             {
@@ -27,10 +32,10 @@ public class AutoAimFollow : MonoBehaviour
                 transform.rotation = Quaternion.AngleAxis(Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * 2), Vector3.forward);
             }
         }
-        else if(follow == true)
-        {
-            follow = false;
-        }
+        //else if(follow == true)
+        //{
+        //    follow = false;
+        //}
 
         transform.Translate(Vector2.down * speed * Time.deltaTime);
     }

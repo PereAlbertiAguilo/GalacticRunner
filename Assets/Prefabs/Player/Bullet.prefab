@@ -106,6 +106,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fcdf744e7640e2843ab2e753da63430e, type: 3}
   bulletSpeed: 40
   bulletLifeTime: 1
+  isPlayerBullet: 1
+  bulletFollow: 0
+  useParentRotation: 1
 --- !u!70 &1147093034456708898
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

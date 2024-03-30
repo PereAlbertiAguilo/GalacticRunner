@@ -476,10 +476,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 32aed462ac641f84789b9f9ef65e7050, type: 2}
   - {fileID: 11400000, guid: b0be72aaa85face4fa190cfda8fcc9a7, type: 2}
   - {fileID: 11400000, guid: f4eb78b074e8c3549985444674cab7a8, type: 2}
+  playerPos: {fileID: 7067900}
+  bosses:
+  - {fileID: 7230031801465436075, guid: eeb3b1f155e291f4d89aed6bfd52ab49, type: 3}
+  - {fileID: 7230031801465436075, guid: ba901e7b94f8f4a459fbde2a85770d3a, type: 3}
+  - {fileID: 7230031801465436075, guid: 0420867e04eaffb4a960d4f79a616362, type: 3}
+  bossIndex: 0
   initialSpawnRate: 2
   maxSpawnRate: 0.05
   spawnRateAugment: 0
   spawnRateAugmentSpeed: 0.025
+  varieSpawnRateAmount: 1
   randomRotation: 0
   pool: []
 --- !u!114 &1103868794 stripped
@@ -864,8 +871,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5300751275939486461, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 14.439001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300751275939486461, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 14.439001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300751275939486461, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 14.439001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300751275939486461, guid: 9238962e275a24342842332fa832548f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 25.27
+      value: 24.86
       objectReference: {fileID: 0}
     - target: {fileID: 5803137372578186608, guid: 9238962e275a24342842332fa832548f, type: 3}
       propertyPath: m_Name
@@ -916,12 +935,44 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8097522684934477274, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9375
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097522684934477274, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0625
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097522684934477274, guid: 9238962e275a24342842332fa832548f, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4dd195fff5e274a4084e63d317975bcb, type: 3}
+      objectReference: {fileID: 21300000, guid: 343602fc60511ef4d9b2ff13cf29b361, type: 3}
+    - target: {fileID: 8097522684934477274, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097522684934477274, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097522684934477274, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097522684934477274, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097522684934477274, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8439656613503424277, guid: 9238962e275a24342842332fa832548f, type: 3}
+      propertyPath: m_Radius
+      value: 0.53125
+      objectReference: {fileID: 0}
     - target: {fileID: 8439656613503424277, guid: 9238962e275a24342842332fa832548f, type: 3}
       propertyPath: m_Offset.y
-      value: 1.03
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

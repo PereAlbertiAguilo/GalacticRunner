@@ -46,10 +46,10 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(EnterScene());
 
         // Instantiates a bullet shooter depending on a stored player pref
-        Instantiate(bulletShooter[PlayerPrefs.HasKey("spaceSelect") ? PlayerPrefs.GetInt("spaceSelect") : 0], transform);
+        Instantiate(bulletShooter[PlayerPrefs.HasKey("SpaceCraftSelect") ? PlayerPrefs.GetInt("SpaceCraftSelect") : 0], transform);
 
         // Upadtes the player move speed
-        speed += PlayerPrefs.HasKey("engineSelect") ? PlayerPrefs.GetInt("engineSelect") + 1 : 0;
+        speed += PlayerPrefs.HasKey("EngineSelect") ? PlayerPrefs.GetInt("EngineSelect") + 1 : 0;
     }
 
     private void Update()
@@ -77,18 +77,18 @@ public class PlayerController : MonoBehaviour
     // The sprite of the player updates depending on a player pref int
     void SpriteUpdate()
     {
-        if (PlayerPrefs.HasKey("spaceSelect"))
+        if (PlayerPrefs.HasKey("SpaceCraftSelect"))
         {
-            _playerSpriteRenderer.sprite = playerSprites[PlayerPrefs.GetInt("spaceSelect")];
+            _playerSpriteRenderer.sprite = playerSprites[PlayerPrefs.GetInt("SpaceCraftSelect")];
         }
     }
 
     // The health of the player updates depending on a player pref int
     void ShieldsUpdate()
     {
-        if (PlayerPrefs.HasKey("shieldSelect") && PlayerPrefs.GetInt("shieldSelect") >= 0)
+        if (PlayerPrefs.HasKey("ShieldsSelect") && PlayerPrefs.GetInt("ShieldsSelect") >= 0)
         {
-            health.maxHealth = (PlayerPrefs.GetInt("shieldSelect") + 1) * 4;
+            health.maxHealth = (PlayerPrefs.GetInt("ShieldsSelect") + 1) * 4;
             health.currentHealth = health.maxHealth;
         }
     }
@@ -195,15 +195,19 @@ public class PlayerController : MonoBehaviour
     {
         canTakeDamage = false;
         _spriteRenderer.color = new Color(0, 0, 0, 0);
-        yield return new WaitForSeconds(.20f);
+        yield return new WaitForSeconds(.14f);
         _spriteRenderer.color = Color.white;
-        yield return new WaitForSeconds(.20f);
+        yield return new WaitForSeconds(.14f);
         _spriteRenderer.color = new Color(0, 0, 0, 0);
-        yield return new WaitForSeconds(.20f);
+        yield return new WaitForSeconds(.14f);
         _spriteRenderer.color = Color.white;
-        yield return new WaitForSeconds(.20f);
+        yield return new WaitForSeconds(.14f);
         _spriteRenderer.color = new Color(0, 0, 0, 0);
-        yield return new WaitForSeconds(.20f);
+        yield return new WaitForSeconds(.14f);
+        _spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(.14f);
+        _spriteRenderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(.14f);
         _spriteRenderer.color = Color.white;
         canTakeDamage = true;
     }
@@ -215,7 +219,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(ImmunityFrames());
             HealthUpdate(true);
-            _explosionAnimator.Play("SpaceCraft_Explosion");
+            //_explosionAnimator.Play("SpaceCraft_Explosion");
             AudioManager.instance.AudioPlayOneShotVolume(explosionClip, .2f, false);
 
             if (health.currentHealth <= health.deathPoint + 1)

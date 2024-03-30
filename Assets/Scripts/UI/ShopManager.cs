@@ -32,28 +32,14 @@ public class ShopManager : MonoBehaviour
         public int[] prices;
 
         public int selectedIndex = 0;
+
+        public bool isFirstSelected = true;
     }
 
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt("pointsScore", 1000000);
-
-        // Gets the selected values from player prefs
-        shopItems[0].selectedIndex = PlayerPrefs.GetInt("spaceSelect");
-        shopItems[1].selectedIndex = PlayerPrefs.GetInt("bulletSelect");
-        shopItems[2].selectedIndex = PlayerPrefs.GetInt("engineSelect");
-        shopItems[3].selectedIndex = PlayerPrefs.GetInt("shieldSelect");
-        shopItems[4].selectedIndex = PlayerPrefs.GetInt("bulletShotSpeedSelect");
-        shopItems[5].selectedIndex = PlayerPrefs.GetInt("bulletSpeedSelect");
-
-        // Updates the selected estate of the buttons
-        ButtonSelectedUpdate("spaceBuy", "spaceSelect", shopItems[0].selectedIndex, shopItems[0].selects, true, false);
-        ButtonSelectedUpdate("bulletBuy", "bulletSelect", shopItems[1].selectedIndex, shopItems[1].selects, true, false);
-        ButtonSelectedUpdate("engineBuy", "engineSelect", shopItems[2].selectedIndex, shopItems[2].selects, false, true);
-        ButtonSelectedUpdate("shieldBuy", "shieldSelect", shopItems[3].selectedIndex, shopItems[3].selects, false, true);
-        ButtonSelectedUpdate("bulletShotSpeedBuy", "bulletShotSpeedSelect", shopItems[4].selectedIndex, shopItems[4].selects, false, true);
-        ButtonSelectedUpdate("bulletSpeedBuy", "bulletSpeedSelect", shopItems[5].selectedIndex, shopItems[5].selects, false, true);
+        //PlayerPrefs.DeleteAll();
+        //PlayerPrefs.SetInt("pointsScore", 1000000);
 
         // Updates the moeny
         money = PlayerPrefs.GetInt("pointsScore");
@@ -74,7 +60,7 @@ public class ShopManager : MonoBehaviour
     }
 
     // Updates the active state of the bought and selected buttons
-    void ButtonUpdate(string key, int index, GameObject[] buys, GameObject[] selects)
+    void ButtonActiveStateUpdate(string key, int index, GameObject[] buys, GameObject[] selects)
     {
         if(PlayerPrefs.HasKey(key))
         {
@@ -96,40 +82,21 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    // Updates the prices texts and the buttons of the UI for each shop item
+    // Updates the UI for each shop item
     void UIUpdate()
     {
         foreach (ShopItem item in shopItems)
         {
+            item.selectedIndex = PlayerPrefs.GetInt(item.itemName + "Select");
+            ButtonSelectedUpdate(item.itemName + "Buy", item.itemName + "Select", item.selectedIndex,
+                    item.selects, item.isFirstSelected, !item.isFirstSelected);
+
             for (int i = 0; i < item.prices.Length; i++)
             {
                 item.buys[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.prices[i] + " S";
+                ButtonActiveStateUpdate(item.itemName + "Buy" + i, i, item.buys, item.selects);
+                
             }
-        }
-
-        for (int i = 0; i < shopItems[0].prices.Length; i++)
-        {
-            ButtonUpdate("spaceBuy" + i, i, shopItems[0].buys, shopItems[0].selects);
-        }
-        for (int i = 0; i < shopItems[1].prices.Length; i++)
-        {
-            ButtonUpdate("bulletBuy" + i, i, shopItems[1].buys, shopItems[1].selects);
-        }
-        for (int i = 0; i < shopItems[2].prices.Length; i++)
-        {
-            ButtonUpdate("engineBuy" + i, i, shopItems[2].buys, shopItems[2].selects);
-        }
-        for (int i = 0; i < shopItems[3].prices.Length; i++)
-        {
-            ButtonUpdate("shieldBuy" + i, i, shopItems[3].buys, shopItems[3].selects);
-        }
-        for (int i = 0; i < shopItems[4].prices.Length; i++)
-        {
-            ButtonUpdate("bulletShotSpeedBuy" + i, i, shopItems[4].buys, shopItems[4].selects);
-        }
-        for (int i = 0; i < shopItems[5].prices.Length; i++)
-        {
-            ButtonUpdate("bulletSpeedBuy" + i, i, shopItems[5].buys, shopItems[5].selects);
         }
     }
 
@@ -145,6 +112,10 @@ public class ShopManager : MonoBehaviour
             {
                 selects[0].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Deselect";
             }
+            else
+            {
+                selects[0].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Selected";
+            }
         }
         else
         {
@@ -153,10 +124,13 @@ public class ShopManager : MonoBehaviour
                 if (i == selectedIndex)
                 {
                     selects[i].GetComponent<Image>().color = selectedColor;
-
                     if (canBeUnselected)
                     {
                         selects[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Deselect";
+                    }
+                    else
+                    {
+                        selects[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Selected";
                     }
                 }
                 else
@@ -235,7 +209,7 @@ public class ShopManager : MonoBehaviour
                     PlayerPrefs.SetInt(buyKey + index, 1);
                     PlayerPrefs.SetInt(lastBoughtKey, index);
                     SelectItem(index, buyKey, selectKey, ref selectedIndex, selects, canBeUnselected, true);
-                    ButtonUpdate(buyKey + index, index, buys, selects);
+                    ButtonActiveStateUpdate(buyKey + index, index, buys, selects);
                 }
             }
             else
@@ -250,8 +224,8 @@ public class ShopManager : MonoBehaviour
     #region SpaceCraftButton
     public void BuySpaceCraft(int index)
     {
-        BuyItem(index, "spaceBuy", "lastSpaceBought", "spaceSelect", ref shopItems[0].selectedIndex, 
-            shopItems[0].buys, shopItems[0].selects, shopItems[0].prices, false, true);
+        BuyItem(index, shopItems[0].itemName + "Buy", shopItems[0].itemName + "LastBought", shopItems[0].itemName + "Select", 
+            ref shopItems[0].selectedIndex, shopItems[0].buys, shopItems[0].selects, shopItems[0].prices, false, true);
     }
     #endregion
 
@@ -259,8 +233,8 @@ public class ShopManager : MonoBehaviour
     #region BulletButton
     public void BuyBullet(int index)
     {
-        BuyItem(index, "bulletBuy", "lastBulletBought", "bulletSelect", ref shopItems[1].selectedIndex, 
-            shopItems[1].buys, shopItems[1].selects, shopItems[1].prices, false, true);
+        BuyItem(index, shopItems[1].itemName + "Buy", shopItems[1].itemName + "LastBought", shopItems[1].itemName + "Select", 
+            ref shopItems[1].selectedIndex, shopItems[1].buys, shopItems[1].selects, shopItems[1].prices, false, true);
     }
     #endregion
 
@@ -268,8 +242,8 @@ public class ShopManager : MonoBehaviour
     #region EngineButton
     public void BuyEngine(int index)
     {
-        BuyItem(index, "engineBuy", "lastEngineBought", "engineSelect", ref shopItems[2].selectedIndex, 
-            shopItems[2].buys, shopItems[2].selects, shopItems[2].prices, true, false);
+        BuyItem(index, shopItems[2].itemName + "Buy", shopItems[2].itemName + "LastBought", shopItems[2].itemName + "Select", 
+            ref shopItems[2].selectedIndex, shopItems[2].buys, shopItems[2].selects, shopItems[2].prices, true, false);
     }
     #endregion
 
@@ -277,8 +251,8 @@ public class ShopManager : MonoBehaviour
     #region ShieldButton
     public void BuyShield(int index)
     {
-        BuyItem(index, "shieldBuy", "lastShieldBought", "shieldSelect", ref shopItems[3].selectedIndex, 
-            shopItems[3].buys, shopItems[3].selects, shopItems[3].prices, true, false);
+        BuyItem(index, shopItems[3].itemName + "Buy", shopItems[3].itemName + "LastBought", shopItems[3].itemName + "Select", 
+            ref shopItems[3].selectedIndex, shopItems[3].buys, shopItems[3].selects, shopItems[3].prices, true, false);
     }
     #endregion
 
@@ -286,7 +260,7 @@ public class ShopManager : MonoBehaviour
     #region ShieldButton
     public void BuyBulletShotSpeed(int index)
     {
-        BuyItem(index, "bulletShotSpeedBuy", "lastBulletShotSpeedBought", "bulletShotSpeedSelect", 
+        BuyItem(index, shopItems[4].itemName + "Buy", shopItems[4].itemName + "LastBought", shopItems[4].itemName + "Select", 
             ref shopItems[4].selectedIndex, shopItems[4].buys, shopItems[4].selects, shopItems[4].prices, true, false);
     }
     #endregion
@@ -295,8 +269,17 @@ public class ShopManager : MonoBehaviour
     #region ShieldButton
     public void BuyBulletSpeed(int index)
     {
-        BuyItem(index, "bulletSpeedBuy", "lastBulletSpeedBought", "bulletSpeedSelect", 
+        BuyItem(index, shopItems[5].itemName + "Buy", shopItems[5].itemName + "LastBought", shopItems[5].itemName + "Select", 
             ref shopItems[5].selectedIndex, shopItems[5].buys, shopItems[5].selects, shopItems[5].prices, true, false);
+    }
+    #endregion
+
+    // Buys and selects the scraps amount
+    #region ShieldButton
+    public void BuyScrapsAmount(int index)
+    {
+        BuyItem(index, shopItems[6].itemName + "Buy", shopItems[6].itemName + "LastBought", shopItems[6].itemName + "Select",
+            ref shopItems[6].selectedIndex, shopItems[6].buys, shopItems[6].selects, shopItems[6].prices, true, false);
     }
     #endregion
 }
