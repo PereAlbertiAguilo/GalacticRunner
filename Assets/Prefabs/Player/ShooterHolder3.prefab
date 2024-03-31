@@ -80,11 +80,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d46831afb072a4e9d895a6e0b86577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnRate: 0.15
+  bulletSpawnRate: 0.14
   bullet: {fileID: 5537667384859716885, guid: d21430c6ae4eb9b42a8745530a22542f, type: 3}
   poolSize: 30
   bulletPool: []
   bulletClip: {fileID: 8300000, guid: 1a43cc6ae7794fa49823406096955937, type: 3}
+  isPlayerBullet: 1
 --- !u!1 &4177600421199816144
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,11 +130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d46831afb072a4e9d895a6e0b86577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnRate: 0.15
+  bulletSpawnRate: 0.14
   bullet: {fileID: 5537667384859716885, guid: d21430c6ae4eb9b42a8745530a22542f, type: 3}
   poolSize: 30
   bulletPool: []
   bulletClip: {fileID: 8300000, guid: 1a43cc6ae7794fa49823406096955937, type: 3}
+  isPlayerBullet: 1
 --- !u!1 &4395120943073532594
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,11 +180,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d46831afb072a4e9d895a6e0b86577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnRate: 0.15
+  bulletSpawnRate: 0.14
   bullet: {fileID: 5537667384859716885, guid: d21430c6ae4eb9b42a8745530a22542f, type: 3}
   poolSize: 30
   bulletPool: []
   bulletClip: {fileID: 8300000, guid: 1a43cc6ae7794fa49823406096955937, type: 3}
+  isPlayerBullet: 1
 --- !u!1 &7987214686456071870
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,11 +230,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d46831afb072a4e9d895a6e0b86577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnRate: 0.15
+  bulletSpawnRate: 0.14
   bullet: {fileID: 5537667384859716885, guid: d21430c6ae4eb9b42a8745530a22542f, type: 3}
   poolSize: 30
   bulletPool: []
   bulletClip: {fileID: 8300000, guid: 1a43cc6ae7794fa49823406096955937, type: 3}
+  isPlayerBullet: 1
 --- !u!1 &8379943115653749147
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,8 +280,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d46831afb072a4e9d895a6e0b86577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpawnRate: 0.15
+  bulletSpawnRate: 0.14
   bullet: {fileID: 5537667384859716885, guid: d21430c6ae4eb9b42a8745530a22542f, type: 3}
   poolSize: 30
   bulletPool: []
   bulletClip: {fileID: 8300000, guid: 1a43cc6ae7794fa49823406096955937, type: 3}
+  isPlayerBullet: 1

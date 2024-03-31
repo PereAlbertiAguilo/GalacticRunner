@@ -12,7 +12,6 @@ public class ObstacleController : MonoBehaviour
     [SerializeField] float currentLifeTime = 0;
     [SerializeField] int scorePoints = 10;
     [SerializeField] int priority = 0;
-    [SerializeField] bool canTakeDamage = true;
 
     [Space]
 
@@ -133,23 +132,15 @@ public class ObstacleController : MonoBehaviour
                 InstantiateObject(explosionParticle);
             }
 
-            if (PlayerPrefs.HasKey("BulletsSelect") && PlayerPrefs.GetInt("BulletsSelect") > 0)
-            {
-                health.currentHealth -= PlayerPrefs.GetInt("BulletsSelect") * 2;
-            }
-            else
-            {
-                health.currentHealth -= 1;
-            }
+            health.currentHealth -= collision.gameObject.GetComponent<BulletController>().bulletDamage;
 
-            if(Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 20) / 100) ||
-                Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 40) / 100) ||
-                Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 60) / 100) ||
-                Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 80) / 100))
+            if (health.currentHealth == health.maxHealth * 20 / 100 ||
+                health.currentHealth == health.maxHealth * 40 / 100 ||
+                health.currentHealth == health.maxHealth * 60 / 100 ||
+                health.currentHealth == health.maxHealth * 80 / 100)
             {
                 InstantiateObject(explosionParticle);
             }
-
         }
         // If this gameobject collides with the player it deactivates itself and updates the health bar text
         else if (tag == "Player" && playerController.canTakeDamage)

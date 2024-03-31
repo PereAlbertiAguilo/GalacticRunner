@@ -10,6 +10,7 @@ public class BulletController : MonoBehaviour
     SpriteRenderer _bulletSpriteRenderer;
 
     [SerializeField] float bulletSpeed = 50f;
+    public int bulletDamage = 1;
 
     [SerializeField] float bulletLifeTime = 10f;
 
@@ -39,16 +40,21 @@ public class BulletController : MonoBehaviour
         if (isPlayerBullet)
         {
             bulletSpeed += PlayerPrefs.HasKey("BulletSpeedSelect") ? (PlayerPrefs.GetInt("BulletSpeedSelect") + 1) * 10 : 0;
+
+            if (PlayerPrefs.HasKey("BulletsSelect") && PlayerPrefs.GetInt("BulletsSelect") > 0)
+            {
+                bulletDamage += PlayerPrefs.GetInt("BulletsSelect") * 2;
+            }
+
             SpriteUpdate();
         }
     }
 
     private void OnEnable()
     {
-        parent = transform.parent;
-
-        if (parent != null)
+        if (transform.parent != null)
         {
+            parent = transform.parent;
             parentDir = parent.up;
         }
 
@@ -101,6 +107,7 @@ public class BulletController : MonoBehaviour
     void ReturnToStartPos()
     {
         transform.parent = parent;
+
         transform.localPosition = Vector2.zero;
         follow = true;
         transform.rotation = startRot;

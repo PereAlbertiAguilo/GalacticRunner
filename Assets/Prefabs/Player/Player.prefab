@@ -675,8 +675,8 @@ MonoBehaviour:
   speed: 4
   playerSprites:
   - {fileID: 21300000, guid: 0364ab32fc19fd34a9b376e9f5f7f1a3, type: 3}
-  - {fileID: 21300000, guid: 152a359442b14b644a7f0cdcac7aa0b6, type: 3}
   - {fileID: 21300000, guid: cd23b05329dde5c48b15554a9290660f, type: 3}
+  - {fileID: 21300000, guid: 152a359442b14b644a7f0cdcac7aa0b6, type: 3}
   - {fileID: 21300000, guid: 69665578fc668be409878e5f1242f1d3, type: 3}
   explosionClip: {fileID: 8300000, guid: 9ce1204bf6a02f8469e6e28e44cfcc6b, type: 3}
   _playerSpriteRenderer: {fileID: 0}
@@ -684,9 +684,9 @@ MonoBehaviour:
   _explosionAnimator: {fileID: 2611826206966754586}
   health: {fileID: 0}
   bulletShooter:
+  - {fileID: 1493869019936821820, guid: 35632aca94cff1b4cbf37202a740e05a, type: 3}
   - {fileID: 9007907116298464339, guid: 78d86acb457741f4c8bf7d619bdea4ba, type: 3}
   - {fileID: 6831205701228439739, guid: b2a545f9f16c9cb4ba3553b4bc11849a, type: 3}
-  - {fileID: 1493869019936821820, guid: 35632aca94cff1b4cbf37202a740e05a, type: 3}
   - {fileID: 388014789486856636, guid: 2c0194f3a435c4c49a03aa527313ee8e, type: 3}
   canTakeDamage: 1
 --- !u!114 &3092207805047067183

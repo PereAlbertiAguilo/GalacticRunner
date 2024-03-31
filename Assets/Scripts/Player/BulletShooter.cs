@@ -38,7 +38,7 @@ public class BulletShooter : MonoBehaviour
     {
         bulletSpawnRate -= Time.deltaTime;
 
-        if (bulletSpawnRate <= 0.0f)
+        if (bulletSpawnRate <= 0.0f && gameObject.activeInHierarchy)
         {
             ShootBullet();
 
@@ -49,14 +49,25 @@ public class BulletShooter : MonoBehaviour
     // From a gameobejct pool spawns a new bullet if the gameobject isn't active and plays a sound
     void ShootBullet()
     {
+        foreach (GameObject bullet in bulletPool)
+        {
+            if(bullet == null)
+            {
+                bulletPool.Remove(bullet);
+            }
+        }
+
         foreach (GameObject g in bulletPool) 
         {
             if (!g.activeSelf)
             {
                 AudioManager.instance.AudioPlayOneShotVolume(bulletClip, .0015f, false);
                 g.SetActive(true);
-                g.transform.parent = null;
-                //g.transform.rotation = transform.rotation;
+
+                if (!isPlayerBullet)
+                {
+                    g.transform.parent = null;
+                }
 
                 break;
             }
@@ -72,6 +83,17 @@ public class BulletShooter : MonoBehaviour
             g.transform.parent = transform;
             bulletPool.Add(g);
             g.SetActive(false);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (GameObject g in bulletPool)
+        {
+            if (!isPlayerBullet && g != null && g.activeInHierarchy)
+            {
+                g.transform.parent = null;
+            }
         }
     }
 }

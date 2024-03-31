@@ -45,7 +45,8 @@ public class BossController : MonoBehaviour
     {
         if (followPlayer)
         {
-            transform.position = Vector3.LerpUnclamped(transform.position, new Vector2(playerPos.position.x, transform.position.y), Time.deltaTime * speed);
+            transform.position = Vector3.LerpUnclamped(transform.position, new Vector2
+                (playerPos.position.x, transform.position.y), Time.deltaTime * speed);
         }
     }
 
@@ -75,7 +76,8 @@ public class BossController : MonoBehaviour
 
         healthBar.enabled = false;
         obstacleSpawner.varieSpawnRateAmount = true;
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
     public GameObject InstantiateObject(GameObject instance)
@@ -92,19 +94,7 @@ public class BossController : MonoBehaviour
         // If this gameobject collides with a bullet takes away 2 points of its life
         if ((tag == "Bullet" || tag == "Player") && canTakeDamage)
         {
-            if (health.currentHealth == health.maxHealth)
-            {
-               //InstantiateObject(explosionParticle);
-            }
-
-            if (PlayerPrefs.HasKey("BulletsSelect") && PlayerPrefs.GetInt("BulletsSelect") > 0)
-            {
-                health.currentHealth -= PlayerPrefs.GetInt("BulletsSelect") * 2;
-            }
-            else
-            {
-                health.currentHealth -= 1;
-            }
+            health.currentHealth -= collision.gameObject.GetComponent<BulletController>().bulletDamage;
 
             if (!health.isAlive)
             {
@@ -115,19 +105,12 @@ public class BossController : MonoBehaviour
                 t.text = "" + scorePoints + " S";
                 t.fontSize = 2;
 
+                hudManager.pointsText.text = "Scraps " + hudManager.pointsScore;
+
                 StartCoroutine(ExitScene(false));
             }
 
             healthBar.fillAmount = (float)health.currentHealth / health.maxHealth;
-
-            if (Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 20) / 100) ||
-                Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 40) / 100) ||
-                Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 60) / 100) ||
-                Mathf.RoundToInt(health.currentHealth) == Mathf.RoundToInt((health.maxHealth * 80) / 100))
-            {
-                //InstantiateObject(explosionParticle);
-            }
-
         }
     }
 }

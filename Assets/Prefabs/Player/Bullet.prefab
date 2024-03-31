@@ -105,6 +105,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 53f363a1baa650d4ea5469c527da2000, type: 3}
   - {fileID: 21300000, guid: fcdf744e7640e2843ab2e753da63430e, type: 3}
   bulletSpeed: 40
+  bulletDamage: 2
   bulletLifeTime: 1
   isPlayerBullet: 1
   bulletFollow: 0

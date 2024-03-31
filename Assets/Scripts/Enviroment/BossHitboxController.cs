@@ -14,19 +14,7 @@ public class BossHitboxController : MonoBehaviour
         // If this gameobject collides with a bullet takes away 2 points of its life
         if ((tag == "Bullet" || tag == "Player") && bossController.canTakeDamage)
         {
-            if (bossController.health.currentHealth == bossController.health.maxHealth)
-            {
-                //InstantiateObject(explosionParticle);
-            }
-
-            if (PlayerPrefs.HasKey("BulletsSelect") && PlayerPrefs.GetInt("BulletsSelect") > 0)
-            {
-                bossController.health.currentHealth -= PlayerPrefs.GetInt("BulletsSelect") * 2;
-            }
-            else
-            {
-                bossController.health.currentHealth -= 1;
-            }
+            bossController.health.currentHealth -= collision.gameObject.GetComponent<BulletController>().bulletDamage;
 
             if (!bossController.health.isAlive)
             {
@@ -37,19 +25,12 @@ public class BossHitboxController : MonoBehaviour
                 t.text = "" + bossController.scorePoints + " S";
                 t.fontSize = 2;
 
+                bossController.hudManager.pointsText.text = "Scraps " + bossController.hudManager.pointsScore;
+
                 StartCoroutine(bossController.ExitScene(true));
             }
 
             bossController.healthBar.fillAmount = (float)bossController.health.currentHealth / bossController.health.maxHealth;
-
-            if (Mathf.RoundToInt(bossController.health.currentHealth) == Mathf.RoundToInt((bossController.health.maxHealth * 20) / 100) ||
-                Mathf.RoundToInt(bossController.health.currentHealth) == Mathf.RoundToInt((bossController.health.maxHealth * 40) / 100) ||
-                Mathf.RoundToInt(bossController.health.currentHealth) == Mathf.RoundToInt((bossController.health.maxHealth * 60) / 100) ||
-                Mathf.RoundToInt(bossController.health.currentHealth) == Mathf.RoundToInt((bossController.health.maxHealth * 80) / 100))
-            {
-                //InstantiateObject(explosionParticle);
-            }
-
         }
     }
 }
