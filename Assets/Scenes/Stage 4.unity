@@ -475,6 +475,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2034e742e1253c14e849a5d0d808efd5, type: 2}
   - {fileID: 11400000, guid: 0701c27deb56bfd498a0ae74108ce3f8, type: 2}
   - {fileID: 11400000, guid: c25321c3698979944be4a7cf9809e16f, type: 2}
+  - {fileID: 11400000, guid: 4d38c39e206f660489c7c658c9fd23aa, type: 2}
   playerPos: {fileID: 3854812526032925729}
   bosses: []
   bossIndex: 0

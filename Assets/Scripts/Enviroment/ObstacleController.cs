@@ -134,10 +134,10 @@ public class ObstacleController : MonoBehaviour
 
             health.currentHealth -= collision.gameObject.GetComponent<BulletController>().bulletDamage;
 
-            if (health.currentHealth == health.maxHealth * 20 / 100 ||
-                health.currentHealth == health.maxHealth * 40 / 100 ||
-                health.currentHealth == health.maxHealth * 60 / 100 ||
-                health.currentHealth == health.maxHealth * 80 / 100)
+            if (Mathf.FloorToInt(health.currentHealth) == Mathf.FloorToInt(health.maxHealth * 20 / 100)||
+                Mathf.FloorToInt(health.currentHealth) == Mathf.FloorToInt(health.maxHealth * 40 / 100)||
+                Mathf.FloorToInt(health.currentHealth) == Mathf.FloorToInt(health.maxHealth * 60 / 100)||
+                Mathf.FloorToInt(health.currentHealth) == Mathf.FloorToInt(health.maxHealth * 80 / 100))
             {
                 InstantiateObject(explosionParticle);
             }

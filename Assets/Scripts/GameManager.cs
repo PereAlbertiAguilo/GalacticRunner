@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // When te game time reaches 900 seconds / 15 minutes the stage ender will bew activated
-        if(hudManager.timeScore >= 900 && !stageEnded)
+        if(hudManager.timeScore >= 600 && !stageEnded)
         {
             stageEnded = true;
 
