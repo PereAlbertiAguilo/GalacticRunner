@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4863354088226235241}
   - component: {fileID: 1147093034456708898}
   - component: {fileID: 1108369436000920621}
-  m_Layer: 7
-  m_Name: Bullet
-  m_TagString: Bullet
+  m_Layer: 0
+  m_Name: Bullet 1
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 2f9e51f4acba6d34c95a5e82a0ef7cbf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1097ebf9a8c1e4344950a3823e95128a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,17 +99,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce64f224feeef0e41a96864a3c7a441e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSprites:
-  - {fileID: 21300000, guid: 2f9e51f4acba6d34c95a5e82a0ef7cbf, type: 3}
-  - {fileID: 21300000, guid: e20149ffb5a509e4ab4bfbe60adfb372, type: 3}
-  - {fileID: 21300000, guid: 53f363a1baa650d4ea5469c527da2000, type: 3}
-  - {fileID: 21300000, guid: fcdf744e7640e2843ab2e753da63430e, type: 3}
+  bulletSprites: []
   bulletSpeed: 15
-  bulletDamage: 2
-  bulletLifeTime: 3
-  isPlayerBullet: 1
+  bulletDamage: 1
+  bulletLifeTime: 6
+  isPlayerBullet: 0
   bulletFollow: 0
-  useParentRotation: 1
+  useParentRotation: 0
 --- !u!70 &1147093034456708898
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -143,7 +139,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.18476531, y: 0.57984066}
+  m_Size: {x: 0.375, y: 0.5}
   m_Direction: 0
 --- !u!50 &1108369436000920621
 Rigidbody2D:
@@ -171,4 +167,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 5
+  m_Constraints: 7

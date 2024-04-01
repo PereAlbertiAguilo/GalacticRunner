@@ -87,6 +87,16 @@ public class BossController : MonoBehaviour
         return g;
     }
 
+    public static bool HasParameter(string paramName, Animator animator)
+    {
+        foreach (AnimatorControllerParameter param in animator.parameters)
+        {
+            if (param.name == paramName)
+                return true;
+        }
+        return false;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         string tag = collision.gameObject.tag;
@@ -107,7 +117,7 @@ public class BossController : MonoBehaviour
 
                 hudManager.pointsText.text = "Scraps " + hudManager.pointsScore;
 
-                StartCoroutine(ExitScene(false));
+                StartCoroutine(ExitScene(HasParameter("ExitScene", _animator) ? true : false));
             }
 
             healthBar.fillAmount = (float)health.currentHealth / health.maxHealth;

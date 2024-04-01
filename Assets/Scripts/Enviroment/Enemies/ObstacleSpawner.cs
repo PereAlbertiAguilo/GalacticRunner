@@ -27,8 +27,12 @@ public class ObstacleSpawner : MonoBehaviour
 
     float currentSpawnRate;
 
+    bool canSpawn = true;
+
     private void Start()
     {
+        initialSpawnRate += maxSpawnRate;
+
         spawnRateAugment = initialSpawnRate;
 
         FillPool();
@@ -36,6 +40,11 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void Update()
     {
+        if (canSpawn)
+        {
+            SpawnRepeting();
+        }
+
         // Makes a value go down slowly over time 
         if (spawnRateAugment > maxSpawnRate && varieSpawnRateAmount)
         {
@@ -44,21 +53,22 @@ public class ObstacleSpawner : MonoBehaviour
         }
         if (spawnRateAugment <= maxSpawnRate)
         {
+            spawnRateAugment = initialSpawnRate;
+
             if (bosses.Count > 0)
             {
                 if (bossIndex >= bosses.Count)
                 {
-                    bossIndex = 0;
+                    canSpawn = false;
+                    StartCoroutine(GameManager.instance.StageCleared());
+                    return;
                 }
 
                 Instantiate(bosses[bossIndex], playerPos.transform);
                 bossIndex++;
                 varieSpawnRateAmount = false;
             }
-            spawnRateAugment = initialSpawnRate;
         }
-
-        SpawnRepeting();
     }
 
     // Spawns obstacles depending on a timer that goes down depending on the initial spawn rate

@@ -247,6 +247,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 250022221}
   finalObstacle: {fileID: 8679642138850440615}
   gameOver: 0
+  endStage: 0
 --- !u!4 &317790309
 Transform:
   m_ObjectHideFlags: 0
@@ -481,10 +482,10 @@ MonoBehaviour:
   - {fileID: 6020750755276850069, guid: 83a8bfb62ea034b4993fced93d0cbd9e, type: 3}
   - {fileID: 6020750755276850069, guid: 2a02271fabe152e4f89514b65f3589d2, type: 3}
   bossIndex: 0
-  initialSpawnRate: 2
+  initialSpawnRate: 1.8
   maxSpawnRate: 0.05
   spawnRateAugment: 0
-  spawnRateAugmentSpeed: 0.025
+  spawnRateAugmentSpeed: 0.01
   varieSpawnRateAmount: 1
   randomRotation: 0
   pool: []

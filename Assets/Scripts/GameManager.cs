@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     int gamesPlayed = 1;
 
-    bool stageEnded = false;
+    TextMeshProUGUI gamOverText;
 
     private void Awake()
     {
@@ -43,27 +41,38 @@ public class GameManager : MonoBehaviour
         playerController = FindObjectOfType<PlayerController>();
         hudManager = FindObjectOfType<HudManager>();
 
+        gamOverText = gameOverPanel.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
+
         // Updates the gameover score texts
         UpdateScore();
     }
 
-    private void Update()
+    // When the player kills the 3rd boss the stage ender will bew activated
+    public IEnumerator StageCleared()
     {
-        // When te game time reaches 900 seconds / 15 minutes the stage ender will bew activated
-        if(hudManager.timeScore >= 600 && !stageEnded)
-        {
-            stageEnded = true;
+        gameOver = true;
 
-            finalObstacle.SetActive(true);
+        gamOverText.text = "Stage\nCleared";
+        gamOverText.color = Color.green;
 
-            foreach (ObstacleSpawner o in FindObjectsOfType<ObstacleSpawner>())
-            {
-                o.enabled = false;
-            }
+        UpdateScore();
 
-            PlayerPrefs.SetInt("stagesEnded", SceneManager.GetActiveScene().buildIndex);
-        }
+        StopPlayer();
+
+        StopSpawnRepeating();
+
+        PlayerPrefs.SetInt("stagesEnded", SceneManager.GetActiveScene().buildIndex);
+
+        yield return new WaitForSeconds(1);
+
+        playerController._animator.applyRootMotion = false;
+        playerController._animator.Play("ExitScene");
+
+        yield return new WaitForSeconds(1);
+
+        StartCoroutine(GameoverPanel());
     }
+
 
     // Updates the gameover score texts
     void UpdateScore()
@@ -73,24 +82,9 @@ public class GameManager : MonoBehaviour
         scrapsText.text = "Scraps: " + hudManager.pointsScore;
     }
 
-    // Gameover state
-    public void GameOver()
+    void StopSpawnRepeating()
     {
-        gameOver = true;
-
-        hudManager.SaveData();
-
-        // Updates the gameover score texts
-        UpdateScore();
-
-        // Stops the player controller moving behaviours and plays an explosion animation
-        playerController._explosionAnimator.Play("SpaceCraft_Explosion");
-        playerController._playerSpriteRenderer.enabled = false;
-        playerController.transform.parent.GetComponent<MoveForward>().forwardSpeed = 0;
-        playerController.speed = 0;
-        playerController.GetComponent<CapsuleCollider2D>().enabled = false;
-
-        // Stops the shooting behaviour
+        // Stops the shooting and obstacle spawning behaviours
         foreach (BulletShooter b in FindObjectsOfType<BulletShooter>())
         {
             b.enabled = false;
@@ -99,6 +93,29 @@ public class GameManager : MonoBehaviour
         {
             o.enabled = false;
         }
+    }
+
+    void StopPlayer()
+    {
+        //playerController.transform.parent.GetComponent<MoveForward>().forwardSpeed = 0;
+        playerController.speed = 0;
+        playerController.GetComponent<CapsuleCollider2D>().enabled = false;
+    }
+
+    // Gameover state
+    public void GameOver()
+    {
+        gameOver = true;
+
+        // Updates the gameover score texts
+        UpdateScore();
+
+        // Stops the player controller moving behaviours and plays an explosion animation
+        StopPlayer();
+        playerController._explosionAnimator.Play("SpaceCraft_Explosion");
+        playerController._playerSpriteRenderer.enabled = false;
+
+        StopSpawnRepeating();
 
         // Opens the gameover panel with some delay
         StartCoroutine(GameoverPanel());
