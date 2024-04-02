@@ -247,7 +247,6 @@ MonoBehaviour:
   gameOverPanel: {fileID: 250022221}
   finalObstacle: {fileID: 8679642138850440615}
   gameOver: 0
-  endStage: 0
 --- !u!4 &317790309
 Transform:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class AutoAimFollow : MonoBehaviour
             {
                 var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 90;
 
-                transform.rotation = Quaternion.AngleAxis(Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * 2), Vector3.forward);
+                transform.rotation = Quaternion.AngleAxis(Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * 3), Vector3.forward);
             }
         }
         //else if(follow == true)

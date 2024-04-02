@@ -37,6 +37,7 @@ public class BossController : MonoBehaviour
 
         healthBar = GameObject.FindGameObjectWithTag("BossHealthBar").GetComponent<Image>();
         healthBar.enabled = true;
+        healthBar.fillAmount = 1;
 
         StartCoroutine(EnterScene());
     }

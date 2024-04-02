@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Reflection;
+using UnityEngine.SceneManagement;
 
 public class ShopManager : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class ShopManager : MonoBehaviour
     {
         //PlayerPrefs.DeleteAll();
         //PlayerPrefs.SetInt("pointsScore", 1000000);
+        //PlayerPrefs.SetInt("stagesEnded", 4);
 
         // Updates the moeny
         money = PlayerPrefs.GetInt("pointsScore");

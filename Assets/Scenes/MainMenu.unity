@@ -7687,7 +7687,7 @@ MonoBehaviour:
     - {fileID: 1658304191}
     - {fileID: 1762663239}
     - {fileID: 1549734722}
-    prices: 00000000f401000088130000983a0000
+    prices: 00000000a60e00004c1d0000983a0000
     selectedIndex: 0
     isFirstSelected: 1
   - itemName: Engine
@@ -7705,7 +7705,7 @@ MonoBehaviour:
     - {fileID: 619594348}
     - {fileID: 1680970723}
     - {fileID: 1597626847}
-    prices: fa000000f4010000e8030000d0070000a00f0000401f0000
+    prices: f4010000e8030000d0070000ac0d00007c150000401f0000
     selectedIndex: 0
     isFirstSelected: 0
   - itemName: Shields
@@ -7719,7 +7719,7 @@ MonoBehaviour:
     - {fileID: 1009949932}
     - {fileID: 281070205}
     - {fileID: 1889181664}
-    prices: f4010000d00700008813000010270000
+    prices: e2040000c40900008813000010270000
     selectedIndex: 0
     isFirstSelected: 0
   - itemName: BulletShotSpeed

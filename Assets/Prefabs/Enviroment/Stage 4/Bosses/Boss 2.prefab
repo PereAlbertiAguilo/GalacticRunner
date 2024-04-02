@@ -310,7 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followPlayer: 0
   speed: 0
-  scorePoints: 150
+  scorePoints: 1000
   textPopUp: {fileID: 3791255777051177583, guid: 73730e61024f74c4d9b6dbc371281a5c, type: 3}
   canTakeDamage: 0
   healthBar: {fileID: 0}
@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2935c2f6f3a9254081ae60d5b935b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 150
+  maxHealth: 1000
   currentHealth: 0
   isAlive: 1
   deathPoint: 0

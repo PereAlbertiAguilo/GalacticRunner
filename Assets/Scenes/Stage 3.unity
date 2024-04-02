@@ -247,7 +247,6 @@ MonoBehaviour:
   gameOverPanel: {fileID: 250022221}
   finalObstacle: {fileID: 8679642138850440615}
   gameOver: 0
-  endStage: 0
 --- !u!4 &317790309
 Transform:
   m_ObjectHideFlags: 0
@@ -454,6 +453,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6ece353c12dd4ff40998165a76e5e8f8, type: 3}
   - {fileID: 21300000, guid: e57b07f62f0629c42a2f18457229fda4, type: 3}
   poolSize: 6
+  saveTile: 1
   lastTilePos: -26
   maxSpaceGap: 34
   tileSize: 16

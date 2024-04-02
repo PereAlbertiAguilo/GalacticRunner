@@ -409,8 +409,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followPlayer: 1
   speed: 0.5
-  scorePoints: 350
+  scorePoints: 550
   textPopUp: {fileID: 3791255777051177583, guid: 73730e61024f74c4d9b6dbc371281a5c, type: 3}
+  canTakeDamage: 0
+  healthBar: {fileID: 0}
+  health: {fileID: 0}
+  hudManager: {fileID: 0}
 --- !u!114 &924073769881715148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,7 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2935c2f6f3a9254081ae60d5b935b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 350
+  maxHealth: 550
   currentHealth: 0
   isAlive: 1
   deathPoint: 0

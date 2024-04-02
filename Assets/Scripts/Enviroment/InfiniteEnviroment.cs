@@ -9,11 +9,14 @@ public class InfiniteEnviroment : MonoBehaviour
     [SerializeField] Sprite[] tileSprites;
     [SerializeField] int poolSize = 5;
 
+    [SerializeField] int saveTile;
     [SerializeField] float lastTilePos;
     [SerializeField] float maxSpaceGap;
     [SerializeField] float tileSize = 16;
 
     [SerializeField] List<GameObject> spaceTilePool = new List<GameObject>();
+
+    int lastTile;
 
     private void Start()
     {
@@ -54,10 +57,21 @@ public class InfiniteEnviroment : MonoBehaviour
         
     }
 
+    int RandomTile()
+    {
+        return Random.Range(0, tileSprites.Length);
+    }
+
     // Spawns a new tile with a random sprite
     void SpawnTile(int i)
     {
-        int r = Random.Range(0, tileSprites.Length);
+        int r = RandomTile();
+        if(r == lastTile)
+        {
+            r = saveTile;
+        }
+        lastTile = r;
+
         lastTilePos += tileSize;
         spaceTilePool[i].GetComponent<SpriteRenderer>().sprite = tileSprites[r];
         spaceTilePool[i].SetActive(true);
