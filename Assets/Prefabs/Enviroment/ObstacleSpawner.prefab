@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &903610254780822875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 923499807705912059}
+  - component: {fileID: 8827835253464515010}
+  - component: {fileID: 2974199017402565094}
+  m_Layer: 0
+  m_Name: ObstacleSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &923499807705912059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903610254780822875}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8827835253464515010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903610254780822875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa28ccd187503e3419d8fd3aab6524c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleScriptableObject:
+  - {fileID: 11400000, guid: 1cb45feb58c4d744091f2424a8ce13ea, type: 2}
+  - {fileID: 11400000, guid: a2bfd748171266042acb89ad87486225, type: 2}
+  - {fileID: 11400000, guid: 2034e742e1253c14e849a5d0d808efd5, type: 2}
+  - {fileID: 11400000, guid: 0701c27deb56bfd498a0ae74108ce3f8, type: 2}
+  - {fileID: 11400000, guid: c25321c3698979944be4a7cf9809e16f, type: 2}
+  - {fileID: 11400000, guid: 4d38c39e206f660489c7c658c9fd23aa, type: 2}
+  initialSpawnRate: 2
+  maxSpawnRate: 0.05
+  spawnRateAugment: 0
+  varieSpawnRateAmount: 1
+  randomRotation: 0
+  canSpawn: 1
+--- !u!114 &2974199017402565094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903610254780822875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe86a049d1a06244b9d1c661fa172fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bosses:
+  - {fileID: 4759382234283497356, guid: e8447c3e12662f24295bfbf70835ee97, type: 3}
+  - {fileID: 4759382234283497356, guid: 1508f1fb61043b84db3035817aa42479, type: 3}
+  - {fileID: 4759382234283497356, guid: 243662a8c84f41444ab0ef8cd85314ba, type: 3}
+  playerPos: {fileID: 0}
+  bossIndex: 0

@@ -93,11 +93,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7927797479441901977}
   - component: {fileID: 5090280961175981708}
-  - component: {fileID: 6203935135517583001}
   - component: {fileID: 1670363442638162545}
   - component: {fileID: -6938086330187355735}
   - component: {fileID: 369753690540032506}
+  - component: {fileID: 4448531774489507070}
   - component: {fileID: 2537834696109383548}
+  - component: {fileID: 6203935135517583001}
   m_Layer: 0
   m_Name: Rock3
   m_TagString: Obstacle
@@ -173,6 +174,93 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
+--- !u!114 &1670363442638162545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777231239517494822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e99adb86980814ca4e26996db1b175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scorePoints: 2
+  priority: 1
+  destroyClip: {fileID: 8300000, guid: 53bb6063c6ef49345b16cadf16f33167, type: 3}
+  explosionParticle: {fileID: 8629288015194619182, guid: 13ec1975691575144bd31eb00dc43776, type: 3}
+  textPopUp: {fileID: 3791255777051177583, guid: 73730e61024f74c4d9b6dbc371281a5c, type: 3}
+--- !u!114 &-6938086330187355735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777231239517494822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2935c2f6f3a9254081ae60d5b935b9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  currentHealth: 0
+  isAlive: 1
+  deathPoint: 0
+--- !u!114 &369753690540032506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777231239517494822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c86aafee805184aa71dbc90b3a56e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forwardSpeed: 9.5
+  randomSpeedOffset: 1
+--- !u!114 &4448531774489507070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777231239517494822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d91970828569401469f218402eb3f960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 0
+--- !u!50 &2537834696109383548
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777231239517494822}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!58 &6203935135517583001
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -208,79 +296,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.38359427
---- !u!114 &1670363442638162545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4777231239517494822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68e99adb86980814ca4e26996db1b175, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeTime: 20
-  currentLifeTime: 0
-  scorePoints: 2
-  priority: 1
-  destroyClip: {fileID: 8300000, guid: 53bb6063c6ef49345b16cadf16f33167, type: 3}
-  explosionParticle: {fileID: 8629288015194619182, guid: 13ec1975691575144bd31eb00dc43776, type: 3}
-  textPopUp: {fileID: 3791255777051177583, guid: 73730e61024f74c4d9b6dbc371281a5c, type: 3}
---- !u!114 &-6938086330187355735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4777231239517494822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2935c2f6f3a9254081ae60d5b935b9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 10
-  currentHealth: 0
-  isAlive: 1
-  deathPoint: 0
---- !u!114 &369753690540032506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4777231239517494822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69c86aafee805184aa71dbc90b3a56e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forwardSpeed: 7.5
-  randomSpeedOffset: 1
---- !u!50 &2537834696109383548
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4777231239517494822}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7

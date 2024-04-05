@@ -39,9 +39,9 @@ public class ShopManager : MonoBehaviour
 
     private void Start()
     {
-        //PlayerPrefs.DeleteAll();
-        //PlayerPrefs.SetInt("pointsScore", 1000000);
-        //PlayerPrefs.SetInt("stagesEnded", 4);
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("pointsScore", 2000000);
+        PlayerPrefs.SetInt("stagesEnded", 4);
 
         // Updates the moeny
         money = PlayerPrefs.GetInt("pointsScore");

@@ -5,7 +5,7 @@ using UnityEngine;
 public class AutoAimFollow : MonoBehaviour
 {
     Transform playerPos;
-    [SerializeField] float speed;
+    public float speed;
 
     bool follow = true;
 

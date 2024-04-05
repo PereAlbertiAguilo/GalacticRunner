@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ObstacleController : MonoBehaviour
 {
-    Health health;
-    GameObject mask;
-
-    [SerializeField] float lifeTime = 10f;
-    [SerializeField] float currentLifeTime = 0;
     [SerializeField] int scorePoints = 10;
     [SerializeField] int priority = 0;
 
@@ -19,23 +15,19 @@ public class ObstacleController : MonoBehaviour
     [SerializeField] GameObject explosionParticle;
     [SerializeField] GameObject textPopUp;
 
+    int particleIndex = 0;
+
     HudManager hudManager;
     PlayerController playerController;
-
-
-    bool awake = false;
-
-    Transform playerPos;
+    Health health;
 
     private void Awake()
     {
         health = GetComponent<Health>();
-        mask = transform.GetChild(0).gameObject;
     }
 
     private void Start()
     {
-        playerPos = FindObjectOfType<PlayerController>(true).transform.parent;
         hudManager = FindObjectOfType<HudManager>();
         playerController = FindObjectOfType<PlayerController>();
 
@@ -44,8 +36,6 @@ public class ObstacleController : MonoBehaviour
 
     private void OnEnable()
     {
-        awake = true;
-        currentLifeTime = lifeTime;
         health.isAlive = true;
     }
 
@@ -58,31 +48,10 @@ public class ObstacleController : MonoBehaviour
         }
         else
         {
-            // If the current health of the gameobject gets to 10% activates a mask
-            if (health.currentHealth <= (health.maxHealth * 20) / 100 && !mask.activeInHierarchy && awake)
-            {
-                mask.SetActive(true);
-            }
-
-            if(playerPos.position.y - 18 >= transform.position.y)
+            if (transform.position.y + GetComponent<SpriteRenderer>().bounds.size.y < -ScreenBorderLimit.Y())
             {
                 DeactivateObject(false, false);
             }
-        }
-
-        // Updates timer
-        Timer();
-    }
-
-    // Countdown timer
-    void Timer()
-    {
-        currentLifeTime -= Time.deltaTime;
-
-        // If the countdown timer reaches 0 deactivates this gameobject
-        if (currentLifeTime <= 0.0f)
-        {
-            DeactivateObject(false, false);
         }
     }
 
@@ -107,10 +76,7 @@ public class ObstacleController : MonoBehaviour
                 hudManager.pointsText.text = "Scraps " + hudManager.pointsScore;
             }
         }
-
-        mask.SetActive(false);
         gameObject.SetActive(false);
-        awake = false;
     }
 
     GameObject InstantiateObject(GameObject instance)
@@ -134,10 +100,9 @@ public class ObstacleController : MonoBehaviour
 
             health.currentHealth -= collision.gameObject.GetComponent<BulletController>().bulletDamage;
 
-            if (Mathf.FloorToInt(health.currentHealth) == Mathf.FloorToInt(health.maxHealth * 20 / 100)||
-                Mathf.FloorToInt(health.currentHealth) == Mathf.FloorToInt(health.maxHealth * 40 / 100)||
-                Mathf.FloorToInt(health.currentHealth) == Mathf.FloorToInt(health.maxHealth * 60 / 100)||
-                Mathf.FloorToInt(health.currentHealth) == Mathf.FloorToInt(health.maxHealth * 80 / 100))
+            particleIndex++;
+
+            if ((float)particleIndex % 6 == 0)
             {
                 InstantiateObject(explosionParticle);
             }
@@ -166,13 +131,13 @@ public class ObstacleController : MonoBehaviour
             {
                 if (priority < oc.priority)
                 {
-                    DeactivateObject(transform.position.y > playerPos.position.y + 14 ? false : true, false);
+                    DeactivateObject(transform.position.y - GetComponent<SpriteRenderer>().bounds.size.y <= ScreenBorderLimit.Y(), false);
                 }
                 if (priority == oc.priority)
                 {
                     if (transform.position.y > oc.transform.position.y)
                     {
-                        DeactivateObject(transform.position.y > playerPos.position.y + 14 ? false : true, false);
+                        DeactivateObject(transform.position.y - GetComponent<SpriteRenderer>().bounds.size.y <= ScreenBorderLimit.Y(), false);
                     }
                 }
             }

@@ -20,7 +20,7 @@ public class BossController : MonoBehaviour
     [HideInInspector] public Image healthBar;
     Animator _animator;
     [HideInInspector] public Health health;
-    ObstacleSpawner obstacleSpawner;
+    ObjectSpawner obstacleSpawner;
     [HideInInspector] public HudManager hudManager;
 
     private void Awake()
@@ -32,11 +32,11 @@ public class BossController : MonoBehaviour
     private void Start()
     {
         playerPos = FindObjectOfType<PlayerController>(true).transform;
-        obstacleSpawner = FindObjectOfType<ObstacleSpawner>();
+        obstacleSpawner = FindObjectOfType<ObjectSpawner>();
         hudManager = FindObjectOfType<HudManager>();
 
         healthBar = GameObject.FindGameObjectWithTag("BossHealthBar").GetComponent<Image>();
-        healthBar.enabled = true;
+        healthBar.transform.GetChild(0).GetComponent<Image>().enabled = true;
         healthBar.fillAmount = 1;
 
         StartCoroutine(EnterScene());
@@ -75,7 +75,7 @@ public class BossController : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        healthBar.enabled = false;
+        healthBar.transform.GetChild(0).GetComponent<Image>().enabled = false;
         obstacleSpawner.varieSpawnRateAmount = true;
         gameObject.SetActive(false);
         //Destroy(gameObject);

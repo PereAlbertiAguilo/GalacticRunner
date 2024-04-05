@@ -13,6 +13,7 @@ public class BulletController : MonoBehaviour
     public int bulletDamage = 1;
 
     [SerializeField] float bulletLifeTime = 10f;
+    float startTime;
 
     [SerializeField] bool isPlayerBullet = true;
 
@@ -33,13 +34,14 @@ public class BulletController : MonoBehaviour
     private void Start()
     {
         playerPos = FindAnyObjectByType<PlayerController>().transform;
+        startTime = bulletLifeTime;
 
         //transform.rotation = parent.rotation;
         startRot = transform.rotation;
 
         if (isPlayerBullet)
         {
-            bulletSpeed += PlayerPrefs.HasKey("BulletSpeedSelect") ? (PlayerPrefs.GetInt("BulletSpeedSelect") + 1) * 10 : 0;
+            bulletSpeed += PlayerPrefs.HasKey("BulletSpeedSelect") ? (PlayerPrefs.GetInt("BulletSpeedSelect") + 1) * 6 : 0;
 
             if (PlayerPrefs.HasKey("BulletsSelect") && PlayerPrefs.GetInt("BulletsSelect") > 0)
             {
@@ -57,13 +59,25 @@ public class BulletController : MonoBehaviour
             parent = transform.parent;
             parentDir = parent.up;
         }
+    }
 
-        // Invokes a function that will activate within a given time
-        Invoke(nameof(ReturnToStartPos), bulletLifeTime);
+    void Timer()
+    {
+        if (bulletLifeTime <= 0)
+        {
+            bulletLifeTime = startTime;
+            ReturnToStartPos();
+        }
+        else
+        {
+            bulletLifeTime -= Time.deltaTime;
+        }
     }
 
     private void Update()
     {
+        Timer();
+
         // Moves this gameobject down if its active
         if (gameObject.activeInHierarchy)
         {
@@ -106,6 +120,8 @@ public class BulletController : MonoBehaviour
     // Resets this gameobject position, active state and sets its parent
     void ReturnToStartPos()
     {
+        bulletLifeTime = startTime;
+
         transform.parent = parent;
 
         transform.localPosition = Vector2.zero;

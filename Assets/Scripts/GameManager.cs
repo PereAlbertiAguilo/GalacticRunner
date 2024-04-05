@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject gameOverPanel;
 
-    [SerializeField] GameObject finalObstacle;
-
     [HideInInspector] public bool gameOver = false;
 
     int gamesPlayed = 1;
@@ -89,7 +87,7 @@ public class GameManager : MonoBehaviour
         {
             b.enabled = false;
         }
-        foreach (ObstacleSpawner o in FindObjectsOfType<ObstacleSpawner>())
+        foreach (ObjectSpawner o in FindObjectsOfType<ObjectSpawner>())
         {
             o.enabled = false;
         }
