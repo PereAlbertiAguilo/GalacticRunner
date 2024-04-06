@@ -5,17 +5,14 @@ using UnityEngine;
 public class BulletShooter : MonoBehaviour
 {
     [SerializeField] float bulletSpawnRate = .15f;
-    float startRate;
-
-    [SerializeField] GameObject bullet;
-
     [SerializeField] int poolSize = 50;
-
-    [SerializeField] List<GameObject> bulletPool = new List<GameObject>();
-
+    [SerializeField] bool isPlayerBullet = true;
+    [SerializeField] GameObject bullet;
     [SerializeField] AudioClip bulletClip;
 
-    [SerializeField] bool isPlayerBullet = true;
+    List<GameObject> bulletPool = new List<GameObject>();
+
+    float startRate;
 
     private void Start()
     {
@@ -38,7 +35,7 @@ public class BulletShooter : MonoBehaviour
     {
         bulletSpawnRate -= Time.deltaTime;
 
-        if (bulletSpawnRate <= 0.0f && gameObject.activeInHierarchy)
+        if (bulletSpawnRate <= 0.0f)
         {
             ShootBullet();
 

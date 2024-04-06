@@ -114,11 +114,6 @@ public class ObstacleController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, 2);
-    }
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         string tag = collision.gameObject.tag;

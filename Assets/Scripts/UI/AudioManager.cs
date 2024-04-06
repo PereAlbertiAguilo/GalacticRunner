@@ -37,7 +37,7 @@ public class AudioManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("music"))
         {
-            music = PlayerPrefs.GetInt("music") == 1 ? true : false;
+            music = PlayerPrefs.GetInt("music") == 1;
         }
         else
         {
@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
         }
         if (PlayerPrefs.HasKey("sfx"))
         {
-            sfx = PlayerPrefs.GetInt("sfx") == 1 ? true : false;
+            sfx = PlayerPrefs.GetInt("sfx") == 1;
         }
         else
         {

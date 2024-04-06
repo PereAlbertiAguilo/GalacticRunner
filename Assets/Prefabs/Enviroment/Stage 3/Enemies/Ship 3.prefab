@@ -107,7 +107,7 @@ MonoBehaviour:
   scorePoints: 40
   priority: 3
   destroyClip: {fileID: 8300000, guid: 53bb6063c6ef49345b16cadf16f33167, type: 3}
-  explosionParticle: {fileID: 8629288015194619182, guid: dcd6290727593d24588e54e5ad6b7214, type: 3}
+  explosionParticle: {fileID: 8629288015194619182, guid: 6aacf26e5206d3247a15e4fa6a8ae76b, type: 3}
   textPopUp: {fileID: 3791255777051177583, guid: 73730e61024f74c4d9b6dbc371281a5c, type: 3}
 --- !u!114 &-5246995021190727279
 MonoBehaviour:

@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class UpdateStats : MonoBehaviour
 {
-    const int HEALTH_POINTS_MINI = 12;
-    const int HEALTH_POINTS_SMALL = 20;
-    const int HEALTH_POINTS_MEDIUM = 35;
-    const int HEALTH_POINTS_BIG = 50;
-    const int HEALTH_POINTS_GIANT = 65;
+    const int HEALTH_POINTS_MINI = 15;
+    const int HEALTH_POINTS_SMALL = 25;
+    const int HEALTH_POINTS_MEDIUM = 38;
+    const int HEALTH_POINTS_BIG = 52;
+    const int HEALTH_POINTS_GIANT = 70;
 
     const float SPEED_MINI = 10.0f;
     const float SPEED_SMALL = 8.5f;

@@ -24,7 +24,6 @@ public class BulletController : MonoBehaviour
     Transform parent;
     Vector3 parentDir;
     Quaternion startRot;
-    bool follow = true;
 
     private void Awake()
     {
@@ -36,7 +35,6 @@ public class BulletController : MonoBehaviour
         playerPos = FindAnyObjectByType<PlayerController>().transform;
         startTime = bulletLifeTime;
 
-        //transform.rotation = parent.rotation;
         startRot = transform.rotation;
 
         if (isPlayerBullet)
@@ -78,33 +76,23 @@ public class BulletController : MonoBehaviour
     {
         Timer();
 
-        // Moves this gameobject down if its active
-        if (gameObject.activeInHierarchy)
+        // Moves this gameobject and follows the player if bulletFollow is active or goes on a straight line
+        if (bulletFollow)
         {
-            if (bulletFollow)
+            Vector3 direction = playerPos.position - transform.position;
+
+            if (transform.position.y > playerPos.position.y)
             {
-                Vector3 direction = playerPos.position - transform.position;
+                var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 90;
 
-                if (transform.position.y > playerPos.position.y)
-                {
-                    if (follow)
-                    {
-                        var angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 90;
-
-                        transform.rotation = Quaternion.AngleAxis(Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * 2), Vector3.forward);
-                    }
-                }
-                else if (follow == true)
-                {
-                    follow = false;
-                }
-
-                transform.Translate(Vector2.down * bulletSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.AngleAxis(Mathf.LerpAngle(transform.eulerAngles.z, angle, Time.deltaTime * 2), Vector3.forward);
             }
-            else
-            {
-                transform.Translate((useParentRotation ? parentDir : (isPlayerBullet ? Vector3.up : Vector3.down)) * bulletSpeed * Time.deltaTime);
-            }
+
+            transform.Translate(Vector2.down * bulletSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate((useParentRotation ? parentDir : (isPlayerBullet ? Vector3.up : Vector3.down)) * bulletSpeed * Time.deltaTime);
         }
     }
 
@@ -125,10 +113,7 @@ public class BulletController : MonoBehaviour
         transform.parent = parent;
 
         transform.localPosition = Vector2.zero;
-        follow = true;
         transform.rotation = startRot;
-
-        this.CancelInvoke();
 
         gameObject.SetActive(false);
     }
@@ -143,7 +128,7 @@ public class BulletController : MonoBehaviour
 
         string tag = collision.gameObject.tag;
 
-        if (tag == "Player")
+        if (tag == "Player" && playerPos.GetComponent<PlayerController>().canTakeDamage)
         {
             ReturnToStartPos();
         }

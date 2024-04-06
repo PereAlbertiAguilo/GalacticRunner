@@ -624,12 +624,12 @@ PrefabInstance:
       objectReference: {fileID: 7067900}
     - target: {fileID: 328299708231700488, guid: ef253f143ef42034181834950be64dc3, type: 3}
       propertyPath: tileSprites.Array.size
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 328299708231700488, guid: ef253f143ef42034181834950be64dc3, type: 3}
       propertyPath: tileSprites.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: 58ee47e785df59940bd7854d4ca0d482, type: 3}
+      objectReference: {fileID: 21300000, guid: 83cb57a857fa665468c1746fe981b2f1, type: 3}
     - target: {fileID: 328299708231700488, guid: ef253f143ef42034181834950be64dc3, type: 3}
       propertyPath: tileSprites.Array.data[1]
       value: 

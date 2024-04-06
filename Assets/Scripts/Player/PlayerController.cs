@@ -65,8 +65,7 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.instance.GameOver();
         }
-
-        if(GameManager.instance.gameOver)
+        if(health.isAlive && GameManager.instance.gameOver)
         {
             transform.position = Vector3.Lerp(transform.position, new Vector3(0, -9.5f, 0), Time.deltaTime * 2);
         }
@@ -231,12 +230,6 @@ public class PlayerController : MonoBehaviour
             {
                 hudManager.healthBarText.gameObject.SetActive(true);
             }
-        }
-
-        if (collision.gameObject.CompareTag("FinalObstacle"))
-        {
-            AudioManager.instance.AudioPlayOneShotVolume(explosionClip, .2f, false);
-            GameManager.instance.GameOver();
         }
     }
 }

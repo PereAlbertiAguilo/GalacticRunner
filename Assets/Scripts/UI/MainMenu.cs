@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,14 +8,18 @@ public class MainMenu : MonoBehaviour
 {
     private void Awake()
     {
-        AdsManager.instance.bannerAds.ShowBannerAd();
-
         StartCoroutine(DysplayBannerWithDelay());
+    }
+
+    void Start()
+    {
+        AdsManager.instance.bannerAds.LoadBannerAd();
+        AdsManager.instance.bannerAds.ShowBannerAd();
     }
 
     IEnumerator DysplayBannerWithDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         AdsManager.instance.bannerAds.ShowBannerAd();
     }

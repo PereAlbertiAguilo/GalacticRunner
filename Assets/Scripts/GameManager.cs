@@ -56,9 +56,7 @@ public class GameManager : MonoBehaviour
         gamOverText.color = Color.green;
 
         UpdateScore();
-
         StopPlayer();
-
         StopSpawnRepeating();
 
         PlayerPrefs.SetInt("stagesEnded", SceneManager.GetActiveScene().buildIndex);
@@ -114,6 +112,7 @@ public class GameManager : MonoBehaviour
         StopPlayer();
         playerController._explosionAnimator.Play("SpaceCraft_Explosion");
         playerController._playerSpriteRenderer.enabled = false;
+        playerController.transform.GetChild(0).gameObject.SetActive(false);
 
         StopSpawnRepeating();
 
