@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
     // When the player kills the 3rd boss the stage ender will bew activated
     public IEnumerator StageCleared()
     {
+        yield return new WaitForSeconds(10);
+
         gameOver = true;
 
         gamOverText.text = "Stage\nCleared";

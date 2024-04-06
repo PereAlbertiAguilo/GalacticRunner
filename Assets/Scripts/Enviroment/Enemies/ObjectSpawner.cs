@@ -47,8 +47,15 @@ public class ObjectSpawner : MonoBehaviour
         }
         if (spawnRateAugment <= maxSpawnRate)
         {
-            spawnRateAugment = initialSpawnRate;
+            StartCoroutine(ResetSpawnRate());
         }
+    }
+
+    IEnumerator ResetSpawnRate()
+    {
+        yield return new WaitForSeconds(1);
+
+        spawnRateAugment = initialSpawnRate;
     }
 
     // Spawns obstacles depending on a timer that goes down depending on the initial spawn rate

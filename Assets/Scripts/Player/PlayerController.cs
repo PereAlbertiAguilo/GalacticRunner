@@ -65,6 +65,11 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.instance.GameOver();
         }
+
+        if(GameManager.instance.gameOver)
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(0, -9.5f, 0), Time.deltaTime * 2);
+        }
     }
 
     IEnumerator EnterScene()

@@ -11,11 +11,11 @@ public class UpdateStats : MonoBehaviour
     const int HEALTH_POINTS_BIG = 50;
     const int HEALTH_POINTS_GIANT = 65;
 
-    const float SPEED_MINI = 9.0f;
-    const float SPEED_SMALL = 7.5f;
-    const float SPEED_MEDIUM = 6.0f;
-    const float SPEED_BIG = 4.5f;
-    const float SPEED_GIANT = 3.0f;
+    const float SPEED_MINI = 10.0f;
+    const float SPEED_SMALL = 8.5f;
+    const float SPEED_MEDIUM = 7.0f;
+    const float SPEED_BIG = 5.5f;
+    const float SPEED_GIANT = 4.0f;
 
     enum enemiesType { mini, small, medium, big, giant };
 

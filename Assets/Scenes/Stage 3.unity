@@ -245,7 +245,6 @@ MonoBehaviour:
   maxScoreText: {fileID: 49808958}
   scrapsText: {fileID: 647332748}
   gameOverPanel: {fileID: 250022221}
-  finalObstacle: {fileID: 8679642138850440615}
   gameOver: 0
 --- !u!4 &317790309
 Transform:
@@ -1211,31 +1210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3533765579977297875, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4284067037
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 2941889757
       objectReference: {fileID: 0}
     - target: {fileID: 4633407606593551359, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1294,11 +1269,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
---- !u!1 &8679642138850440615 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 703289077141192025, guid: 9238962e275a24342842332fa832548f, type: 3}
-  m_PrefabInstance: {fileID: 3854812526032925728}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

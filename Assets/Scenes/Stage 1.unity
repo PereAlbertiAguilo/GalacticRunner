@@ -245,7 +245,6 @@ MonoBehaviour:
   maxScoreText: {fileID: 49808958}
   scrapsText: {fileID: 647332748}
   gameOverPanel: {fileID: 250022221}
-  finalObstacle: {fileID: 0}
   gameOver: 0
 --- !u!4 &317790309
 Transform:
@@ -782,6 +781,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7067900}
     - target: {fileID: 2974199017402565094, guid: 290da77f06c4efe44b0b022149997474, type: 3}
+      propertyPath: bosses.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2974199017402565094, guid: 290da77f06c4efe44b0b022149997474, type: 3}
       propertyPath: bosses.Array.data[0]
       value: 
       objectReference: {fileID: 6020750755276850069, guid: 646a759def3e2be469ce49b86d0e25ad, type: 3}
@@ -1156,30 +1159,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2286960103173917143, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4132289639321093007, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4633407606593551359, guid: db80f5c869e541d408a8f4b6a76d3c4e, type: 3}

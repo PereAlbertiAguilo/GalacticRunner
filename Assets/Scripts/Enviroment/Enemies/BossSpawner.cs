@@ -19,7 +19,7 @@ public class BossSpawner : MonoBehaviour
     {
         if (_obstacleSpawner.spawnRateAugment <= _obstacleSpawner.maxSpawnRate)
         {
-            if (bosses.Length > 0)
+            if (bosses.Length > 0 && _obstacleSpawner.varieSpawnRateAmount)
             {
                 if (bossIndex >= bosses.Length)
                 {

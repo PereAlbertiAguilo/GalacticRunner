@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 1097ebf9a8c1e4344950a3823e95128a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 06f56401ae24dc24aa2124f0a7a749c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,11 +100,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSprites: []
-  bulletSpeed: 10
+  bulletSpeed: 8
   bulletDamage: 1
-  bulletLifeTime: 6
+  bulletLifeTime: 10
   isPlayerBullet: 0
-  bulletFollow: 0
+  bulletFollow: 1
   useParentRotation: 0
 --- !u!70 &1147093034456708898
 CapsuleCollider2D:
