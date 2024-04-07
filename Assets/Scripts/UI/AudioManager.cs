@@ -54,6 +54,8 @@ public class AudioManager : MonoBehaviour
 
         musicToggle.isOn = music;
         sfxToggle.isOn = sfx;
+
+        index++;
     }
 
     // Plays a sound form a unity event from UI elements
@@ -61,11 +63,10 @@ public class AudioManager : MonoBehaviour
     {
         sfxAudioSource.pitch = 1f;
 
-        if(index > 0)
+        if (index > 0)
         {
             sfxAudioSource.PlayOneShot(ac);
         }
-        index++;
     }
 
     float RandomPitch()

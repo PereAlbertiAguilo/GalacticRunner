@@ -28,7 +28,6 @@ public class PauseMenu : MonoBehaviour
             b.enabled = false;
         }
 
-        PlayerPrefs.SetInt("gamesPlayed", PlayerPrefs.HasKey("gamesPlayed") ? PlayerPrefs.GetInt("gamesPlayed") + 1: 1);
         AdsManager.instance.bannerAds.HideBannerAd();
 
         StartCoroutine(ChangeSceneDelay(SceneManager.GetActiveScene().name));
@@ -43,6 +42,8 @@ public class PauseMenu : MonoBehaviour
     // Adds a delay before changeing the scene
     IEnumerator ChangeSceneDelay(string sceneName)
     {
+        PlayerPrefs.SetInt("gamesPlayed", PlayerPrefs.HasKey("gamesPlayed") ? PlayerPrefs.GetInt("gamesPlayed") + 1 : 2);
+
         FadeBlack.instance.FadeToBlack();
 
         yield return new WaitForSeconds(1);

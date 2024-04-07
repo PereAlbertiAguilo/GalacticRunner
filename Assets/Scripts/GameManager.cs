@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool gameOver = false;
 
-    int gamesPlayed = 1;
+    public int gamesPlayed = 1;
 
     TextMeshProUGUI gamOverText;
 
@@ -32,6 +32,11 @@ public class GameManager : MonoBehaviour
         }
 
         gamesPlayed = PlayerPrefs.HasKey("gamesPlayed") ? PlayerPrefs.GetInt("gamesPlayed") : 1;
+
+        if (gamesPlayed % 3 == 0)
+        {
+            AdsManager.instance.interstitialAds.LoadInterstatialAd();
+        }
     }
 
     private void Start()
@@ -48,7 +53,7 @@ public class GameManager : MonoBehaviour
     // When the player kills the 3rd boss the stage ender will bew activated
     public IEnumerator StageCleared()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(8);
 
         gameOver = true;
 
@@ -123,7 +128,7 @@ public class GameManager : MonoBehaviour
     // Opens the gameover panel with some delay
     IEnumerator GameoverPanel()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
 
         AdsManager.instance.bannerAds.ShowBannerAd();
 
