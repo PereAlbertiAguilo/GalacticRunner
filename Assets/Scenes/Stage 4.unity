@@ -246,6 +246,7 @@ MonoBehaviour:
   scrapsText: {fileID: 647332748}
   gameOverPanel: {fileID: 250022221}
   gameOver: 0
+  gamesPlayed: 1
 --- !u!4 &317790309
 Transform:
   m_ObjectHideFlags: 0

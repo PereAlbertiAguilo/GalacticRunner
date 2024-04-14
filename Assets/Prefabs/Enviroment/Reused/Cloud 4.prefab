@@ -100,14 +100,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e99adb86980814ca4e26996db1b175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 25
-  currentLifeTime: 0
   scorePoints: 8
   priority: 4
   destroyClip: {fileID: 8300000, guid: 53bb6063c6ef49345b16cadf16f33167, type: 3}
   explosionParticle: {fileID: 8629288015194619182, guid: 13ec1975691575144bd31eb00dc43776, type: 3}
   textPopUp: {fileID: 0}
-  canTakeDamage: 0
 --- !u!114 &-5246995021190727279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +134,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: 3
-  randomSpeedOffset: 1
 --- !u!1 &6644223611472231445
 GameObject:
   m_ObjectHideFlags: 0
